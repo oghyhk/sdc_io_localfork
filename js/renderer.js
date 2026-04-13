@@ -327,7 +327,9 @@ export class Renderer {
             const sy = b.y - cam.y;
             if (sx < -10 || sx > cam.width + 10 || sy < -10 || sy > cam.height + 10) continue;
 
-            const color = b.owner === 'player' ? COLORS.BULLET_PLAYER : COLORS.BULLET_ENEMY;
+            const color = b.owner === 'player'
+                ? (b.color || COLORS.BULLET_PLAYER)
+                : COLORS.BULLET_ENEMY;
             ctx.fillStyle = color;
             ctx.shadowColor = color;
             ctx.shadowBlur = 6;
@@ -427,6 +429,13 @@ export class Renderer {
         ctx.font = 'bold 12px monospace';
         ctx.textAlign = 'center';
         ctx.fillText(`CARRY ${player.getCarriedItemCount()}/${player.carryCapacity} · EST. VALUE ${player.loot}c`, cam.width / 2, hpY - 20);
+        const weaponHud = player.getWeaponHudInfo();
+        ctx.fillStyle = weaponHud.color || '#d0d7de';
+        ctx.font = 'bold 16px monospace';
+        ctx.shadowColor = weaponHud.color || '#d0d7de';
+        ctx.shadowBlur = 8;
+        ctx.fillText(weaponHud.text, cam.width / 2, hpY - 32);
+        ctx.shadowBlur = 0;
 
         const dashReady = player.dashCooldown <= 0;
         const modeText = player.isSlowMode ? 'SLOW' : 'NORMAL';

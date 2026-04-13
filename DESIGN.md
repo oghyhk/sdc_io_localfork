@@ -29,6 +29,9 @@ The current prototype now treats all major loot as one of these six categories:
 
 The player inventory screen supports equipping one item from each class.
 
+### Ammo
+Ammo is a separate loot type (not equipment) with six rarity tiers from Gray to Red. Each tier has a distinct damage multiplier and sell value. Ammo is stored in a dedicated `stashAmmo` map rather than the equipment stash. See **Section 10** for full details.
+
 ### Example Items
 The game includes 36 items across all six categories and rarity tiers:
 
@@ -215,6 +218,7 @@ That makes it easier later to move raid logic to an authoritative backend while 
 
 ### Lose
 - Die before extraction.
+- Death penalties vary by difficulty — see **Section 12** for details.
 
 ### Controls
 - `WASD` / arrow keys: move
@@ -227,12 +231,126 @@ That makes it easier later to move raid logic to an authoritative backend while 
 
 ---
 
-## 10. Next Refinement Opportunities
+## 10. Ammo Rarity System
+
+### Ammo Tiers
+Ammo is a distinct loot type split into six rarity tiers, each stored as a separate pack:
+
+| Rarity | Definition ID | Damage Multiplier | Sell Value | Color |
+|--------|---------------|-------------------|------------|-------|
+| **Gray (White)** | `ammo_white` | ×0.2 (free fallback) | 1 | `#aaa` (gray) |
+| **Green** | `ammo_green` | ×1.0 | 8 | green |
+| **Blue** | `ammo_blue` | ×1.05 | 250 | blue |
+| **Purple** | `ammo_purple` | ×1.2 | 5,000 | purple |
+| **Gold** | `ammo_gold` | ×1.4 | 25,000 | gold |
+| **Red** | `ammo_red` | Instant Kill | 1,000,000 | red |
+
+Ammo definitions live in `ITEM_DEFS` in `profile.js`. The priority ordering (highest → lowest) is maintained in `AMMO_DEFINITION_IDS`: `['ammo_red', 'ammo_gold', 'ammo_purple', 'ammo_blue', 'ammo_green', 'ammo_white']`.
+
+### Stash Ammo Storage
+Ammo is persisted separately from equipment in a `stashAmmo` map (`{ [definitionId]: count }`), not in `stashItems`. On profile load, `normalizeStashAmmo()` migrates any legacy ammo entries from the items array into this map.
+
+### Priority-based Loading
+- On raid start, the gun magazine starts **empty**.
+- `reloadBestAvailableAmmo(forceReplace)` draws ammo from the backpack, filling the magazine with the **highest-rarity ammo first** using `_getAmmoPriority()` (lower index in `AMMO_DEFINITION_IDS` = higher priority).
+- When all non-gray backpack ammo is exhausted, the remaining magazine slots are filled with free gray ammo.
+- Each round in the magazine tracks its own `ammoDefinitionId`, so a single magazine can contain mixed-rarity rounds sorted by priority.
+
+### Gray Ammo — Free Unlimited Fallback
+Gray ammo (`ammo_white`) is a special tier with these rules:
+- **Unlimited & free**: always available as a fallback; never runs out.
+- **Damage ×0.2**: significantly weaker than any purchased ammo.
+- **Cannot be persisted**: `addAmmoToProfile()` and `removeAmmoFromProfile()` silently skip it; `createPersistentEntryFromLootItem()` returns `null` for it.
+- **Cannot be extracted**: `recordExtraction()` skips gray ammo items.
+- **Cannot be stored**: `moveItemToSafebox()` and `moveItemToBackpack()` throw errors for gray ammo.
+- **Cannot be traded**: the market UI shows "Locked" for gray ammo; buy/sell operations throw errors.
+- **Reserve shows ∞**: when no non-gray ammo is in the backpack, the HUD reserve counter displays `∞`.
+
+Guard functions:
+- `isFreeFallbackAmmo(definitionId)` — returns `true` for `ammo_white`.
+- `isMarketLockedAmmo(definitionId)` — returns `true` for `ammo_white`.
+
+### Shooting & Bullet Behavior
+- Each shot shifts one round from `loadedAmmoQueue`.
+- The bullet inherits the round's `damageMultiplier`, `instantKill` flag, and rarity **color**.
+- `game.js` applies instant-kill logic: if `b.instantKill` is true, the bullet deals `e.maxHp` damage, killing any enemy in one hit.
+- Bullets are rendered on canvas in the color of their ammo rarity via `b.color` in `renderer.js`.
+
+### Auto-reload Triggers
+1. **Raid start** — `reloadBestAvailableAmmo(true)` is called when the player spawns.
+2. **Safebox → Backpack transfer** — if the moved item is ammo with higher priority than the currently loaded round, `reloadBestAvailableAmmo(true)` is called to upgrade the magazine.
+3. **Manual reload** — standard reload timer applies as before.
+
+---
+
+## 11. Dynamic HUD Coloring
+
+The weapon HUD text at the bottom of the screen dynamically changes color based on the highest-priority ammo currently loaded:
+- `player.getWeaponHudInfo()` returns `{ text, color, ammoDefinitionId }` instead of the old plain-text function.
+- `renderer.js` renders the HUD text with `weaponHud.color` at 16px bold with an 8px shadow glow for readability.
+- When reloading, the color reflects the next round's rarity. When the magazine is empty and only gray fallback remains, the HUD color is gray.
+
+---
+
+## 12. Difficulty-based Death Penalties
+
+On death, penalties are determined by the raid difficulty setting:
+
+| Difficulty | Backpack Lost | Gun Lost | Other Equipped Slots | Safebox |
+|------------|---------------|----------|----------------------|---------|
+| **Easy** | Yes (always) | No | No | Safe |
+| **Advanced** | Yes (always) | Always | 15% chance each | Safe |
+| **Hell** | Yes (always) | Always | Always | Safe |
+
+Implementation: `applyDeathLosses(profile, difficulty)` in `profile.js`:
+- `easy` — returns immediately; only backpack contents are lost (handled separately by `applyRaidOutcome`).
+- `advanced` — always removes the equipped gun from stash; each other equipped slot has a 15% independent chance of removal.
+- `hell` — removes all equipped items from stash (every slot).
+- The **safebox** is never touched regardless of difficulty.
+
+`ProfileStore.applyRaidOutcome()` accepts a `difficulty` parameter from `game.js` (`this.activeDifficulty`).
+
+---
+
+## 13. Safebox
+
+- The safebox is a protected storage area (capacity: `SAFEBOX_CAPACITY`) separate from the main stash.
+- Items in the safebox are **never lost on death**, regardless of difficulty.
+- Safebox ammo is **not auto-moved** to the backpack on raid start — the player must explicitly move items via a "Move to Backpack" action.
+- Moving ammo from safebox to backpack can trigger an auto-reload if the transferred ammo has higher priority than the currently loaded round.
+- Gray ammo cannot be placed in the safebox (it's free and unlimited).
+
+---
+
+## 14. Inventory Value Display
+
+The top-right corner of the screen shows account information including:
+- Username/login status
+- **Inv Value** — displayed below the account info in gold (`#ffca28`), 13px, font-weight 900.
+- Inv Value = total coins + the sum of `sellValue` for every item in stash, backpack, and safebox.
+- Calculated by `getProfileInventoryValue(profile)` in `profile.js`.
+- Rendered via an `.auth-status-value` span in the `.auth-status-button` container.
+
+---
+
+## 15. Redeem Code System
+
+A **Redeem** button is displayed in the top-left bar next to the game brand. It opens a prompt for entering redemption codes:
+
+| Code | Reward |
+|------|--------|
+| `oghyhk` | +10,000 coins |
+| `2598` | Prompts for a custom coin amount to add |
+
+Implementation: `redeemButton` click handler in `app.js` calls `ProfileStore.addCoins()` and re-renders the auth status.
+
+---
+
+## 16. Next Refinement Opportunities
 
 Recommended next passes:
 1. add true melee attack input and enemy stagger
 2. add item size / slot weight instead of simple carry count
-3. add dedicated ammo / meds / valuables item classes
-4. add stash filtering and sorting tools in inventory
-5. harden the local API auth model before any wider release
-6. add multiplayer-safe server authority for crate ownership, item pickup, and market sync
+3. add stash filtering and sorting tools in inventory
+4. harden the local API auth model before any wider release
+5. add multiplayer-safe server authority for crate ownership, item pickup, and market sync

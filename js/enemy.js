@@ -23,40 +23,75 @@ const STATE = {
     RETURN: 'return',
 };
 
+const DIFFICULTY_MODIFIERS = {
+    easy: {
+        hp: 0.85,
+        damage: 0.85,
+        speed: 0.92,
+        attackCooldown: 1.08,
+        sightRange: 0.95,
+        chaseRange: 0.95,
+        shootRange: 0.96,
+        bulletSpeed: 0.95,
+    },
+    advanced: {
+        hp: 1,
+        damage: 1,
+        speed: 1,
+        attackCooldown: 1,
+        sightRange: 1,
+        chaseRange: 1,
+        shootRange: 1,
+        bulletSpeed: 1,
+    },
+    hell: {
+        hp: 1.35,
+        damage: 1.3,
+        speed: 1.18,
+        attackCooldown: 0.82,
+        sightRange: 1.18,
+        chaseRange: 1.15,
+        shootRange: 1.1,
+        bulletSpeed: 1.15,
+    },
+};
+
 export class Enemy {
-    constructor(x, y, type) {
+    constructor(x, y, type, difficulty = 'advanced') {
         this.id = generateId();
         this.x = x;
         this.y = y;
         this.type = type; // 'drone' or 'sentinel'
+        this.difficulty = difficulty;
         this.spawnX = x;
         this.spawnY = y;
         this.angle = randFloat(0, Math.PI * 2);
+        const modifiers = DIFFICULTY_MODIFIERS[difficulty] || DIFFICULTY_MODIFIERS.advanced;
 
         if (type === 'drone') {
             this.radius = DRONE_RADIUS;
-            this.speed = DRONE_SPEED;
-            this.hp = DRONE_HP;
-            this.maxHp = DRONE_HP;
-            this.damage = DRONE_DAMAGE;
-            this.attackCooldown = DRONE_ATTACK_COOLDOWN;
-            this.sightRange = DRONE_SIGHT_RANGE;
-            this.chaseRange = DRONE_CHASE_RANGE;
+            this.speed = DRONE_SPEED * modifiers.speed;
+            this.hp = Math.round(DRONE_HP * modifiers.hp);
+            this.maxHp = this.hp;
+            this.damage = Math.round(DRONE_DAMAGE * modifiers.damage);
+            this.attackCooldown = DRONE_ATTACK_COOLDOWN * modifiers.attackCooldown;
+            this.sightRange = DRONE_SIGHT_RANGE * modifiers.sightRange;
+            this.chaseRange = DRONE_CHASE_RANGE * modifiers.chaseRange;
             this.patrolRange = DRONE_PATROL_RANGE;
             this.canShoot = false;
         } else {
             this.radius = SENTINEL_RADIUS;
-            this.speed = SENTINEL_SPEED;
-            this.hp = SENTINEL_HP;
-            this.maxHp = SENTINEL_HP;
-            this.damage = SENTINEL_DAMAGE;
-            this.attackCooldown = SENTINEL_ATTACK_COOLDOWN;
-            this.sightRange = SENTINEL_SIGHT_RANGE;
-            this.chaseRange = SENTINEL_CHASE_RANGE;
+            this.speed = SENTINEL_SPEED * modifiers.speed;
+            this.hp = Math.round(SENTINEL_HP * modifiers.hp);
+            this.maxHp = this.hp;
+            this.damage = Math.round(SENTINEL_DAMAGE * modifiers.damage);
+            this.attackCooldown = SENTINEL_ATTACK_COOLDOWN * modifiers.attackCooldown;
+            this.sightRange = SENTINEL_SIGHT_RANGE * modifiers.sightRange;
+            this.chaseRange = SENTINEL_CHASE_RANGE * modifiers.chaseRange;
             this.patrolRange = 100;
             this.canShoot = true;
-            this.shootRange = SENTINEL_SHOOT_RANGE;
-            this.bulletSpeed = SENTINEL_BULLET_SPEED;
+            this.shootRange = SENTINEL_SHOOT_RANGE * modifiers.shootRange;
+            this.bulletSpeed = SENTINEL_BULLET_SPEED * modifiers.bulletSpeed;
         }
 
         this.alive = true;

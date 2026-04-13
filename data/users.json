@@ -1,3 +1,1047 @@
 {
-  "users": {}
+  "users": {
+    "oghyhk": {
+      "username": "oghyhk",
+      "isGuest": false,
+      "password": "112069",
+      "coins": 890175,
+      "loadout": {
+        "gun": "as_val",
+        "melee": "field_knife",
+        "armor": "bastion_plate",
+        "helmet": "scout_cap",
+        "shoes": "warp_drivers",
+        "backpack": "mule_pack"
+      },
+      "stashItems": [
+        {
+          "definitionId": "field_knife"
+        },
+        {
+          "definitionId": "cloth_vest"
+        },
+        {
+          "definitionId": "scout_cap"
+        },
+        {
+          "definitionId": "trail_shoes"
+        },
+        {
+          "definitionId": "mule_pack"
+        },
+        {
+          "definitionId": "bastion_plate"
+        },
+        {
+          "definitionId": "warp_drivers"
+        },
+        {
+          "definitionId": "doom_cleaver"
+        },
+        {
+          "definitionId": "doom_cleaver"
+        },
+        {
+          "definitionId": "as_val"
+        },
+        {
+          "definitionId": "void_satchel"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "phantom_crown"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "void_satchel"
+        },
+        {
+          "definitionId": "fortress_mask"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "fortress_mask"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "fortress_mask"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "fortress_mask"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "phantom_crown"
+        },
+        {
+          "definitionId": "fortress_mask"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "cargo_titan"
+        },
+        {
+          "definitionId": "void_satchel"
+        },
+        {
+          "definitionId": "warp_drivers"
+        },
+        {
+          "definitionId": "bastion_plate"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "void_satchel"
+        },
+        {
+          "definitionId": "wraith_katana"
+        },
+        {
+          "definitionId": "blitz_treads"
+        },
+        {
+          "definitionId": "doom_cleaver"
+        },
+        {
+          "definitionId": "phantom_crown"
+        },
+        {
+          "definitionId": "titan_rig"
+        },
+        {
+          "definitionId": "phantom_crown"
+        }
+      ],
+      "stashAmmo": {
+        "ammo_red": 99506
+      },
+      "backpackItems": [],
+      "safeboxItems": [],
+      "extractedRuns": [
+        {
+          "id": "1776055745116-6112",
+          "createdAt": "2026-04-13T04:49:05.116Z",
+          "estimatedValue": 5972,
+          "items": [
+            {
+              "id": "ammo_red-291917250",
+              "definitionId": "ammo_red",
+              "name": "Red Ammo x792",
+              "category": "loot",
+              "rarity": "red",
+              "sellValue": 792,
+              "description": "Red Ammo pack containing 792 rounds.",
+              "quantity": 792,
+              "stats": {},
+              "modifiers": {}
+            },
+            {
+              "id": "void_satchel-744609160",
+              "definitionId": "void_satchel",
+              "name": "Void Satchel",
+              "category": "backpack",
+              "rarity": "red",
+              "sellValue": 480,
+              "description": "Prototype pack with huge haul capacity.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 18
+              }
+            },
+            {
+              "id": "warp_drivers-710163082",
+              "definitionId": "warp_drivers",
+              "name": "Warp Drivers",
+              "category": "shoes",
+              "rarity": "red",
+              "sellValue": 520,
+              "description": "Experimental exo-boots that defy physics.",
+              "stats": {},
+              "modifiers": {
+                "speed": 72
+              }
+            },
+            {
+              "id": "bastion_plate-48061551",
+              "definitionId": "bastion_plate",
+              "name": "Bastion Plate",
+              "category": "armor",
+              "rarity": "red",
+              "sellValue": 580,
+              "description": "Experimental exo-armor with maximum protection.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 72
+              }
+            },
+            {
+              "id": "titan_rig-292521772",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "void_satchel-360075309",
+              "definitionId": "void_satchel",
+              "name": "Void Satchel",
+              "category": "backpack",
+              "rarity": "red",
+              "sellValue": 480,
+              "description": "Prototype pack with huge haul capacity.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 18
+              }
+            },
+            {
+              "id": "wraith_katana-187449326",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "blitz_treads-387190765",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            },
+            {
+              "id": "doom_cleaver-427691733",
+              "definitionId": "doom_cleaver",
+              "name": "Doom Cleaver",
+              "category": "melee",
+              "rarity": "red",
+              "sellValue": 550,
+              "description": "Prototype heavy weapon that obliterates anything in range.",
+              "stats": {
+                "meleeDamage": 68,
+                "meleeCooldown": 0.38
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "phantom_crown-171802074",
+              "definitionId": "phantom_crown",
+              "name": "Phantom Crown",
+              "category": "helmet",
+              "rarity": "red",
+              "sellValue": 520,
+              "description": "Prototype adaptive helmet with integrated HUD.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 48
+              }
+            },
+            {
+              "id": "titan_rig-382189999",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "phantom_crown-274609055",
+              "definitionId": "phantom_crown",
+              "name": "Phantom Crown",
+              "category": "helmet",
+              "rarity": "red",
+              "sellValue": 520,
+              "description": "Prototype adaptive helmet with integrated HUD.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 48
+              }
+            }
+          ],
+          "kills": 16,
+          "duration": 64.04619999999946,
+          "durationLabel": "01:04",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776055054789-6829",
+          "createdAt": "2026-04-13T04:37:34.789Z",
+          "estimatedValue": 1739,
+          "items": [
+            {
+              "id": "ammo_red-29650574",
+              "definitionId": "ammo_red",
+              "name": "Red Ammo x949",
+              "category": "loot",
+              "rarity": "red",
+              "sellValue": 949,
+              "description": "Red Ammo pack containing 949 rounds.",
+              "quantity": 949,
+              "stats": {},
+              "modifiers": {}
+            },
+            {
+              "id": "titan_rig-351432580",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "cargo_titan-42227417",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            }
+          ],
+          "kills": 11,
+          "duration": 42.3308000000005,
+          "durationLabel": "00:42",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776054986577-4730",
+          "createdAt": "2026-04-13T04:36:26.577Z",
+          "estimatedValue": 0,
+          "items": [],
+          "kills": 2,
+          "duration": 18.03239999999999,
+          "durationLabel": "00:18",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776054136009-4970",
+          "createdAt": "2026-04-13T04:22:16.009Z",
+          "estimatedValue": 4903,
+          "items": [
+            {
+              "id": "ammo_red-978229601",
+              "definitionId": "ammo_red",
+              "name": "Red Ammo x763",
+              "category": "loot",
+              "rarity": "red",
+              "sellValue": 763,
+              "description": "Red Ammo pack containing 763 rounds.",
+              "quantity": 763,
+              "stats": {},
+              "modifiers": {}
+            },
+            {
+              "id": "titan_rig-354282969",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "blitz_treads-739560520",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            },
+            {
+              "id": "titan_rig-920324443",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "fortress_mask-551125978",
+              "definitionId": "fortress_mask",
+              "name": "Fortress Mask",
+              "category": "helmet",
+              "rarity": "gold",
+              "sellValue": 360,
+              "description": "Full-face tactical helmet with blast shielding.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 36
+              }
+            },
+            {
+              "id": "wraith_katana-254861198",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "fortress_mask-491020177",
+              "definitionId": "fortress_mask",
+              "name": "Fortress Mask",
+              "category": "helmet",
+              "rarity": "gold",
+              "sellValue": 360,
+              "description": "Full-face tactical helmet with blast shielding.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 36
+              }
+            },
+            {
+              "id": "blitz_treads-426081407",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            },
+            {
+              "id": "wraith_katana-450687177",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "wraith_katana-519838926",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "fortress_mask-64242250",
+              "definitionId": "fortress_mask",
+              "name": "Fortress Mask",
+              "category": "helmet",
+              "rarity": "gold",
+              "sellValue": 360,
+              "description": "Full-face tactical helmet with blast shielding.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 36
+              }
+            },
+            {
+              "id": "cargo_titan-953005923",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            }
+          ],
+          "kills": 11,
+          "duration": 66.61310000000182,
+          "durationLabel": "01:06",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776051792478-4534",
+          "createdAt": "2026-04-13T03:43:12.478Z",
+          "estimatedValue": 6740,
+          "items": [
+            {
+              "id": "blitz_treads-855815464",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            },
+            {
+              "id": "phantom_crown-271311667",
+              "definitionId": "phantom_crown",
+              "name": "Phantom Crown",
+              "category": "helmet",
+              "rarity": "red",
+              "sellValue": 520,
+              "description": "Prototype adaptive helmet with integrated HUD.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 48
+              }
+            },
+            {
+              "id": "wraith_katana-155396767",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "titan_rig-639939444",
+              "definitionId": "titan_rig",
+              "name": "Titan Rig",
+              "category": "armor",
+              "rarity": "gold",
+              "sellValue": 390,
+              "description": "Heavy armor for frontline raids.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 52
+              }
+            },
+            {
+              "id": "cargo_titan-536902486",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            },
+            {
+              "id": "wraith_katana-110030701",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "wraith_katana-405477406",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "wraith_katana-167689945",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "void_satchel-971172333",
+              "definitionId": "void_satchel",
+              "name": "Void Satchel",
+              "category": "backpack",
+              "rarity": "red",
+              "sellValue": 480,
+              "description": "Prototype pack with huge haul capacity.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 18
+              }
+            },
+            {
+              "id": "fortress_mask-844051234",
+              "definitionId": "fortress_mask",
+              "name": "Fortress Mask",
+              "category": "helmet",
+              "rarity": "gold",
+              "sellValue": 360,
+              "description": "Full-face tactical helmet with blast shielding.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 36
+              }
+            },
+            {
+              "id": "cargo_titan-822493566",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            },
+            {
+              "id": "blitz_treads-369071854",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            },
+            {
+              "id": "cargo_titan-26979332",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            },
+            {
+              "id": "cargo_titan-983705051",
+              "definitionId": "cargo_titan",
+              "name": "Cargo Titan",
+              "category": "backpack",
+              "rarity": "gold",
+              "sellValue": 400,
+              "description": "Heavy-duty hauler with reinforced compartments.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 14
+              }
+            },
+            {
+              "id": "wraith_katana-252118359",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "wraith_katana-554667200",
+              "definitionId": "wraith_katana",
+              "name": "Wraith Katana",
+              "category": "melee",
+              "rarity": "gold",
+              "sellValue": 380,
+              "description": "Elegant high-damage blade for elite operatives.",
+              "stats": {
+                "meleeDamage": 50,
+                "meleeCooldown": 0.3
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "blitz_treads-807659856",
+              "definitionId": "blitz_treads",
+              "name": "Blitz Treads",
+              "category": "shoes",
+              "rarity": "gold",
+              "sellValue": 370,
+              "description": "High-performance boots with shock absorption.",
+              "stats": {},
+              "modifiers": {
+                "speed": 56
+              }
+            }
+          ],
+          "kills": 15,
+          "duration": 142.2420000000092,
+          "durationLabel": "02:22",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776051389917-9216",
+          "createdAt": "2026-04-13T03:36:29.917Z",
+          "estimatedValue": 480,
+          "items": [
+            {
+              "id": "void_satchel-473771576",
+              "definitionId": "void_satchel",
+              "name": "Void Satchel",
+              "category": "backpack",
+              "rarity": "red",
+              "sellValue": 480,
+              "description": "Prototype pack with huge haul capacity.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 18
+              }
+            }
+          ],
+          "kills": 8,
+          "duration": 39.01450000000019,
+          "durationLabel": "00:39",
+          "weaponId": "as_val",
+          "weaponName": "AS VAL",
+          "loadout": {
+            "gun": "as_val",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776050446655-8819",
+          "createdAt": "2026-04-13T03:20:46.655Z",
+          "estimatedValue": 0,
+          "items": [],
+          "kills": 1,
+          "duration": 10.49950000000002,
+          "durationLabel": "00:10",
+          "weaponId": "militia_carbine",
+          "weaponName": "Militia Carbine",
+          "loadout": {
+            "gun": "militia_carbine",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776048391806-5260",
+          "createdAt": "2026-04-13T02:46:31.806Z",
+          "estimatedValue": 1100,
+          "items": [
+            {
+              "id": "doom_cleaver-741227200",
+              "definitionId": "doom_cleaver",
+              "name": "Doom Cleaver",
+              "category": "melee",
+              "rarity": "red",
+              "sellValue": 550,
+              "description": "Prototype heavy weapon that obliterates anything in range.",
+              "stats": {
+                "meleeDamage": 68,
+                "meleeCooldown": 0.38
+              },
+              "modifiers": {}
+            },
+            {
+              "id": "doom_cleaver-532347682",
+              "definitionId": "doom_cleaver",
+              "name": "Doom Cleaver",
+              "category": "melee",
+              "rarity": "red",
+              "sellValue": 550,
+              "description": "Prototype heavy weapon that obliterates anything in range.",
+              "stats": {
+                "meleeDamage": 68,
+                "meleeCooldown": 0.38
+              },
+              "modifiers": {}
+            }
+          ],
+          "kills": 12,
+          "duration": 68.6295000000016,
+          "durationLabel": "01:08",
+          "weaponId": "militia_carbine",
+          "weaponName": "Militia Carbine",
+          "loadout": {
+            "gun": "militia_carbine",
+            "melee": "field_knife",
+            "armor": "bastion_plate",
+            "helmet": "scout_cap",
+            "shoes": "warp_drivers",
+            "backpack": "mule_pack"
+          }
+        },
+        {
+          "id": "1776047609101-3685",
+          "createdAt": "2026-04-13T02:33:29.101Z",
+          "estimatedValue": 1540,
+          "items": [
+            {
+              "id": "mule_pack-868434821",
+              "definitionId": "mule_pack",
+              "name": "Mule Pack",
+              "category": "backpack",
+              "rarity": "blue",
+              "sellValue": 220,
+              "description": "Larger backpack for bigger hauls.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 8
+              }
+            },
+            {
+              "id": "mule_pack-663985680",
+              "definitionId": "mule_pack",
+              "name": "Mule Pack",
+              "category": "backpack",
+              "rarity": "blue",
+              "sellValue": 220,
+              "description": "Larger backpack for bigger hauls.",
+              "stats": {},
+              "modifiers": {
+                "carrySlots": 8
+              }
+            },
+            {
+              "id": "bastion_plate-201193509",
+              "definitionId": "bastion_plate",
+              "name": "Bastion Plate",
+              "category": "armor",
+              "rarity": "red",
+              "sellValue": 580,
+              "description": "Experimental exo-armor with maximum protection.",
+              "stats": {},
+              "modifiers": {
+                "maxHp": 72
+              }
+            },
+            {
+              "id": "warp_drivers-893798225",
+              "definitionId": "warp_drivers",
+              "name": "Warp Drivers",
+              "category": "shoes",
+              "rarity": "red",
+              "sellValue": 520,
+              "description": "Experimental exo-boots that defy physics.",
+              "stats": {},
+              "modifiers": {
+                "speed": 72
+              }
+            }
+          ],
+          "kills": 11,
+          "duration": 62.096700000000965,
+          "durationLabel": "01:02",
+          "weaponId": "militia_carbine",
+          "weaponName": "Militia Carbine",
+          "loadout": {
+            "gun": "militia_carbine",
+            "melee": "field_knife",
+            "armor": "cloth_vest",
+            "helmet": "scout_cap",
+            "shoes": "trail_shoes",
+            "backpack": "sling_pack"
+          }
+        }
+      ],
+      "stats": {
+        "totalRuns": 10,
+        "totalExtractions": 9,
+        "totalKills": 87,
+        "totalCoinsEarned": 415,
+        "totalMarketTrades": 100003
+      }
+    }
+  }
 }

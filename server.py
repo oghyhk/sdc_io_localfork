@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -10,6 +11,7 @@ ROOT = Path(__file__).resolve().parent
 DATA_FILE = ROOT / 'data' / 'users.json'
 HOST = '0.0.0.0'
 PORT = 8765
+USERNAME_PATTERN = re.compile(r'^(?:[A-Za-z]|❤(?:️)?)+$')
 
 
 def read_store() -> dict:
@@ -24,6 +26,47 @@ def read_store() -> dict:
 
 def write_store(store: dict) -> None:
     DATA_FILE.write_text(json.dumps(store, indent=2), encoding='utf-8')
+
+
+def normalize_username_key(username: str) -> str:
+    return username.casefold()
+
+
+def is_valid_username(username: str) -> bool:
+    return bool(USERNAME_PATTERN.fullmatch(username))
+
+
+def get_user_record(users: dict, username: str) -> tuple[str | None, dict | None]:
+    normalized = normalize_username_key(username)
+    if normalized in users:
+        return normalized, users[normalized]
+
+    for key, user in users.items():
+        stored_name = str(user.get('username', key))
+        if normalize_username_key(stored_name) == normalized or normalize_username_key(key) == normalized:
+            return key, user
+
+    return None, None
+
+
+def build_profile(username: str, password: str, source_profile: dict | None = None) -> dict:
+    source_profile = source_profile or {}
+    source_stats = source_profile.get('stats') or {}
+    return {
+        'username': username,
+        'coins': source_profile.get('coins', 0),
+        'loadout': source_profile.get('loadout', {}),
+        'stashItems': source_profile.get('stashItems', []),
+        'extractedRuns': source_profile.get('extractedRuns', []),
+        'stats': {
+            'totalRuns': source_stats.get('totalRuns', 0),
+            'totalExtractions': source_stats.get('totalExtractions', 0),
+            'totalKills': source_stats.get('totalKills', 0),
+            'totalCoinsEarned': source_stats.get('totalCoinsEarned', 0),
+            'totalMarketTrades': source_stats.get('totalMarketTrades', 0),
+        },
+        'password': password,
+    }
 
 
 class ApiHandler(SimpleHTTPRequestHandler):
@@ -54,7 +97,7 @@ class ApiHandler(SimpleHTTPRequestHandler):
             params = parse_qs(parsed.query)
             username = (params.get('username') or [''])[0]
             store = read_store()
-            user = store.get('users', {}).get(username)
+            _, user = get_user_record(store.get('users', {}), username)
             if not user:
                 self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
                 return
@@ -74,33 +117,52 @@ class ApiHandler(SimpleHTTPRequestHandler):
             self._send_json({'ok': False, 'message': 'Invalid JSON body.'}, HTTPStatus.BAD_REQUEST)
             return
 
+        if parsed.path == '/api/auth':
+            username = str(body.get('username', '')).strip()
+            password = str(body.get('password', ''))
+            if not username or not password:
+                self._send_json({'ok': False, 'message': 'Username and password are required.'}, HTTPStatus.BAD_REQUEST)
+                return
+            if not is_valid_username(username):
+                self._send_json({'ok': False, 'message': 'Username may contain only English letters and the red heart emoji.'}, HTTPStatus.BAD_REQUEST)
+                return
+            store = read_store()
+            users = store.setdefault('users', {})
+            canonical_key = normalize_username_key(username)
+            existing_key, user = get_user_record(users, username)
+            if user:
+                if user.get('password') != password:
+                    self._send_json({'ok': False, 'message': 'Invalid password.'}, HTTPStatus.UNAUTHORIZED)
+                    return
+                safe_user = {k: v for k, v in user.items() if k != 'password'}
+                self._send_json({'ok': True, 'created': False, 'profile': safe_user})
+                return
+
+            profile = build_profile(username, password, body.get('profile'))
+            users[canonical_key] = profile
+            write_store(store)
+            safe_user = {k: v for k, v in profile.items() if k != 'password'}
+            self._send_json({'ok': True, 'created': True, 'profile': safe_user}, HTTPStatus.CREATED)
+            return
+
         if parsed.path == '/api/signup':
             username = str(body.get('username', '')).strip()
             password = str(body.get('password', ''))
             if not username or not password:
                 self._send_json({'ok': False, 'message': 'Username and password are required.'}, HTTPStatus.BAD_REQUEST)
                 return
+            if not is_valid_username(username):
+                self._send_json({'ok': False, 'message': 'Username may contain only English letters and the red heart emoji.'}, HTTPStatus.BAD_REQUEST)
+                return
             store = read_store()
             users = store.setdefault('users', {})
-            if username in users:
+            canonical_key = normalize_username_key(username)
+            _, existing_user = get_user_record(users, username)
+            if existing_user:
                 self._send_json({'ok': False, 'message': 'Username already exists.'}, HTTPStatus.CONFLICT)
                 return
-            profile = {
-                'username': username,
-                'coins': 0,
-                'loadout': body.get('profile', {}).get('loadout', {}),
-                'stashItems': body.get('profile', {}).get('stashItems', []),
-                'extractedRuns': [],
-                'stats': {
-                    'totalRuns': 0,
-                    'totalExtractions': 0,
-                    'totalKills': 0,
-                    'totalCoinsEarned': 0,
-                    'totalMarketTrades': 0,
-                },
-                'password': password,
-            }
-            users[username] = profile
+            profile = build_profile(username, password, body.get('profile'))
+            users[canonical_key] = profile
             write_store(store)
             safe_user = {k: v for k, v in profile.items() if k != 'password'}
             self._send_json({'ok': True, 'profile': safe_user})
@@ -110,7 +172,7 @@ class ApiHandler(SimpleHTTPRequestHandler):
             username = str(body.get('username', '')).strip()
             password = str(body.get('password', ''))
             store = read_store()
-            user = store.get('users', {}).get(username)
+            _, user = get_user_record(store.get('users', {}), username)
             if not user or user.get('password') != password:
                 self._send_json({'ok': False, 'message': 'Invalid username or password.'}, HTTPStatus.UNAUTHORIZED)
                 return
@@ -122,12 +184,14 @@ class ApiHandler(SimpleHTTPRequestHandler):
             username = str(body.get('username', '')).strip()
             profile = body.get('profile') or {}
             store = read_store()
-            user = store.get('users', {}).get(username)
-            if not user:
+            users = store.setdefault('users', {})
+            existing_key, user = get_user_record(users, username)
+            if not user or not existing_key:
                 self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
                 return
             profile['password'] = user.get('password', '')
-            store['users'][username] = profile
+            profile['username'] = user.get('username', username)
+            users[existing_key] = profile
             write_store(store)
             safe_user = {k: v for k, v in profile.items() if k != 'password'}
             self._send_json({'ok': True, 'profile': safe_user})

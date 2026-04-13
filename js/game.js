@@ -16,7 +16,7 @@ import {
 import {
     dist, circleCollision, circleRectCollision, clamp, resetIdCounter
 } from './utils.js';
-import { getItemDefinition, getRarityMeta } from './profile.js';
+import { createPersistentEntryFromLootItem, getItemDefinition, getRarityMeta, getSlotLabel } from './profile.js';
 
 // Game states
 export const GAME_STATE = {
@@ -33,6 +33,7 @@ export class Game {
         this.state = GAME_STATE.MENU;
         this.onStateChange = options.onStateChange || null;
         this.onExtraction = options.onExtraction || null;
+        this.onRunComplete = options.onRunComplete || null;
 
         this._resize();
         window.addEventListener('resize', () => this._resize());
@@ -54,8 +55,10 @@ export class Game {
         this.extractZone = null;
         this.openCrateId = null;
         this.nearbyCrateId = null;
+        this.inventoryUiOpen = false;
         this.crateMessage = '';
         this.activeProfile = null;
+        this.activeDifficulty = 'advanced';
         this.lastExtractSummary = null;
         this._deathHandled = false;
 
@@ -96,9 +99,10 @@ export class Game {
         }
     }
 
-    startGame(profile) {
+    startGame(profile, options = {}) {
         this.audio.init();
         this.activeProfile = profile || null;
+        this.activeDifficulty = options?.difficulty || 'advanced';
         this._startGame();
     }
 
@@ -118,24 +122,27 @@ export class Game {
         this._deathHandled = false;
         this.openCrateId = null;
         this.nearbyCrateId = null;
+        this.inventoryUiOpen = false;
         this.crateMessage = '';
         this.stats = { kills: 0, lootCollected: 0, timeSurvived: 0 };
 
         // Generate map
-        this.mapData = generateMap();
+        this.mapData = generateMap({ difficulty: this.activeDifficulty });
         this.wallGrid = new WallGrid(this.mapData.walls);
 
         // Create player
         this.player = new Player(
             this.mapData.playerSpawn.x,
             this.mapData.playerSpawn.y,
-            this.activeProfile?.loadout || {}
+            this.activeProfile?.loadout || {},
+            this.activeProfile?.backpackItems || [],
+            this.activeProfile?.safeboxItems || []
         );
 
         // Create enemies
         this.enemies = [];
         for (const spawn of this.mapData.enemySpawns) {
-            this.enemies.push(new Enemy(spawn.x, spawn.y, spawn.type));
+            this.enemies.push(new Enemy(spawn.x, spawn.y, spawn.type, this.activeDifficulty));
         }
 
         // Camera snap to player
@@ -189,6 +196,15 @@ export class Game {
             if (!this._deathHandled) {
                 this._deathHandled = true;
                 this.audio.playDeath();
+                if (this.onRunComplete) {
+                    this.onRunComplete({
+                        status: 'dead',
+                        difficulty: this.activeDifficulty,
+                        safeboxItems: this.player.safeboxItems
+                            .map((item) => createPersistentEntryFromLootItem(item))
+                            .filter(Boolean),
+                    });
+                }
             }
             this._setState(GAME_STATE.DEAD);
             return;
@@ -259,7 +275,7 @@ export class Game {
                 for (const e of this.enemies) {
                     if (!e.alive) continue;
                     if (circleCollision(b.x, b.y, b.radius, e.x, e.y, e.radius)) {
-                        e.takeDamage(b.damage);
+                        e.takeDamage(b.instantKill ? e.maxHp : b.damage);
                         this._spawnParticles(b.x, b.y, COLORS.ENEMY_DRONE, 5);
                         this.audio.playHit();
                         if (!e.alive) {
@@ -325,7 +341,12 @@ export class Game {
     }
 
     _handleCrateInteraction() {
-        if (!this.input.interactRequested || !this.nearbyCrateId) return;
+        if (!this.input.interactRequested) return;
+
+        if (!this.nearbyCrateId) {
+            this.inventoryUiOpen = !this.inventoryUiOpen;
+            return;
+        }
 
         const crate = this.mapData.lootCrates.find((entry) => entry.id === this.nearbyCrateId);
         if (!crate) return;
@@ -338,6 +359,7 @@ export class Game {
         crate.inspected = true;
         crate.opened = !wasOpen;
         this.openCrateId = crate.opened ? crate.id : null;
+        this.inventoryUiOpen = crate.opened;
     }
 
     _getOpenCrate() {
@@ -369,6 +391,49 @@ export class Game {
         };
     }
 
+    getRaidUiView() {
+        if (this.state !== GAME_STATE.PLAYING || !this.player) {
+            return { visible: false, crateVisible: false };
+        }
+
+        const crateView = this.getOpenCrateView();
+        return {
+            visible: this.inventoryUiOpen || crateView.visible,
+            crateVisible: crateView.visible,
+            crate: crateView.crate,
+            prompt: crateView.prompt,
+            message: crateView.message,
+            backpack: {
+                itemCount: this.player.inventoryItems.length,
+                capacity: this.player.carryCapacity,
+                items: this.player.getBackpackView().map((item) => ({
+                    ...item,
+                    slotLabel: getSlotLabel(item.category),
+                    rarityLabel: getRarityMeta(item.rarity).label,
+                    rarityColor: getRarityMeta(item.rarity).color,
+                })),
+            },
+            safebox: {
+                itemCount: this.player.safeboxItems.length,
+                capacity: 4,
+                items: this.player.getSafeboxView().map((item) => ({
+                    ...item,
+                    slotLabel: getSlotLabel(item.category),
+                    rarityLabel: getRarityMeta(item.rarity).label,
+                    rarityColor: getRarityMeta(item.rarity).color,
+                })),
+            },
+            loadout: {
+                items: this.player.getLoadoutView().map((item) => ({
+                    ...item,
+                    slotLabel: getSlotLabel(item.slot),
+                    rarityLabel: getRarityMeta(item.rarity).label,
+                    rarityColor: getRarityMeta(item.rarity).color,
+                })),
+            },
+        };
+    }
+
     takeItemFromOpenCrate(itemId) {
         const crate = this._getOpenCrate();
         if (!crate) return { ok: false, message: 'No crate open.' };
@@ -393,6 +458,48 @@ export class Game {
         return { ok: true, item };
     }
 
+    equipBackpackItem(itemId) {
+        const result = this.player.equipItemFromBackpack(itemId);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
+    abandonBackpackItem(itemId) {
+        const result = this.player.dropBackpackItem(itemId);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
+    unequipLoadoutItem(slot) {
+        const result = this.player.unequipLoadoutItem(slot);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
+    abandonLoadoutItem(slot) {
+        const result = this.player.abandonLoadoutItem(slot);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
+    moveBackpackItemToSafebox(itemId) {
+        const result = this.player.moveBackpackItemToSafebox(itemId);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
+    moveSafeboxItemToBackpack(itemId) {
+        const result = this.player.moveSafeboxItemToBackpack(itemId);
+        this.crateMessage = result.message;
+        this.crateMessageTimer = 1.2;
+        return result;
+    }
+
     _checkExtraction(dt) {
         let inZone = false;
         for (const ez of this.mapData.extractionPoints) {
@@ -414,6 +521,16 @@ export class Game {
                 this.lastExtractSummary = this._buildExtractionSummary();
                 if (this.onExtraction) {
                     this.onExtraction(this.lastExtractSummary);
+                }
+                if (this.onRunComplete) {
+                    this.onRunComplete({
+                        status: 'extracted',
+                        difficulty: this.activeDifficulty,
+                        safeboxItems: this.player.safeboxItems
+                            .map((item) => createPersistentEntryFromLootItem(item))
+                            .filter(Boolean),
+                        summary: this.lastExtractSummary,
+                    });
                 }
                 this._setState(GAME_STATE.EXTRACTED);
                 this.audio.playExtract();
@@ -592,7 +709,7 @@ export class Game {
 
         ctx.fillStyle = '#888';
         ctx.font = '14px monospace';
-        ctx.fillText('All loot has been lost.', w / 2, h / 2 + 110);
+        ctx.fillText('Backpack loot was lost. Safebox contents were retained.', w / 2, h / 2 + 110);
 
         const pulse = 0.5 + 0.5 * Math.sin(Date.now() / 400);
         ctx.globalAlpha = pulse;
@@ -662,8 +779,8 @@ export class Game {
             kills: this.stats.kills,
             duration: this.stats.timeSurvived,
             durationLabel: this._formatTime(this.stats.timeSurvived),
-            weaponId: this.player?.weaponId || 'militia_carbine',
-            weaponName: this.player?.weapon?.name || 'Militia Carbine',
+            weaponId: this.player?.weaponId || 'g17',
+            weaponName: this.player?.weapon?.name || 'G17',
             loadout: { ...(this.player?.loadout || {}) }
         };
     }

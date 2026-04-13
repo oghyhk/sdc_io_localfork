@@ -4,8 +4,11 @@
 
 export const ACTIVE_USER_KEY = 'sdcio_active_user_v1';
 export const API_BASE = '/api';
+export const SAFEBOX_CAPACITY = 4;
+export const MIN_TRADE_TOTAL = 10;
+export const AMMO_PACK_LIMIT = 999;
 
-export const RARITY_ORDER = ['red', 'gold', 'purple', 'blue', 'green', 'white'];
+export const RARITY_ORDER = ['red', 'gold', 'purple', 'blue', 'green', 'white', 'gray'];
 
 export const RARITY_META = {
     red: { label: 'Red', color: '#ff4d4d', multiplier: 3.2 },
@@ -13,48 +16,88 @@ export const RARITY_META = {
     purple: { label: 'Purple', color: '#b388ff', multiplier: 1.95 },
     blue: { label: 'Blue', color: '#64b5f6', multiplier: 1.5 },
     green: { label: 'Green', color: '#81c784', multiplier: 1.15 },
-    white: { label: 'White', color: '#eceff1', multiplier: 1 }
+    white: { label: 'White', color: '#eceff1', multiplier: 1 },
+    gray: { label: 'Gray', color: '#9e9e9e', multiplier: 1 }
+};
+
+export const CRATE_RARITY_ORDER = ['white', 'green', 'blue', 'purple', 'gold', 'red'];
+
+export const RAID_DIFFICULTIES = {
+    easy: { id: 'easy', label: 'Easy' },
+    advanced: { id: 'advanced', label: 'Advanced' },
+    hell: { id: 'hell', label: 'Hell' }
 };
 
 export const LOADOUT_SLOTS = ['gun', 'melee', 'armor', 'helmet', 'shoes', 'backpack'];
+export const AMMO_DEFINITION_IDS = ['ammo_red', 'ammo_gold', 'ammo_purple', 'ammo_blue', 'ammo_green', 'ammo_white'];
+
+const LEGACY_AMMO_AMOUNTS = {
+    ammo_white: 1,
+    ammo_green: 2,
+    ammo_blue: 5,
+    ammo_purple: 10,
+    ammo_gold: 100,
+    ammo_red: 25000,
+};
 
 export const ITEM_DEFS = {
     // ─── GUNS ───────────────────────────────────────────────
-    militia_carbine: {
-        id: 'militia_carbine', category: 'gun', rarity: 'white',
-        name: 'Militia Carbine', description: 'Starter rifle with stable handling.',
+    g17: {
+        id: 'g17', category: 'gun', rarity: 'gray',
+        name: 'G17', description: 'Sidearm with a steady rhythm, 17-round magazine, and light recoil drift.',
         sellValue: 120,
-        stats: { damage: 16, cooldown: 0.27, bulletSpeed: 500, range: 340 }
+        stats: { damage: 14, cooldown: 0.27, bulletSpeed: 500, range: 340, clipSize: 17, reloadTime: 1, spread: 0.075 }
     },
-    ranger_smg: {
-        id: 'ranger_smg', category: 'gun', rarity: 'green',
-        name: 'Ranger SMG', description: 'Fast close-range weapon for aggressive runs.',
-        sellValue: 170,
-        stats: { damage: 12, cooldown: 0.13, bulletSpeed: 470, range: 275 }
-    },
-    spectre_assault: {
-        id: 'spectre_assault', category: 'gun', rarity: 'blue',
-        name: 'Spectre Assault Rifle', description: 'Reliable mid-tier rifle with balanced stats.',
+    as_val: {
+        id: 'as_val', category: 'gun', rarity: 'gray',
+        name: 'AS VAL', description: 'Suppressed rifle with 900 RPM fire rate, 45-round magazine, and wider spray.',
         sellValue: 240,
-        stats: { damage: 22, cooldown: 0.2, bulletSpeed: 560, range: 400 }
+        stats: { damage: 10, cooldown: 60 / 900, bulletSpeed: 540, range: 436, clipSize: 45, reloadTime: 2, spread: 0.11 }
     },
-    eclipse_dmr: {
-        id: 'eclipse_dmr', category: 'gun', rarity: 'purple',
-        name: 'Eclipse DMR', description: 'Precision rifle for careful crate fights.',
-        sellValue: 320,
-        stats: { damage: 34, cooldown: 0.55, bulletSpeed: 650, range: 540 }
+
+    // ─── LOOT / AMMO ───────────────────────────────────────
+    ammo_white: {
+        id: 'ammo_white', category: 'loot', lootType: 'ammo', rarity: 'gray',
+        name: 'Gray Ammo', description: 'Low-grade gray ammo. Damage x0.8.',
+        sellValue: 1,
+        ammoAmount: 1,
+        damageMultiplier: 0.8,
     },
-    aurora_lmg: {
-        id: 'aurora_lmg', category: 'gun', rarity: 'gold',
-        name: 'Aurora LMG', description: 'Heavy automatic rifle with strong sustained fire.',
-        sellValue: 430,
-        stats: { damage: 20, cooldown: 0.18, bulletSpeed: 540, range: 420 }
+    ammo_green: {
+        id: 'ammo_green', category: 'loot', lootType: 'ammo', rarity: 'green',
+        name: 'Green Ammo', description: 'Standard green ammo. Damage x1.0.',
+        sellValue: 8,
+        ammoAmount: 1,
+        damageMultiplier: 1,
     },
-    inferno_rail: {
-        id: 'inferno_rail', category: 'gun', rarity: 'red',
-        name: 'Inferno Railgun', description: 'Prototype rifle that hits extremely hard.',
-        sellValue: 620,
-        stats: { damage: 52, cooldown: 0.72, bulletSpeed: 820, range: 700 }
+    ammo_blue: {
+        id: 'ammo_blue', category: 'loot', lootType: 'ammo', rarity: 'blue',
+        name: 'Blue Ammo', description: 'Improved blue ammo. Damage x1.05.',
+        sellValue: 250,
+        ammoAmount: 1,
+        damageMultiplier: 1.05,
+    },
+    ammo_purple: {
+        id: 'ammo_purple', category: 'loot', lootType: 'ammo', rarity: 'purple',
+        name: 'Purple Ammo', description: 'High-end purple ammo. Damage x1.2.',
+        sellValue: 5000,
+        ammoAmount: 1,
+        damageMultiplier: 1.2,
+    },
+    ammo_gold: {
+        id: 'ammo_gold', category: 'loot', lootType: 'ammo', rarity: 'gold',
+        name: 'Gold Ammo', description: 'Elite gold ammo. Damage x1.4.',
+        sellValue: 25000,
+        ammoAmount: 1,
+        damageMultiplier: 1.4,
+    },
+    ammo_red: {
+        id: 'ammo_red', category: 'loot', lootType: 'ammo', rarity: 'red',
+        name: 'Red Ammo', description: 'Experimental red ammo. Instantly kills any target.',
+        sellValue: 1000000,
+        ammoAmount: 1,
+        damageMultiplier: 999999,
+        instantKill: true,
     },
 
     // ─── MELEE ──────────────────────────────────────────────
@@ -248,7 +291,7 @@ export const ITEM_DEFS = {
     }
 };
 
-export const STARTER_LOADOUT = { gun: 'militia_carbine', melee: 'field_knife', armor: 'cloth_vest', helmet: 'scout_cap', shoes: 'trail_shoes', backpack: 'sling_pack' };
+export const STARTER_LOADOUT = { gun: 'g17', melee: 'field_knife', armor: 'cloth_vest', helmet: 'scout_cap', shoes: 'trail_shoes', backpack: 'sling_pack' };
 export const STARTER_STASH = Object.values(STARTER_LOADOUT).map((id) => ({ definitionId: id }));
 
 // Crate tiers — each crate type draws from a weighted rarity pool
@@ -302,8 +345,108 @@ export function getItemDefinition(id) {
     return ITEM_DEFS[id] || null;
 }
 
+export function getItemValue(definitionId) {
+    return ITEM_DEFS[definitionId]?.sellValue || 0;
+}
+
+export function getBuyTradeTotal(definitionId, quantity = 1) {
+    const amount = Math.max(1, Math.floor(Number(quantity) || 0));
+    return Math.ceil(getItemValue(definitionId) * amount * 1.1);
+}
+
+export function getSellTradeTotal(definitionId, quantity = 1) {
+    const amount = Math.max(1, Math.floor(Number(quantity) || 0));
+    return Math.floor(getItemValue(definitionId) * amount * 0.9);
+}
+
+export function getMinimumTradeQuantity(definitionId, mode = 'buy') {
+    const value = getItemValue(definitionId);
+    if (value <= 0) return Infinity;
+    for (let quantity = 1; quantity <= 100000; quantity++) {
+        const total = mode === 'sell'
+            ? getSellTradeTotal(definitionId, quantity)
+            : getBuyTradeTotal(definitionId, quantity);
+        if (total >= MIN_TRADE_TOTAL) return quantity;
+    }
+    return Infinity;
+}
+
+export function isEquipmentCategory(category) {
+    return LOADOUT_SLOTS.includes(category);
+}
+
+export function isLootCategory(category) {
+    return category === 'loot';
+}
+
+export function isAmmoDefinition(definitionId) {
+    return definitionId in LEGACY_AMMO_AMOUNTS || ITEM_DEFS[definitionId]?.lootType === 'ammo';
+}
+
+export function getAmmoAmountForDefinition(definitionId) {
+    return LEGACY_AMMO_AMOUNTS[definitionId] || ITEM_DEFS[definitionId]?.ammoAmount || 0;
+}
+
+export function getAmmoAmountForEntry(entry) {
+    if (!entry || !isAmmoDefinition(entry.definitionId)) return 0;
+    return Math.max(1, Math.floor(Number(entry.quantity) || getAmmoAmountForDefinition(entry.definitionId) || 1));
+}
+
+export function getAmmoCountForProfile(profile, definitionId) {
+    if (isFreeFallbackAmmo(definitionId)) {
+        return 0;
+    }
+    const stashAmmo = profile?.stashAmmo;
+    if (typeof stashAmmo === 'number') {
+        return 0;
+    }
+    if (!stashAmmo || typeof stashAmmo !== 'object') {
+        return 0;
+    }
+    return Math.max(0, Math.floor(Number(stashAmmo[definitionId]) || 0));
+}
+
+export function getStashAmmoMap(profile) {
+    const ammoMap = {};
+    for (const definitionId of AMMO_DEFINITION_IDS) {
+        const count = getAmmoCountForProfile(profile, definitionId);
+        if (count > 0) {
+            ammoMap[definitionId] = count;
+        }
+    }
+    return ammoMap;
+}
+
+export function getAmmoAmountForEntries(entries = []) {
+    return entries.reduce((sum, entry) => sum + getAmmoAmountForEntry(entry), 0);
+}
+
+export function packAmmoAmount(definitionId, amount) {
+    let remaining = Math.max(0, Math.floor(amount || 0));
+    const packed = [];
+    while (remaining > 0) {
+        const quantity = Math.min(AMMO_PACK_LIMIT, remaining);
+        packed.push({ definitionId, quantity });
+        remaining -= quantity;
+    }
+    return packed;
+}
+
+export function getTotalAmmoForProfile(profile) {
+    return Object.values(getStashAmmoMap(profile)).reduce((sum, count) => sum + count, 0);
+}
+
 export function getRarityMeta(rarity) {
     return RARITY_META[rarity] || RARITY_META.white;
+}
+
+export function getCrateTierMeta(rarity) {
+    const meta = getRarityMeta(rarity);
+    return {
+        key: rarity,
+        label: `${meta.label} Crate`,
+        color: meta.color,
+    };
 }
 
 export function getSlotLabel(slot) {
@@ -314,6 +457,10 @@ export function getOwnedCounts(profile) {
     const counts = {};
     for (const entry of profile.stashItems || []) {
         counts[entry.definitionId] = (counts[entry.definitionId] || 0) + 1;
+    }
+    const stashAmmoMap = getStashAmmoMap(profile);
+    for (const [definitionId, amount] of Object.entries(stashAmmoMap)) {
+        counts[definitionId] = (counts[definitionId] || 0) + amount;
     }
     return counts;
 }
@@ -346,9 +493,138 @@ export function createDefaultProfile(username = 'Guest Operative', isGuest = fal
         coins: 0,
         loadout: defaultLoadout(),
         stashItems: defaultStash(),
+        stashAmmo: {},
+        backpackItems: [],
+        safeboxItems: [],
         extractedRuns: [],
         stats: { totalRuns: 0, totalExtractions: 0, totalKills: 0, totalCoinsEarned: 0, totalMarketTrades: 0 }
     };
+}
+
+function normalizePersistentEntry(entry) {
+    if (!entry) return [];
+    const definitionId = entry.definitionId || entry;
+    if (isAmmoDefinition(definitionId)) {
+        if (isFreeFallbackAmmo(definitionId)) return [];
+        return packAmmoAmount(definitionId, getAmmoAmountForEntry({ definitionId, quantity: entry.quantity }));
+    }
+    if (!ITEM_DEFS[definitionId]) return [];
+    return [{ definitionId }];
+}
+
+function normalizePersistentEntries(entries = [], maxLength = Infinity) {
+    const normalized = [];
+    for (const entry of entries) {
+        normalized.push(...normalizePersistentEntry(entry));
+        if (normalized.length >= maxLength) break;
+    }
+    return normalized.slice(0, maxLength);
+}
+
+function getLegacyAmmoFromStashEntries(entries = []) {
+    const ammoMap = {};
+    for (const entry of entries) {
+        if (!isAmmoDefinition(entry.definitionId)) continue;
+        const definitionId = ITEM_DEFS[entry.definitionId] ? entry.definitionId : 'ammo_white';
+        ammoMap[definitionId] = (ammoMap[definitionId] || 0) + getAmmoAmountForEntry(entry);
+    }
+    return ammoMap;
+}
+
+function normalizeStashAmmo(stashAmmo, legacyEntries = []) {
+    const normalized = {};
+    if (stashAmmo && typeof stashAmmo === 'object') {
+        for (const definitionId of AMMO_DEFINITION_IDS) {
+            if (isFreeFallbackAmmo(definitionId)) continue;
+            const count = Math.max(0, Math.floor(Number(stashAmmo[definitionId]) || 0));
+            if (count > 0) {
+                normalized[definitionId] = count;
+            }
+        }
+    }
+
+    const legacyAmmo = getLegacyAmmoFromStashEntries(legacyEntries);
+    for (const [definitionId, count] of Object.entries(legacyAmmo)) {
+        if (isFreeFallbackAmmo(definitionId)) continue;
+        normalized[definitionId] = (normalized[definitionId] || 0) + count;
+    }
+    return normalized;
+}
+
+function addAmmoToProfile(profile, definitionId, amount) {
+    if (!isAmmoDefinition(definitionId) || isFreeFallbackAmmo(definitionId)) return;
+    const nextAmount = Math.max(0, Math.floor(Number(amount) || 0));
+    const current = getAmmoCountForProfile(profile, definitionId);
+    profile.stashAmmo = { ...getStashAmmoMap(profile), [definitionId]: current + nextAmount };
+}
+
+function removeAmmoFromProfile(profile, definitionId, amount) {
+    if (!isAmmoDefinition(definitionId) || isFreeFallbackAmmo(definitionId)) return;
+    const nextMap = { ...getStashAmmoMap(profile) };
+    const current = nextMap[definitionId] || 0;
+    const remaining = Math.max(0, current - Math.max(0, Math.floor(Number(amount) || 0)));
+    if (remaining > 0) {
+        nextMap[definitionId] = remaining;
+    } else {
+        delete nextMap[definitionId];
+    }
+    profile.stashAmmo = nextMap;
+}
+
+function removeOneDefinitionFromStash(profile, definitionId) {
+    const stash = profile.stashItems || [];
+    const index = stash.findIndex((item) => item.definitionId === definitionId);
+    if (index !== -1) {
+        stash.splice(index, 1);
+        return true;
+    }
+    return false;
+}
+
+function rollLoss(probability) {
+    return Math.random() < probability;
+}
+
+function isMarketLockedAmmo(definitionId) {
+    return definitionId === 'ammo_white';
+}
+
+function isFreeFallbackAmmo(definitionId) {
+    return definitionId === 'ammo_white';
+}
+
+function applyDeathLosses(profile, difficulty = 'advanced') {
+    if (!profile) return;
+
+    if (difficulty === 'easy') {
+        return;
+    }
+
+    const equippedDefinitions = LOADOUT_SLOTS.reduce((entries, slot) => {
+        const definitionId = profile.loadout?.[slot];
+        if (!definitionId || !ITEM_DEFS[definitionId]) return entries;
+        entries.push({ slot, definitionId });
+        return entries;
+    }, []);
+
+    if (difficulty === 'hell') {
+        for (const { definitionId } of equippedDefinitions) {
+            removeOneDefinitionFromStash(profile, definitionId);
+        }
+        return;
+    }
+
+    const gunEntry = equippedDefinitions.find((entry) => entry.slot === 'gun');
+    if (gunEntry) {
+        removeOneDefinitionFromStash(profile, gunEntry.definitionId);
+    }
+
+    for (const entry of equippedDefinitions) {
+        if (entry.slot === 'gun') continue;
+        if (rollLoss(0.15)) {
+            removeOneDefinitionFromStash(profile, entry.definitionId);
+        }
+    }
 }
 
 function normalizeLoadout(loadout, stashItems) {
@@ -370,15 +646,26 @@ function normalizeLoadout(loadout, stashItems) {
 
 export function normalizeProfile(profile, fallbackName = 'Guest Operative', isGuest = false) {
     const base = createDefaultProfile(fallbackName, isGuest);
-    const stashItems = Array.isArray(profile?.stashItems) && profile.stashItems.length
-        ? profile.stashItems.filter((entry) => ITEM_DEFS[entry.definitionId])
+    const rawStashItems = Array.isArray(profile?.stashItems) && profile.stashItems.length
+        ? profile.stashItems
         : defaultStash();
+    const stashItems = rawStashItems.filter((entry) => ITEM_DEFS[entry.definitionId] && !isAmmoDefinition(entry.definitionId));
+    const stashAmmo = normalizeStashAmmo(profile?.stashAmmo, rawStashItems.filter((entry) => isAmmoDefinition(entry.definitionId)));
+    const backpackItems = Array.isArray(profile?.backpackItems)
+        ? normalizePersistentEntries(profile.backpackItems)
+        : [];
+    const safeboxItems = Array.isArray(profile?.safeboxItems)
+        ? normalizePersistentEntries(profile.safeboxItems, SAFEBOX_CAPACITY)
+        : [];
 
     return {
         ...base,
         ...profile,
         isGuest,
         stashItems,
+        stashAmmo,
+        backpackItems,
+        safeboxItems,
         loadout: normalizeLoadout(profile?.loadout, stashItems),
         extractedRuns: Array.isArray(profile?.extractedRuns) ? profile.extractedRuns : [],
         stats: { ...base.stats, ...(profile?.stats || {}) }
@@ -395,6 +682,28 @@ export function summarizeProfile(profile) {
     };
 }
 
+export function getProfileInventoryValue(profile) {
+    const sumEntryValues = (entries = []) => entries.reduce((sum, entry) => {
+        const definition = ITEM_DEFS[entry.definitionId];
+        if (!definition) return sum;
+        if (isAmmoDefinition(entry.definitionId)) {
+            return sum + (definition.sellValue * getAmmoAmountForEntry(entry));
+        }
+        return sum + definition.sellValue;
+    }, 0);
+
+    const stashAmmoValue = Object.entries(getStashAmmoMap(profile)).reduce((sum, [definitionId, count]) => {
+        const definition = ITEM_DEFS[definitionId];
+        return sum + ((definition?.sellValue || 0) * count);
+    }, 0);
+
+    return (profile?.coins || 0)
+        + sumEntryValues(profile?.stashItems || [])
+        + stashAmmoValue
+        + sumEntryValues(profile?.backpackItems || [])
+        + sumEntryValues(profile?.safeboxItems || []);
+}
+
 export function getStashSummary(profile) {
     const summary = { items: 0 };
     for (const rarity of RARITY_ORDER) summary[rarity] = 0;
@@ -404,23 +713,50 @@ export function getStashSummary(profile) {
         summary.items += 1;
         summary[definition.rarity] += 1;
     }
+    const stashAmmoMap = getStashAmmoMap(profile);
+    for (const [definitionId, amount] of Object.entries(stashAmmoMap)) {
+        const definition = ITEM_DEFS[definitionId];
+        if (!definition || amount <= 0) continue;
+        summary.items += amount;
+        summary[definition.rarity] += amount;
+    }
     return summary;
 }
 
-export function createLootItem(definitionId) {
+export function getSafeboxSummary(profile) {
+    return {
+        used: (profile.safeboxItems || []).length,
+        capacity: SAFEBOX_CAPACITY,
+    };
+}
+
+export function createLootItem(definitionId, options = {}) {
     const definition = ITEM_DEFS[definitionId];
     if (!definition) return null;
+    const quantity = isAmmoDefinition(definitionId)
+        ? Math.max(1, Math.min(AMMO_PACK_LIMIT, Math.floor(Number(options.quantity) || 1)))
+        : null;
     return {
         id: `${definitionId}-${Math.floor(Math.random() * 1000000000)}`,
         definitionId,
-        name: definition.name,
+        name: quantity ? `${definition.name} x${quantity}` : definition.name,
         category: definition.category,
         rarity: definition.rarity,
-        sellValue: definition.sellValue,
-        description: definition.description,
+        sellValue: quantity ? definition.sellValue * quantity : definition.sellValue,
+        description: quantity ? `${definition.name} pack containing ${quantity} round${quantity === 1 ? '' : 's'}.` : definition.description,
+        quantity: quantity || undefined,
         stats: clone(definition.stats || {}),
         modifiers: clone(definition.modifiers || {})
     };
+}
+
+export function createPersistentEntryFromLootItem(item) {
+    if (!item?.definitionId || !ITEM_DEFS[item.definitionId]) return null;
+    if (isAmmoDefinition(item.definitionId)) {
+        if (isFreeFallbackAmmo(item.definitionId)) return null;
+        return { definitionId: item.definitionId, quantity: getAmmoAmountForEntry(item) };
+    }
+    return { definitionId: item.definitionId };
 }
 
 export function createLootItemsForCrateTier(tierKey) {
@@ -435,6 +771,65 @@ export function createLootItemsForCrateTier(tierKey) {
         const picked = candidates[Math.floor(Math.random() * candidates.length)] || itemIds[0];
         items.push(createLootItem(picked));
     }
+    return items.filter(Boolean);
+}
+
+function pickWeighted(items) {
+    const total = items.reduce((sum, entry) => sum + entry.weight, 0);
+    let roll = Math.random() * total;
+    for (const entry of items) {
+        roll -= entry.weight;
+        if (roll <= 0) return entry.value;
+    }
+    return items[items.length - 1]?.value;
+}
+
+function getCrateItemCount(crateRarity) {
+    switch (crateRarity) {
+        case 'white': return { min: 2, max: 4 };
+        case 'green': return { min: 2, max: 4 };
+        case 'blue': return { min: 2, max: 4 };
+        case 'purple': return { min: 2, max: 4 };
+        case 'gold': return { min: 1, max: 3 };
+        case 'red': return { min: 1, max: 2 };
+        default: return { min: 2, max: 4 };
+    }
+}
+
+function getCrateDropRarity(crateRarity) {
+    if (crateRarity === 'red') {
+        return pickWeighted([
+            { value: 'red', weight: 0.9 },
+            { value: 'gold', weight: 0.1 }
+        ]);
+    }
+
+    const baseIndex = CRATE_RARITY_ORDER.indexOf(crateRarity);
+    if (baseIndex === -1) return crateRarity;
+
+    const weighted = [{ value: crateRarity, weight: 0.88 }];
+    if (CRATE_RARITY_ORDER[baseIndex + 1]) {
+        weighted.push({ value: CRATE_RARITY_ORDER[baseIndex + 1], weight: 0.1 });
+    }
+    if (CRATE_RARITY_ORDER[baseIndex + 2]) {
+        weighted.push({ value: CRATE_RARITY_ORDER[baseIndex + 2], weight: 0.02 });
+    }
+    return pickWeighted(weighted);
+}
+
+export function createLootItemsForCrateRarity(crateRarity) {
+    const countRange = getCrateItemCount(crateRarity);
+    const count = countRange.min + Math.floor(Math.random() * (countRange.max - countRange.min + 1));
+    const itemIds = Object.keys(ITEM_DEFS).filter((id) => ITEM_DEFS[id].category !== 'loot');
+    const items = [];
+
+    for (let i = 0; i < count; i++) {
+        const rarity = getCrateDropRarity(crateRarity);
+        const candidates = itemIds.filter((id) => ITEM_DEFS[id].rarity === rarity);
+        const picked = candidates[Math.floor(Math.random() * candidates.length)] || itemIds[0];
+        items.push(createLootItem(picked));
+    }
+
     return items.filter(Boolean);
 }
 
@@ -464,6 +859,8 @@ export class ProfileStore {
         }
         try {
             const result = await apiFetch(`/profile?username=${encodeURIComponent(this.activeUsername)}`);
+            this.activeUsername = result.profile.username;
+            localStorage.setItem(ACTIVE_USER_KEY, this.activeUsername);
             this.currentProfile = normalizeProfile(result.profile, this.activeUsername, false);
         } catch {
             this.activeUsername = null;
@@ -481,14 +878,29 @@ export class ProfileStore {
         return Boolean(this.activeUsername);
     }
 
+    async authenticate(username, password) {
+        const result = await apiFetch('/auth', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                password,
+                profile: createDefaultProfile(username, false)
+            })
+        });
+        this.activeUsername = result.profile.username;
+        localStorage.setItem(ACTIVE_USER_KEY, this.activeUsername);
+        this.currentProfile = normalizeProfile(result.profile, this.activeUsername, false);
+        return { ok: true, created: Boolean(result.created), profile: this.getCurrentProfile() };
+    }
+
     async login(username, password) {
         const result = await apiFetch('/login', {
             method: 'POST',
             body: JSON.stringify({ username, password })
         });
-        this.activeUsername = username;
-        localStorage.setItem(ACTIVE_USER_KEY, username);
-        this.currentProfile = normalizeProfile(result.profile, username, false);
+        this.activeUsername = result.profile.username;
+        localStorage.setItem(ACTIVE_USER_KEY, this.activeUsername);
+        this.currentProfile = normalizeProfile(result.profile, this.activeUsername, false);
         return { ok: true, profile: this.getCurrentProfile() };
     }
 
@@ -497,9 +909,9 @@ export class ProfileStore {
             method: 'POST',
             body: JSON.stringify({ username, password })
         });
-        this.activeUsername = username;
-        localStorage.setItem(ACTIVE_USER_KEY, username);
-        this.currentProfile = normalizeProfile(result.profile, username, false);
+        this.activeUsername = result.profile.username;
+        localStorage.setItem(ACTIVE_USER_KEY, this.activeUsername);
+        this.currentProfile = normalizeProfile(result.profile, this.activeUsername, false);
         return { ok: true, profile: this.getCurrentProfile() };
     }
 
@@ -536,7 +948,10 @@ export class ProfileStore {
             ...clone(summary)
         };
         for (const item of runSummary.items || []) {
-            if (ITEM_DEFS[item.definitionId]) {
+            if (isAmmoDefinition(item.definitionId)) {
+                if (isFreeFallbackAmmo(item.definitionId)) continue;
+                addAmmoToProfile(this.currentProfile, item.definitionId, getAmmoAmountForEntry(item));
+            } else if (ITEM_DEFS[item.definitionId]) {
                 this.currentProfile.stashItems.push({ definitionId: item.definitionId });
             }
         }
@@ -548,30 +963,200 @@ export class ProfileStore {
         return this.saveCurrentProfile();
     }
 
-    async buyItem(definitionId) {
-        const definition = ITEM_DEFS[definitionId];
-        if (!definition) throw new Error('Item not found.');
-        if (this.currentProfile.coins < definition.sellValue) throw new Error('Not enough coins.');
-        this.currentProfile.coins -= definition.sellValue;
-        this.currentProfile.stashItems.push({ definitionId });
-        this.currentProfile.stats.totalMarketTrades += 1;
+    async applyRaidOutcome(result) {
+        const difficulty = result?.difficulty || 'advanced';
+        this.currentProfile.backpackItems = [];
+        this.currentProfile.safeboxItems = normalizePersistentEntries(result?.safeboxItems || [], SAFEBOX_CAPACITY);
+
+        if (result?.status === 'extracted') {
+            return this.recordExtraction({
+                ...result.summary,
+                items: Array.isArray(result.summary?.items) ? result.summary.items : []
+            });
+        }
+
+        if (result?.status === 'dead') {
+            this.currentProfile.stats.totalRuns += 1;
+            applyDeathLosses(this.currentProfile, difficulty);
+        }
+
         return this.saveCurrentProfile();
     }
 
-    async sellItem(definitionId) {
-        const definition = ITEM_DEFS[definitionId];
-        if (!definition) throw new Error('Item not found.');
+    async moveItemToSafebox(definitionId, quantity = 1) {
+        const amount = Math.max(1, Math.floor(Number(quantity) || 1));
+
+        if (isAmmoDefinition(definitionId)) {
+            if (isFreeFallbackAmmo(definitionId)) {
+                throw new Error('Gray ammo is free and unlimited, so it cannot be stored.');
+            }
+            const availableAmmo = getAmmoCountForProfile(this.currentProfile, definitionId);
+            if (amount > availableAmmo) {
+                throw new Error(`You only have ${availableAmmo} ${ITEM_DEFS[definitionId].name}.`);
+            }
+            const requiredSlots = Math.ceil(amount / AMMO_PACK_LIMIT);
+            if ((this.currentProfile.safeboxItems || []).length + requiredSlots > SAFEBOX_CAPACITY) {
+                throw new Error('Safebox does not have enough space for that ammo.');
+            }
+            removeAmmoFromProfile(this.currentProfile, definitionId, amount);
+            this.currentProfile.safeboxItems.push(...packAmmoAmount(definitionId, amount));
+            return this.saveCurrentProfile();
+        }
+
+        if ((this.currentProfile.safeboxItems || []).length >= SAFEBOX_CAPACITY) {
+            throw new Error('Safebox is full.');
+        }
+
         const stash = this.currentProfile.stashItems || [];
         const ownedCount = stash.filter((item) => item.definitionId === definitionId).length;
         const equipped = Object.values(this.currentProfile.loadout).includes(definitionId);
-        if (ownedCount <= 0) throw new Error('You do not own this item.');
-        if (equipped && ownedCount === 1) throw new Error('Equip another item first.');
+        const movableCount = Math.max(0, ownedCount - (equipped ? 1 : 0));
+        if (movableCount <= 0) {
+            throw new Error('No movable copy available.');
+        }
+
         const index = stash.findIndex((item) => item.definitionId === definitionId);
-        if (index === -1) throw new Error('You do not own this item.');
+        if (index === -1) {
+            throw new Error('Item not found in inventory.');
+        }
+
         stash.splice(index, 1);
-        this.currentProfile.coins += definition.sellValue;
-        this.currentProfile.stats.totalCoinsEarned += definition.sellValue;
-        this.currentProfile.stats.totalMarketTrades += 1;
+        this.currentProfile.safeboxItems.push({ definitionId });
+        return this.saveCurrentProfile();
+    }
+
+    async moveItemToBackpack(definitionId, capacity, quantity = 1) {
+        const amount = Math.max(1, Math.floor(Number(quantity) || 1));
+
+        if (isAmmoDefinition(definitionId)) {
+            if (isFreeFallbackAmmo(definitionId)) {
+                throw new Error('Gray ammo is free and unlimited, so it cannot be stored.');
+            }
+            const availableAmmo = getAmmoCountForProfile(this.currentProfile, definitionId);
+            if (amount > availableAmmo) {
+                throw new Error(`You only have ${availableAmmo} ${ITEM_DEFS[definitionId].name}.`);
+            }
+            const requiredSlots = Math.ceil(amount / AMMO_PACK_LIMIT);
+            if ((this.currentProfile.backpackItems || []).length + requiredSlots > capacity) {
+                throw new Error('Backpack does not have enough space for that ammo.');
+            }
+            removeAmmoFromProfile(this.currentProfile, definitionId, amount);
+            this.currentProfile.backpackItems.push(...packAmmoAmount(definitionId, amount));
+            return this.saveCurrentProfile();
+        }
+
+        if ((this.currentProfile.backpackItems || []).length >= capacity) {
+            throw new Error('Backpack is full.');
+        }
+
+        const stash = this.currentProfile.stashItems || [];
+        const ownedCount = stash.filter((item) => item.definitionId === definitionId).length;
+        const equipped = Object.values(this.currentProfile.loadout).includes(definitionId);
+        const movableCount = Math.max(0, ownedCount - (equipped ? 1 : 0));
+        if (movableCount <= 0) {
+            throw new Error('No movable copy available.');
+        }
+
+        const index = stash.findIndex((item) => item.definitionId === definitionId);
+        if (index === -1) {
+            throw new Error('Item not found in inventory.');
+        }
+
+        stash.splice(index, 1);
+        this.currentProfile.backpackItems.push({ definitionId });
+        return this.saveCurrentProfile();
+    }
+
+    async moveBackpackItemToStash(definitionId, entryIndex = null) {
+        const backpack = this.currentProfile.backpackItems || [];
+        const resolvedIndex = entryIndex == null
+            ? backpack.findIndex((item) => item.definitionId === definitionId)
+            : Number(entryIndex);
+        if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= backpack.length) {
+            throw new Error('Item not found in backpack.');
+        }
+
+        const [entry] = backpack.splice(resolvedIndex, 1);
+        if (isAmmoDefinition(entry.definitionId)) {
+            addAmmoToProfile(this.currentProfile, entry.definitionId, getAmmoAmountForEntry(entry));
+        } else {
+            this.currentProfile.stashItems.push({ definitionId: entry.definitionId });
+        }
+        return this.saveCurrentProfile();
+    }
+
+    async moveSafeboxItemToStash(definitionId, entryIndex = null) {
+        const safebox = this.currentProfile.safeboxItems || [];
+        const resolvedIndex = entryIndex == null
+            ? safebox.findIndex((item) => item.definitionId === definitionId)
+            : Number(entryIndex);
+        if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= safebox.length) {
+            throw new Error('Item not found in safebox.');
+        }
+
+        const [entry] = safebox.splice(resolvedIndex, 1);
+        if (isAmmoDefinition(entry.definitionId)) {
+            addAmmoToProfile(this.currentProfile, entry.definitionId, getAmmoAmountForEntry(entry));
+        } else {
+            this.currentProfile.stashItems.push({ definitionId: entry.definitionId });
+        }
+        return this.saveCurrentProfile();
+    }
+
+    async buyItem(definitionId, quantity = 1) {
+        const definition = ITEM_DEFS[definitionId];
+        if (!definition) throw new Error('Item not found.');
+        if (isMarketLockedAmmo(definitionId)) throw new Error('Gray ammo cannot be traded in the market.');
+        const amount = Math.max(1, Math.floor(Number(quantity) || 0));
+        const totalCost = getBuyTradeTotal(definitionId, amount);
+        if (totalCost < MIN_TRADE_TOTAL) throw new Error(`Trades must be at least ${MIN_TRADE_TOTAL} coins.`);
+        if (this.currentProfile.coins < totalCost) throw new Error('Not enough coins.');
+        this.currentProfile.coins -= totalCost;
+        if (isAmmoDefinition(definitionId)) {
+            addAmmoToProfile(this.currentProfile, definitionId, amount);
+        } else {
+            for (let i = 0; i < amount; i++) {
+                this.currentProfile.stashItems.push({ definitionId });
+            }
+        }
+        this.currentProfile.stats.totalMarketTrades += amount;
+        return this.saveCurrentProfile();
+    }
+
+    async sellItem(definitionId, quantity = 1) {
+        const definition = ITEM_DEFS[definitionId];
+        if (!definition) throw new Error('Item not found.');
+        if (isMarketLockedAmmo(definitionId)) throw new Error('Gray ammo cannot be traded in the market.');
+        const stash = this.currentProfile.stashItems || [];
+        const ownedCount = isAmmoDefinition(definitionId)
+            ? getAmmoCountForProfile(this.currentProfile, definitionId)
+            : stash.filter((item) => item.definitionId === definitionId).length;
+        const equipped = Object.values(this.currentProfile.loadout).includes(definitionId);
+        if (ownedCount <= 0) throw new Error('You do not own this item.');
+        const amount = Math.max(1, Math.floor(Number(quantity) || 0));
+        const sellableCount = isAmmoDefinition(definitionId) ? ownedCount : (equipped ? ownedCount - 1 : ownedCount);
+        if (sellableCount <= 0) throw new Error('Equip another item first.');
+        if (amount > sellableCount) throw new Error(`You can sell at most ${sellableCount}.`);
+        const totalValue = getSellTradeTotal(definitionId, amount);
+        if (totalValue < MIN_TRADE_TOTAL) throw new Error(`Trades must be at least ${MIN_TRADE_TOTAL} coins.`);
+        if (isAmmoDefinition(definitionId)) {
+            removeAmmoFromProfile(this.currentProfile, definitionId, amount);
+        } else {
+            for (let i = 0; i < amount; i++) {
+                const index = stash.findIndex((item) => item.definitionId === definitionId);
+                if (index === -1) throw new Error('You do not own this item.');
+                stash.splice(index, 1);
+            }
+        }
+        this.currentProfile.coins += totalValue;
+        this.currentProfile.stats.totalCoinsEarned += totalValue;
+        this.currentProfile.stats.totalMarketTrades += amount;
+        return this.saveCurrentProfile();
+    }
+
+    async addCoins(amount = 0) {
+        const coins = Math.max(0, Math.floor(Number(amount) || 0));
+        this.currentProfile.coins += coins;
         return this.saveCurrentProfile();
     }
 }

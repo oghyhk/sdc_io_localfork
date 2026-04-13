@@ -8,10 +8,73 @@ import {
     HEALTHPACK_RADIUS, CRATE_WIDTH, CRATE_HEIGHT
 } from './constants.js';
 import { randInt, generateId } from './utils.js';
-import { createLootItemsForZone, createLootItemsForCrateTier, CRATE_TIERS } from './profile.js';
+import { createLootItemsForCrateRarity, getCrateTierMeta } from './profile.js';
+
+const DIFFICULTY_CRATE_POOLS = {
+    easy: {
+        [ZONE.SAFE]: [
+            { rarity: 'white', weight: 0.68 },
+            { rarity: 'green', weight: 0.24 },
+            { rarity: 'blue', weight: 0.08 }
+        ],
+        [ZONE.COMBAT]: [
+            { rarity: 'green', weight: 0.34 },
+            { rarity: 'blue', weight: 0.38 },
+            { rarity: 'purple', weight: 0.28 }
+        ],
+        [ZONE.HIGH_VALUE]: [
+            { rarity: 'purple', weight: 0.94 },
+            { rarity: 'gold', weight: 0.06 }
+        ]
+    },
+    advanced: {
+        [ZONE.SAFE]: [
+            { rarity: 'green', weight: 0.58 },
+            { rarity: 'blue', weight: 0.3 },
+            { rarity: 'purple', weight: 0.12 }
+        ],
+        [ZONE.COMBAT]: [
+            { rarity: 'blue', weight: 0.34 },
+            { rarity: 'purple', weight: 0.38 },
+            { rarity: 'gold', weight: 0.28 }
+        ],
+        [ZONE.HIGH_VALUE]: [
+            { rarity: 'gold', weight: 0.94 },
+            { rarity: 'red', weight: 0.06 }
+        ]
+    },
+    hell: {
+        [ZONE.SAFE]: [
+            { rarity: 'blue', weight: 0.54 },
+            { rarity: 'purple', weight: 0.34 },
+            { rarity: 'gold', weight: 0.12 }
+        ],
+        [ZONE.COMBAT]: [
+            { rarity: 'purple', weight: 0.34 },
+            { rarity: 'gold', weight: 0.4 },
+            { rarity: 'red', weight: 0.26 }
+        ],
+        [ZONE.HIGH_VALUE]: [
+            { rarity: 'red', weight: 1 }
+        ]
+    }
+};
+
+function pickWeightedRarity(pool) {
+    const total = pool.reduce((sum, entry) => sum + entry.weight, 0);
+    let roll = Math.random() * total;
+    for (const entry of pool) {
+        roll -= entry.weight;
+        if (roll <= 0) return entry.rarity;
+    }
+    return pool[pool.length - 1]?.rarity || 'white';
+}
 
 // Generate the map — returns { tiles[][], walls[], lootCrates[], extractionPoints[], enemySpawns[], playerSpawn }
-export function generateMap(seed) {
+export function generateMap(options = {}) {
+    const difficulty = typeof options === 'string' ? options : options?.difficulty || 'advanced';
+    const cratePools = DIFFICULTY_CRATE_POOLS[difficulty] || DIFFICULTY_CRATE_POOLS.advanced;
+
     // Seeded RNG not critical for MVP — using Math.random
     const tiles = [];
     for (let r = 0; r < MAP_ROWS; r++) {
@@ -149,12 +212,12 @@ export function generateMap(seed) {
 
     // ---------- Loot crates with tiers ----------
     const lootCrates = [];
-    const CRATE_TIER_MAP = { [ZONE.SAFE]: 'supply', [ZONE.COMBAT]: 'tactical', [ZONE.HIGH_VALUE]: 'elite' };
     const addCrates = (count, zone) => {
-        const tierKey = CRATE_TIER_MAP[zone] || 'supply';
-        const tierMeta = CRATE_TIERS[tierKey];
+        const pool = cratePools[zone] || cratePools[ZONE.SAFE];
         for (let i = 0; i < count; i++) {
             const pos = randomOpenPos(zone);
+            const crateRarity = pickWeightedRarity(pool);
+            const tierMeta = getCrateTierMeta(crateRarity);
             lootCrates.push({
                 id: generateId(),
                 x: pos.x,
@@ -163,10 +226,10 @@ export function generateMap(seed) {
                 h: CRATE_HEIGHT,
                 opened: false,
                 inspected: false,
-                tier: tierKey,
+                tier: crateRarity,
                 tierLabel: tierMeta.label,
                 tierColor: tierMeta.color,
-                items: createLootItemsForCrateTier(tierKey)
+                items: createLootItemsForCrateRarity(crateRarity)
             });
         }
     };
