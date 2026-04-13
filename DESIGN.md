@@ -30,16 +30,22 @@ The current prototype now treats all major loot as one of these six categories:
 The player inventory screen supports equipping one item from each class.
 
 ### Example Items
-Current placeholder examples include:
+The game includes 36 items across all six categories and rarity tiers:
 
-- **Guns**: Militia Carbine, Ranger SMG, Eclipse DMR, Aurora LMG, Inferno Railgun
-- **Melee Weapons**: Field Knife, Breach Hatchet, Ion Blade, Revenant Machete
-- **Armors**: Cloth Vest, Ranger Plate, Titan Rig
-- **Helmets**: Scout Cap, Recon Helmet, Eclipse Visor
-- **Shoes**: Trail Shoes, Runner Boots, Phase Greaves
-- **Backpacks**: Sling Pack, Scout Pack, Mule Pack, Void Satchel
+- **Guns**: Militia Carbine (White), Ranger SMG (Green), Spectre Assault Rifle (Blue), Eclipse DMR (Purple), Aurora LMG (Gold), Inferno Railgun (Red)
+- **Melee Weapons**: Field Knife (White), Breach Hatchet (Green), Ion Blade (Blue), Revenant Machete (Purple), Wraith Katana (Gold), Doom Cleaver (Red)
+- **Armors**: Cloth Vest (White), Kevlar Weave (Green), Ranger Plate (Blue), Warden Vest (Purple), Titan Rig (Gold), Bastion Plate (Red)
+- **Helmets**: Scout Cap (White), Recon Helmet (Green), Sentinel Helm (Blue), Eclipse Visor (Purple), Fortress Mask (Gold), Phantom Crown (Red)
+- **Shoes**: Trail Shoes (White), Runner Boots (Green), Phase Greaves (Blue), Phantom Sprinters (Purple), Blitz Treads (Gold), Warp Drivers (Red)
+- **Backpacks**: Sling Pack (White), Scout Pack (Green), Mule Pack (Blue), Siege Rucksack (Purple), Cargo Titan (Gold), Void Satchel (Red)
 
-These are placeholder content only and are intended to be refined later.
+### Item Images
+Each item has a 512x512 PNG image stored in `assets/items/`. Images are displayed in:
+- **Inventory loadout cards** — 64px thumbnail alongside item name, description, and stats
+- **Market cards** — full-width image above item details
+- **Crate loot panel** — full-width image above item details when opening crates during a raid
+
+The `getItemImagePath(definitionId)` function in `profile.js` returns the image path as `assets/items/<definitionId>.png`.
 
 ### Rarity Ladder
 All items, including equipment, follow this rarity order from highest to lowest:
@@ -62,6 +68,14 @@ Rarity affects:
 - Pressing `F` toggles the nearest crate open or closed.
 - Once opened at least once, a crate is marked as **inspected** visually.
 - Crates may become empty after all items are taken.
+
+### Crate Tiers
+Crates come in three tiers that determine loot quality:
+- **Supply** — green and below, found in safe zones
+- **Tactical** — blue and below, found in combat zones
+- **Elite** — red and below, found in high-value zones
+
+Each tier has its own image (`crate_supply.png`, `crate_tactical.png`, `crate_elite.png`) and the crate is colored to match its tier.
 
 ### Crate UI Direction
 The prototype now uses a **centered loot panel** while raiding.
@@ -92,6 +106,8 @@ This is conceptually similar to modern extraction-mode inventory interactions wi
 
 ```
 index.html          — Entry point + DOM overlays
+assets/
+  items/            — 512x512 PNG images for all 36 items + 3 crate tiers
 js/
   app.js            — Menu, inventory, auth, and crate-panel UI
   game.js           — Main loop, raid state, extraction summary, crate interaction
@@ -99,7 +115,7 @@ js/
   enemy.js          — AI enemies
   map.js            — Procedural map generation and crate placement
   renderer.js       — Canvas rendering for world, crates, HUD, minimap
-  profile.js        — Item catalog, rarity data, stash persistence, loadout logic
+  profile.js        — Item catalog, rarity data, stash persistence, loadout logic, item image paths
   input.js          — Keyboard/mouse commands including `F` interaction
   audio.js          — Procedural sound
   constants.js      — Shared config
