@@ -288,6 +288,47 @@ export const ITEM_DEFS = {
         name: 'Void Satchel', description: 'Prototype pack with huge haul capacity.',
         sellValue: 480,
         modifiers: { carrySlots: 18 }
+    },
+
+    // ─── CONSUMABLES ────────────────────────────────────────
+    field_bandage: {
+        id: 'field_bandage', category: 'consumable', rarity: 'white',
+        name: 'Field Bandage', description: 'Basic gauze wrap. Restores 20 HP.',
+        sellValue: 30,
+        healAmount: 20
+    },
+    med_kit: {
+        id: 'med_kit', category: 'consumable', rarity: 'green',
+        name: 'Med Kit', description: 'Standard first aid kit. Restores 35 HP.',
+        sellValue: 80,
+        healAmount: 35
+    },
+    stim_syringe: {
+        id: 'stim_syringe', category: 'consumable', rarity: 'blue',
+        name: 'Stim Syringe', description: 'Fast-acting combat stimulant. Restores 50 HP.',
+        sellValue: 200,
+        healAmount: 50
+    },
+    combat_medic_pack: {
+        id: 'combat_medic_pack', category: 'consumable', rarity: 'purple',
+        name: 'Combat Medic Pack', description: 'Advanced field surgical kit. Restores 70 HP.',
+        sellValue: 400,
+        healAmount: 70
+    },
+    regen_injector: {
+        id: 'regen_injector', category: 'consumable', rarity: 'gold',
+        name: 'Regen Injector', description: 'Nanobots that slowly regen health. Restores 100 HP + 2 HP/sec for 15 sec.',
+        sellValue: 800,
+        healAmount: 100,
+        regenPerSecond: 2,
+        regenDuration: 15
+    },
+    nano_serum: {
+        id: 'nano_serum', category: 'consumable', rarity: 'red',
+        name: 'Nano Serum', description: 'Experimental full-body nano-repair. Fully restores HP and energy.',
+        sellValue: 5000,
+        healAmount: -1,  // -1 = full heal
+        restoreEnergy: true
     }
 };
 

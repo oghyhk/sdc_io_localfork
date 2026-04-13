@@ -41,6 +41,19 @@ The game includes 36 items across all six categories and rarity tiers:
 - **Helmets**: Scout Cap (White), Recon Helmet (Green), Sentinel Helm (Blue), Eclipse Visor (Purple), Fortress Mask (Gold), Phantom Crown (Red)
 - **Shoes**: Trail Shoes (White), Runner Boots (Green), Phase Greaves (Blue), Phantom Sprinters (Purple), Blitz Treads (Gold), Warp Drivers (Red)
 - **Backpacks**: Sling Pack (White), Scout Pack (Green), Mule Pack (Blue), Siege Rucksack (Purple), Cargo Titan (Gold), Void Satchel (Red)
+- **Consumables**: Field Bandage (White), Med Kit (Green), Stim Syringe (Blue), Combat Medic Pack (Purple), Regen Injector (Gold), Nano Serum (Red)
+
+### Consumables System
+Consumable items are picked up from loot crates during raids and stored in a separate consumable pouch (max 5). They do NOT take up backpack carry slots. Press **Q** to use a consumable. The HUD shows consumable count when any are held.
+
+| Item | Rarity | Heal | Special |
+|------|--------|------|---------|
+| Field Bandage | White | 20 HP | — |
+| Med Kit | Green | 35 HP | — |
+| Stim Syringe | Blue | 50 HP | — |
+| Combat Medic Pack | Purple | 70 HP | — |
+| Regen Injector | Gold | 100 HP | +2 HP/sec for 15 sec |
+| Nano Serum | Red | Full HP | + Full energy restore |
 
 ### Item Images
 Each item has a 512x512 PNG image stored in `assets/items/`. Images are displayed in:

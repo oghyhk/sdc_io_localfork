@@ -1,0 +1,1337 @@
+{
+  "version": 1,
+  "items": {
+    "g17": {
+      "id": "g17",
+      "category": "gun",
+      "rarity": "gray",
+      "name": "G17",
+      "description": "Sidearm with a steady rhythm, 17-round magazine, and light recoil drift.",
+      "sellValue": 120,
+      "stats": {
+        "damage": 14,
+        "cooldown": 0.27,
+        "bulletSpeed": 500,
+        "range": 340,
+        "clipSize": 17,
+        "reloadTime": 1,
+        "spread": 0.075
+      },
+      "image": "/assets/dev/g17.jpg"
+    },
+    "as_val": {
+      "id": "as_val",
+      "category": "gun",
+      "rarity": "gray",
+      "name": "AS VAL",
+      "description": "Suppressed rifle with 900 RPM fire rate, 45-round magazine, and wider spray.",
+      "sellValue": 240,
+      "stats": {
+        "damage": 10,
+        "cooldown": 0.067,
+        "bulletSpeed": 540,
+        "range": 436,
+        "clipSize": 45,
+        "reloadTime": 2,
+        "spread": 0.11
+      },
+      "image": "/assets/dev/as_val.jpg"
+    },
+    "field_knife": {
+      "id": "field_knife",
+      "category": "melee",
+      "rarity": "white",
+      "name": "Field Knife",
+      "description": "Basic close-quarters blade.",
+      "sellValue": 80,
+      "stats": {
+        "meleeDamage": 24,
+        "meleeCooldown": 0.42
+      },
+      "image": "/assets/dev/field_knife.jpg"
+    },
+    "breach_hatchet": {
+      "id": "breach_hatchet",
+      "category": "melee",
+      "rarity": "green",
+      "name": "Breach Hatchet",
+      "description": "Reliable utility hatchet.",
+      "sellValue": 110,
+      "stats": {
+        "meleeDamage": 30,
+        "meleeCooldown": 0.4
+      },
+      "image": "/assets/dev/breach_hatchet.jpg"
+    },
+    "ion_blade": {
+      "id": "ion_blade",
+      "category": "melee",
+      "rarity": "blue",
+      "name": "Ion Blade",
+      "description": "Light blade with quick recovery.",
+      "sellValue": 180,
+      "stats": {
+        "meleeDamage": 34,
+        "meleeCooldown": 0.34
+      },
+      "image": "/assets/dev/ion_blade.jpg"
+    },
+    "revenant_machete": {
+      "id": "revenant_machete",
+      "category": "melee",
+      "rarity": "purple",
+      "name": "Revenant Machete",
+      "description": "Heavy finishing blade.",
+      "sellValue": 260,
+      "stats": {
+        "meleeDamage": 42,
+        "meleeCooldown": 0.36
+      },
+      "image": "/assets/dev/revenant_machete.jpg"
+    },
+    "wraith_katana": {
+      "id": "wraith_katana",
+      "category": "melee",
+      "rarity": "gold",
+      "name": "Wraith Katana",
+      "description": "Elegant high-damage blade for elite operatives.",
+      "sellValue": 380,
+      "stats": {
+        "meleeDamage": 50,
+        "meleeCooldown": 0.3
+      },
+      "image": "/assets/dev/wraith_katana.jpg"
+    },
+    "doom_cleaver": {
+      "id": "doom_cleaver",
+      "category": "melee",
+      "rarity": "red",
+      "name": "Doom Cleaver",
+      "description": "Prototype heavy weapon that obliterates anything in range.",
+      "sellValue": 550,
+      "stats": {
+        "meleeDamage": 68,
+        "meleeCooldown": 0.38
+      },
+      "image": "/assets/dev/doom_cleaver.jpg"
+    },
+    "cloth_vest": {
+      "id": "cloth_vest",
+      "category": "armor",
+      "rarity": "white",
+      "name": "Cloth Vest",
+      "description": "Minimal torso protection.",
+      "sellValue": 90,
+      "modifiers": {
+        "maxHp": 10
+      },
+      "image": "/assets/dev/cloth_vest.jpg"
+    },
+    "kevlar_weave": {
+      "id": "kevlar_weave",
+      "category": "armor",
+      "rarity": "green",
+      "name": "Kevlar Weave",
+      "description": "Standard-issue ballistic protection.",
+      "sellValue": 150,
+      "modifiers": {
+        "maxHp": 18
+      },
+      "image": "/assets/dev/kevlar_weave.jpg"
+    },
+    "ranger_plate": {
+      "id": "ranger_plate",
+      "category": "armor",
+      "rarity": "blue",
+      "name": "Ranger Plate",
+      "description": "Balanced combat vest.",
+      "sellValue": 220,
+      "modifiers": {
+        "maxHp": 28
+      },
+      "image": "/assets/dev/ranger_plate.jpg"
+    },
+    "warden_vest": {
+      "id": "warden_vest",
+      "category": "armor",
+      "rarity": "purple",
+      "name": "Warden Vest",
+      "description": "Heavy-duty protection for high-threat zones.",
+      "sellValue": 310,
+      "modifiers": {
+        "maxHp": 40
+      },
+      "image": "/assets/dev/warden_vest.jpg"
+    },
+    "titan_rig": {
+      "id": "titan_rig",
+      "category": "armor",
+      "rarity": "gold",
+      "name": "Titan Rig",
+      "description": "Heavy armor for frontline raids.",
+      "sellValue": 390,
+      "modifiers": {
+        "maxHp": 52
+      },
+      "image": "/assets/dev/titan_rig.jpg"
+    },
+    "bastion_plate": {
+      "id": "bastion_plate",
+      "category": "armor",
+      "rarity": "red",
+      "name": "Bastion Plate",
+      "description": "Experimental exo-armor with maximum protection.",
+      "sellValue": 580,
+      "modifiers": {
+        "maxHp": 72
+      },
+      "image": "/assets/dev/bastion_plate.jpg"
+    },
+    "scout_cap": {
+      "id": "scout_cap",
+      "category": "helmet",
+      "rarity": "white",
+      "name": "Scout Cap",
+      "description": "Light head cover.",
+      "sellValue": 70,
+      "modifiers": {
+        "maxHp": 6
+      },
+      "image": "/assets/dev/scout_cap.jpg"
+    },
+    "recon_helmet": {
+      "id": "recon_helmet",
+      "category": "helmet",
+      "rarity": "green",
+      "name": "Recon Helmet",
+      "description": "Standard issue tactical helmet.",
+      "sellValue": 140,
+      "modifiers": {
+        "maxHp": 14
+      },
+      "image": "/assets/dev/recon_helmet.jpg"
+    },
+    "sentinel_helm": {
+      "id": "sentinel_helm",
+      "category": "helmet",
+      "rarity": "blue",
+      "name": "Sentinel Helm",
+      "description": "Reinforced helmet with side protection.",
+      "sellValue": 200,
+      "modifiers": {
+        "maxHp": 20
+      },
+      "image": "/assets/dev/sentinel_helm.jpg"
+    },
+    "eclipse_visor": {
+      "id": "eclipse_visor",
+      "category": "helmet",
+      "rarity": "purple",
+      "name": "Eclipse Visor",
+      "description": "Enhanced visor with reinforced shell.",
+      "sellValue": 250,
+      "modifiers": {
+        "maxHp": 24
+      },
+      "image": "/assets/dev/eclipse_visor.jpg"
+    },
+    "fortress_mask": {
+      "id": "fortress_mask",
+      "category": "helmet",
+      "rarity": "gold",
+      "name": "Fortress Mask",
+      "description": "Full-face tactical helmet with blast shielding.",
+      "sellValue": 360,
+      "modifiers": {
+        "maxHp": 36
+      },
+      "image": "/assets/dev/fortress_mask.jpg"
+    },
+    "phantom_crown": {
+      "id": "phantom_crown",
+      "category": "helmet",
+      "rarity": "red",
+      "name": "Phantom Crown",
+      "description": "Prototype adaptive helmet with integrated HUD.",
+      "sellValue": 520,
+      "modifiers": {
+        "maxHp": 48
+      },
+      "image": "/assets/dev/phantom_crown.jpg"
+    },
+    "trail_shoes": {
+      "id": "trail_shoes",
+      "category": "shoes",
+      "rarity": "white",
+      "name": "Trail Shoes",
+      "description": "Plain footwear for basic mobility.",
+      "sellValue": 60,
+      "modifiers": {
+        "speed": 10
+      },
+      "image": "/assets/dev/trail_shoes.jpg"
+    },
+    "runner_boots": {
+      "id": "runner_boots",
+      "category": "shoes",
+      "rarity": "green",
+      "name": "Runner Boots",
+      "description": "Reliable movement boost.",
+      "sellValue": 120,
+      "modifiers": {
+        "speed": 20
+      },
+      "image": "/assets/dev/runner_boots.jpg"
+    },
+    "phase_greaves": {
+      "id": "phase_greaves",
+      "category": "shoes",
+      "rarity": "blue",
+      "name": "Phase Greaves",
+      "description": "Fast boots for quick disengages.",
+      "sellValue": 200,
+      "modifiers": {
+        "speed": 32
+      },
+      "image": "/assets/dev/phase_greaves.jpg"
+    },
+    "phantom_sprinters": {
+      "id": "phantom_sprinters",
+      "category": "shoes",
+      "rarity": "purple",
+      "name": "Phantom Sprinters",
+      "description": "Ultra-light boots for rapid extraction.",
+      "sellValue": 280,
+      "modifiers": {
+        "speed": 44
+      },
+      "image": "/assets/dev/phantom_sprinters.jpg"
+    },
+    "blitz_treads": {
+      "id": "blitz_treads",
+      "category": "shoes",
+      "rarity": "gold",
+      "name": "Blitz Treads",
+      "description": "High-performance boots with shock absorption.",
+      "sellValue": 370,
+      "modifiers": {
+        "speed": 56
+      },
+      "image": "/assets/dev/blitz_treads.jpg"
+    },
+    "warp_drivers": {
+      "id": "warp_drivers",
+      "category": "shoes",
+      "rarity": "red",
+      "name": "Warp Drivers",
+      "description": "Experimental exo-boots that defy physics.",
+      "sellValue": 520,
+      "modifiers": {
+        "speed": 72
+      },
+      "image": "/assets/dev/warp_drivers.jpg"
+    },
+    "sling_pack": {
+      "id": "sling_pack",
+      "category": "backpack",
+      "rarity": "white",
+      "name": "Sling Pack",
+      "description": "Small pack with limited carrying space.",
+      "sellValue": 75,
+      "modifiers": {
+        "carrySlots": 3
+      },
+      "image": "/assets/dev/sling_pack.jpg"
+    },
+    "scout_pack": {
+      "id": "scout_pack",
+      "category": "backpack",
+      "rarity": "green",
+      "name": "Scout Pack",
+      "description": "Compact backpack for efficient loot runs.",
+      "sellValue": 130,
+      "modifiers": {
+        "carrySlots": 5
+      },
+      "image": "/assets/dev/scout_pack.jpg"
+    },
+    "mule_pack": {
+      "id": "mule_pack",
+      "category": "backpack",
+      "rarity": "blue",
+      "name": "Mule Pack",
+      "description": "Larger backpack for bigger hauls.",
+      "sellValue": 220,
+      "modifiers": {
+        "carrySlots": 8
+      },
+      "image": "/assets/dev/mule_pack.jpg"
+    },
+    "siege_rucksack": {
+      "id": "siege_rucksack",
+      "category": "backpack",
+      "rarity": "purple",
+      "name": "Siege Rucksack",
+      "description": "Tactical rucksack built for extended operations.",
+      "sellValue": 300,
+      "modifiers": {
+        "carrySlots": 11
+      },
+      "image": "/assets/dev/siege_rucksack.jpg"
+    },
+    "cargo_titan": {
+      "id": "cargo_titan",
+      "category": "backpack",
+      "rarity": "gold",
+      "name": "Cargo Titan",
+      "description": "Heavy-duty hauler with reinforced compartments.",
+      "sellValue": 400,
+      "modifiers": {
+        "carrySlots": 14
+      },
+      "image": "/assets/dev/cargo_titan.jpg"
+    },
+    "void_satchel": {
+      "id": "void_satchel",
+      "category": "backpack",
+      "rarity": "red",
+      "name": "Void Satchel",
+      "description": "Prototype pack with huge haul capacity.",
+      "sellValue": 480,
+      "modifiers": {
+        "carrySlots": 18
+      },
+      "image": "/assets/dev/void_satchel.jpg"
+    },
+    "ammo_white": {
+      "id": "ammo_white",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "gray",
+      "name": "Gray Ammo",
+      "description": "Low-grade gray ammo. Damage x0.8.",
+      "sellValue": 1,
+      "ammoAmount": 1,
+      "damageMultiplier": 0.8,
+      "image": "/assets/dev/ammo_white.jpg"
+    },
+    "ammo_green": {
+      "id": "ammo_green",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "green",
+      "name": "Green Ammo",
+      "description": "Standard green ammo. Damage x1.0.",
+      "sellValue": 8,
+      "ammoAmount": 1,
+      "damageMultiplier": 1.0,
+      "image": "/assets/dev/ammo_green.jpg"
+    },
+    "ammo_blue": {
+      "id": "ammo_blue",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "blue",
+      "name": "Blue Ammo",
+      "description": "Improved blue ammo. Damage x1.05.",
+      "sellValue": 250,
+      "ammoAmount": 1,
+      "damageMultiplier": 1.05,
+      "image": "/assets/dev/ammo_blue.jpg"
+    },
+    "ammo_purple": {
+      "id": "ammo_purple",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "purple",
+      "name": "Purple Ammo",
+      "description": "High-end purple ammo. Damage x1.2.",
+      "sellValue": 5000,
+      "ammoAmount": 1,
+      "damageMultiplier": 1.2,
+      "image": "/assets/dev/ammo_purple.jpg"
+    },
+    "ammo_gold": {
+      "id": "ammo_gold",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "gold",
+      "name": "Gold Ammo",
+      "description": "Elite gold ammo. Damage x1.4.",
+      "sellValue": 25000,
+      "ammoAmount": 1,
+      "damageMultiplier": 1.4,
+      "image": "/assets/dev/ammo_gold.jpg"
+    },
+    "ammo_red": {
+      "id": "ammo_red",
+      "category": "loot",
+      "lootType": "ammo",
+      "rarity": "red",
+      "name": "Red Ammo",
+      "description": "Experimental red ammo. Instantly kills any target.",
+      "sellValue": 1000000,
+      "ammoAmount": 1,
+      "damageMultiplier": 999999,
+      "instantKill": true,
+      "image": "/assets/dev/ammo_red.jpg"
+    },
+    "m4_carbine": {
+      "id": "m4_carbine",
+      "category": "gun",
+      "rarity": "white",
+      "name": "M4 Carbine",
+      "description": "Standard-issue 5.56 carbine. Reliable in every situation.",
+      "sellValue": 180,
+      "stats": {
+        "damage": 16,
+        "cooldown": 0.22,
+        "bulletSpeed": 520,
+        "range": 380,
+        "clipSize": 30,
+        "reloadTime": 1.8,
+        "spread": 0.09
+      },
+      "image": "/assets/dev/m4_carbine.jpg"
+    },
+    "mp5_sd": {
+      "id": "mp5_sd",
+      "category": "gun",
+      "rarity": "green",
+      "name": "MP5-SD",
+      "description": "Integrated suppressor submachine gun. Quiet and fast.",
+      "sellValue": 260,
+      "stats": {
+        "damage": 13,
+        "cooldown": 0.15,
+        "bulletSpeed": 480,
+        "range": 320,
+        "clipSize": 30,
+        "reloadTime": 1.6,
+        "spread": 0.12
+      },
+      "image": "/assets/dev/mp5_sd.jpg"
+    },
+    "ak74m": {
+      "id": "ak74m",
+      "category": "gun",
+      "rarity": "green",
+      "name": "AK-74M",
+      "description": "Modernized AK platform in 5.45x39. Hard-hitting with manageable recoil.",
+      "sellValue": 300,
+      "stats": {
+        "damage": 19,
+        "cooldown": 0.2,
+        "bulletSpeed": 560,
+        "range": 400,
+        "clipSize": 30,
+        "reloadTime": 2.1,
+        "spread": 0.1
+      },
+      "image": "/assets/dev/ak74m.jpg"
+    },
+    "scar_h": {
+      "id": "scar_h",
+      "category": "gun",
+      "rarity": "blue",
+      "name": "SCAR-H",
+      "description": "Battle rifle chambered in 7.62 NATO. High damage per round with excellent range.",
+      "sellValue": 380,
+      "stats": {
+        "damage": 28,
+        "cooldown": 0.28,
+        "bulletSpeed": 580,
+        "range": 450,
+        "clipSize": 20,
+        "reloadTime": 2.2,
+        "spread": 0.07
+      },
+      "image": "/assets/dev/scar_h.jpg"
+    },
+    "hk416": {
+      "id": "hk416",
+      "category": "gun",
+      "rarity": "blue",
+      "name": "HK416",
+      "description": "German-engineered assault rifle. Tight tolerances, zero malfunctions.",
+      "sellValue": 420,
+      "stats": {
+        "damage": 20,
+        "cooldown": 0.18,
+        "bulletSpeed": 570,
+        "range": 420,
+        "clipSize": 30,
+        "reloadTime": 1.9,
+        "spread": 0.065
+      },
+      "image": "/assets/dev/hk416.jpg"
+    },
+    "sr25": {
+      "id": "sr25",
+      "category": "gun",
+      "rarity": "purple",
+      "name": "SR-25",
+      "description": "Semi-auto marksman rifle. Surgical precision at long range.",
+      "sellValue": 520,
+      "stats": {
+        "damage": 38,
+        "cooldown": 0.45,
+        "bulletSpeed": 650,
+        "range": 520,
+        "clipSize": 20,
+        "reloadTime": 2.5,
+        "spread": 0.04
+      },
+      "image": "/assets/dev/sr25.jpg"
+    },
+    "rpk16": {
+      "id": "rpk16",
+      "category": "gun",
+      "rarity": "purple",
+      "name": "RPK-16",
+      "description": "Light machine gun with 95-round drum. Sustained suppressive fire.",
+      "sellValue": 560,
+      "stats": {
+        "damage": 17,
+        "cooldown": 0.12,
+        "bulletSpeed": 540,
+        "range": 400,
+        "clipSize": 95,
+        "reloadTime": 4.0,
+        "spread": 0.13
+      },
+      "image": "/assets/dev/rpk16.jpg"
+    },
+    "ash12": {
+      "id": "ash12",
+      "category": "gun",
+      "rarity": "gold",
+      "name": "ASH-12",
+      "description": "Bullpup battle rifle in 12.7x55. Devastating close-range stopping power.",
+      "sellValue": 680,
+      "stats": {
+        "damage": 45,
+        "cooldown": 0.35,
+        "bulletSpeed": 500,
+        "range": 380,
+        "clipSize": 20,
+        "reloadTime": 2.8,
+        "spread": 0.09
+      },
+      "image": "/assets/dev/ash12.jpg"
+    },
+    "mk18_cqbr": {
+      "id": "mk18_cqbr",
+      "category": "gun",
+      "rarity": "gold",
+      "name": "MK18 CQBR",
+      "description": "Close quarters battle rifle. Special operations favorite with M855A1 AP rounds.",
+      "sellValue": 750,
+      "stats": {
+        "damage": 24,
+        "cooldown": 0.14,
+        "bulletSpeed": 600,
+        "range": 360,
+        "clipSize": 30,
+        "reloadTime": 1.7,
+        "spread": 0.06
+      },
+      "image": "/assets/dev/mk18_cqbr.jpg"
+    },
+    "mk14_ebr": {
+      "id": "mk14_ebr",
+      "category": "gun",
+      "rarity": "red",
+      "name": "MK14 EBR",
+      "description": "Enhanced battle rifle. The weapon of choice for Delta Force marksmen.",
+      "sellValue": 950,
+      "stats": {
+        "damage": 52,
+        "cooldown": 0.32,
+        "bulletSpeed": 700,
+        "range": 550,
+        "clipSize": 20,
+        "reloadTime": 2.6,
+        "spread": 0.035
+      },
+      "image": "/assets/dev/mk14_ebr.jpg"
+    },
+    "vector45": {
+      "id": "vector45",
+      "category": "gun",
+      "rarity": "red",
+      "name": "Vector .45",
+      "description": "Kriss Vector with Super V recoil system. 1200 RPM of controlled chaos.",
+      "sellValue": 880,
+      "stats": {
+        "damage": 18,
+        "cooldown": 0.08,
+        "bulletSpeed": 470,
+        "range": 300,
+        "clipSize": 33,
+        "reloadTime": 1.5,
+        "spread": 0.14
+      },
+      "image": "/assets/dev/vector45.jpg"
+    },
+    "trench_spike": {
+      "id": "trench_spike",
+      "category": "melee",
+      "rarity": "white",
+      "name": "Trench Spike",
+      "description": "WWI-style spike bayonet. Simple but effective in tight spaces.",
+      "sellValue": 65,
+      "stats": {
+        "meleeDamage": 20,
+        "meleeCooldown": 0.38
+      },
+      "image": "/assets/dev/trench_spike.jpg"
+    },
+    "tomahawk": {
+      "id": "tomahawk",
+      "category": "melee",
+      "rarity": "green",
+      "name": "Tactical Tomahawk",
+      "description": "Bearded axe head for breaching and close combat.",
+      "sellValue": 130,
+      "stats": {
+        "meleeDamage": 32,
+        "meleeCooldown": 0.42
+      },
+      "image": "/assets/dev/tomahawk.jpg"
+    },
+    "karambit": {
+      "id": "karambit",
+      "category": "melee",
+      "rarity": "blue",
+      "name": "Karambit",
+      "description": "Curved claw blade. Fast slashes with devastating rip cuts.",
+      "sellValue": 200,
+      "stats": {
+        "meleeDamage": 28,
+        "meleeCooldown": 0.28
+      },
+      "image": "/assets/dev/karambit.jpg"
+    },
+    "fire_axe": {
+      "id": "fire_axe",
+      "category": "melee",
+      "rarity": "purple",
+      "name": "Fire Axe",
+      "description": "Heavy two-handed axe. Slow swings that cleave through anything.",
+      "sellValue": 290,
+      "stats": {
+        "meleeDamage": 55,
+        "meleeCooldown": 0.55
+      },
+      "image": "/assets/dev/fire_axe.jpg"
+    },
+    "cricket_bat": {
+      "id": "cricket_bat",
+      "category": "melee",
+      "rarity": "gold",
+      "name": "Cricket Bat",
+      "description": "Reinforced composite bat with weighted end. Knockback specialist.",
+      "sellValue": 400,
+      "stats": {
+        "meleeDamage": 48,
+        "meleeCooldown": 0.35
+      },
+      "image": "/assets/dev/cricket_bat.jpg"
+    },
+    "thermal_blade": {
+      "id": "thermal_blade",
+      "category": "melee",
+      "rarity": "red",
+      "name": "Thermal Blade",
+      "description": "Prototype heated edge sword. Cuts through armor like butter.",
+      "sellValue": 620,
+      "stats": {
+        "meleeDamage": 78,
+        "meleeCooldown": 0.42
+      },
+      "image": "/assets/dev/thermal_blade.jpg"
+    },
+    "soft_armor": {
+      "id": "soft_armor",
+      "category": "armor",
+      "rarity": "white",
+      "name": "Soft Armor",
+      "description": "Concealable ballistic vest. Minimal protection, maximum mobility.",
+      "sellValue": 100,
+      "modifiers": {
+        "maxHp": 12
+      },
+      "image": "/assets/dev/soft_armor.jpg"
+    },
+    "carrier_rig": {
+      "id": "carrier_rig",
+      "category": "armor",
+      "rarity": "green",
+      "name": "Carrier Rig",
+      "description": "MOLLE-equipped plate carrier with Level III plates.",
+      "sellValue": 170,
+      "modifiers": {
+        "maxHp": 22
+      },
+      "image": "/assets/dev/carrier_rig.jpg"
+    },
+    "fort_armor": {
+      "id": "fort_armor",
+      "category": "armor",
+      "rarity": "blue",
+      "name": "Fort Defender",
+      "description": "Full coverage assault vest with ceramic plates and neck guard.",
+      "sellValue": 250,
+      "modifiers": {
+        "maxHp": 32
+      },
+      "image": "/assets/dev/fort_armor.jpg"
+    },
+    "slick_armor": {
+      "id": "slick_armor",
+      "category": "armor",
+      "rarity": "purple",
+      "name": "Slick Plate",
+      "description": "Ultra-thin Level IV plate carrier. High protection, low profile.",
+      "sellValue": 340,
+      "modifiers": {
+        "maxHp": 45
+      },
+      "image": "/assets/dev/slick_armor.jpg"
+    },
+    "altyn_vest": {
+      "id": "altyn_vest",
+      "category": "armor",
+      "rarity": "gold",
+      "name": "Altyn Vest",
+      "description": "Heavy assault armor rated for rifle threats. Built like a tank.",
+      "sellValue": 440,
+      "modifiers": {
+        "maxHp": 58
+      },
+      "image": "/assets/dev/altyn_vest.jpg"
+    },
+    "exo_suit": {
+      "id": "exo_suit",
+      "category": "armor",
+      "rarity": "red",
+      "name": "Exo Combat Suit",
+      "description": "Powered exoskeleton with integrated ballistic protection. The future of warfare.",
+      "sellValue": 650,
+      "modifiers": {
+        "maxHp": 80
+      },
+      "image": "/assets/dev/exo_suit.jpg"
+    },
+    "ssh68": {
+      "id": "ssh68",
+      "category": "helmet",
+      "rarity": "white",
+      "name": "SSH-68",
+      "description": "Soviet steel helmet. Old but still stops shrapnel.",
+      "sellValue": 80,
+      "modifiers": {
+        "maxHp": 8
+      },
+      "image": "/assets/dev/ssh68.jpg"
+    },
+    "ops_core": {
+      "id": "ops_core",
+      "category": "helmet",
+      "rarity": "green",
+      "name": "Ops-Core FAST",
+      "description": "High-cut ballistic helmet with NVG mount. Special ops standard.",
+      "sellValue": 160,
+      "modifiers": {
+        "maxHp": 16
+      },
+      "image": "/assets/dev/ops_core.jpg"
+    },
+    "altyn_helmet": {
+      "id": "altyn_helmet",
+      "category": "helmet",
+      "rarity": "blue",
+      "name": "Altyn Helmet",
+      "description": "Heavy titanium helmet with face shield. Spetsnaz heritage.",
+      "sellValue": 230,
+      "modifiers": {
+        "maxHp": 22
+      },
+      "image": "/assets/dev/altyn_helmet.jpg"
+    },
+    "exfil_helmet": {
+      "id": "exfil_helmet",
+      "category": "helmet",
+      "rarity": "purple",
+      "name": "EXFIL Ballistic",
+      "description": "Team Wendy EXFIL with SLAAP armor applique. Best in class.",
+      "sellValue": 280,
+      "modifiers": {
+        "maxHp": 28
+      },
+      "image": "/assets/dev/exfil_helmet.jpg"
+    },
+    "rys_t": {
+      "id": "rys_t",
+      "category": "helmet",
+      "rarity": "gold",
+      "name": "Rys-T Helmet",
+      "description": "Heavy combat helmet with full face shield. Stops rifle rounds.",
+      "sellValue": 400,
+      "modifiers": {
+        "maxHp": 40
+      },
+      "image": "/assets/dev/rys_t.jpg"
+    },
+    "cyber_helm": {
+      "id": "cyber_helm",
+      "category": "helmet",
+      "rarity": "red",
+      "name": "Cyber Operative Helm",
+      "description": "AI-assisted tactical helmet with threat detection HUD and reactive armor.",
+      "sellValue": 580,
+      "modifiers": {
+        "maxHp": 52
+      },
+      "image": "/assets/dev/cyber_helm.jpg"
+    },
+    "combat_boots": {
+      "id": "combat_boots",
+      "category": "shoes",
+      "rarity": "white",
+      "name": "Combat Boots",
+      "description": "Standard-issue leather boots. Sturdy and reliable.",
+      "sellValue": 70,
+      "modifiers": {
+        "speed": 12
+      },
+      "image": "/assets/dev/combat_boots.jpg"
+    },
+    "hiking_boots": {
+      "id": "hiking_boots",
+      "category": "shoes",
+      "rarity": "green",
+      "name": "Hiking Boots",
+      "description": "Waterproof hiking boots with ankle support. Good all-terrain traction.",
+      "sellValue": 140,
+      "modifiers": {
+        "speed": 22
+      },
+      "image": "/assets/dev/hiking_boots.jpg"
+    },
+    "jump_boots": {
+      "id": "jump_boots",
+      "category": "shoes",
+      "rarity": "blue",
+      "name": "Jump Boots",
+      "description": "Airborne-rated boots with reinforced sole. Built for drops.",
+      "sellValue": 220,
+      "modifiers": {
+        "speed": 35
+      },
+      "image": "/assets/dev/jump_boots.jpg"
+    },
+    "fast_greaves": {
+      "id": "fast_greaves",
+      "category": "shoes",
+      "rarity": "purple",
+      "name": "FAST Greaves",
+      "description": "Lightweight carbon fiber leg armor. Speed and protection combined.",
+      "sellValue": 310,
+      "modifiers": {
+        "speed": 48
+      },
+      "image": "/assets/dev/fast_greaves.jpg"
+    },
+    "evas_sprinters": {
+      "id": "evas_sprinters",
+      "category": "shoes",
+      "rarity": "gold",
+      "name": "EVA Sprinters",
+      "description": "Electric-assist running boots with hydraulic dampening.",
+      "sellValue": 400,
+      "modifiers": {
+        "speed": 60
+      },
+      "image": "/assets/dev/evas_sprinters.jpg"
+    },
+    "gravity_boots": {
+      "id": "gravity_boots",
+      "category": "shoes",
+      "rarity": "red",
+      "name": "Gravity Boots",
+      "description": "Anti-gravity assist boots. Walk on walls, sprint on air.",
+      "sellValue": 560,
+      "modifiers": {
+        "speed": 78
+      },
+      "image": "/assets/dev/gravity_boots.jpg"
+    },
+    "duffel_bag": {
+      "id": "duffel_bag",
+      "category": "backpack",
+      "rarity": "white",
+      "name": "Duffel Bag",
+      "description": "Canvas military duffel. Gets the job done.",
+      "sellValue": 85,
+      "modifiers": {
+        "carrySlots": 4
+      },
+      "image": "/assets/dev/duffel_bag.jpg"
+    },
+    "day_pack": {
+      "id": "day_pack",
+      "category": "backpack",
+      "rarity": "green",
+      "name": "Day Pack",
+      "description": "Compact assault pack with hydration sleeve.",
+      "sellValue": 150,
+      "modifiers": {
+        "carrySlots": 6
+      },
+      "image": "/assets/dev/day_pack.jpg"
+    },
+    "alice_pack": {
+      "id": "alice_pack",
+      "category": "backpack",
+      "rarity": "blue",
+      "name": "ALICE Pack",
+      "description": "All-purpose lightweight carrying equipment. Vietnam-proven design.",
+      "sellValue": 240,
+      "modifiers": {
+        "carrySlots": 9
+      },
+      "image": "/assets/dev/alice_pack.jpg"
+    },
+    "mystery_ranch": {
+      "id": "mystery_ranch",
+      "category": "backpack",
+      "rarity": "purple",
+      "name": "Mystery Ranch",
+      "description": "Military assault pack with tri-zip access. Industry-leading load distribution.",
+      "sellValue": 330,
+      "modifiers": {
+        "carrySlots": 12
+      },
+      "image": "/assets/dev/mystery_ranch.jpg"
+    },
+    "parachute_pack": {
+      "id": "parachute_pack",
+      "category": "backpack",
+      "rarity": "gold",
+      "name": "Parachute Pack",
+      "description": "HALO-rated pack with integrated reserve chute. Carry more, jump further.",
+      "sellValue": 420,
+      "modifiers": {
+        "carrySlots": 15
+      },
+      "image": "/assets/dev/parachute_pack.jpg"
+    },
+    "quantum_pack": {
+      "id": "quantum_pack",
+      "category": "backpack",
+      "rarity": "red",
+      "name": "Quantum Satchel",
+      "description": "Dimensional compression pack. Physics-defying storage capacity.",
+      "sellValue": 520,
+      "modifiers": {
+        "carrySlots": 20
+      },
+      "image": "/assets/dev/quantum_pack.jpg"
+    }
+  },
+  "enemies": {
+    "drone": {
+      "id": "drone",
+      "name": "Drone",
+      "type": "melee",
+      "radius": 12,
+      "speed": 100,
+      "hp": 40,
+      "damage": 8,
+      "attackCooldown": 0.8,
+      "sightRange": 250,
+      "chaseRange": 350,
+      "patrolRange": 150,
+      "canShoot": false,
+      "color": "#ff5252",
+      "description": "Fast melee drone that charges the player."
+    },
+    "sentinel": {
+      "id": "sentinel",
+      "name": "Sentinel",
+      "type": "ranged",
+      "radius": 20,
+      "speed": 70,
+      "hp": 120,
+      "damage": 18,
+      "attackCooldown": 1.2,
+      "sightRange": 200,
+      "chaseRange": 300,
+      "shootRange": 180,
+      "bulletSpeed": 300,
+      "canShoot": true,
+      "color": "#ff6f00",
+      "description": "Ranged sentinel that shoots at the player."
+    },
+    "berserker": {
+      "id": "berserker",
+      "name": "Berserker",
+      "type": "melee",
+      "radius": 16,
+      "speed": 140,
+      "hp": 65,
+      "damage": 22,
+      "attackCooldown": 0.5,
+      "sightRange": 280,
+      "chaseRange": 400,
+      "patrolRange": 120,
+      "canShoot": false,
+      "color": "#e91e63",
+      "description": "Fast and aggressive melee unit. Charges the player relentlessly."
+    },
+    "sniper": {
+      "id": "sniper",
+      "name": "Sniper",
+      "type": "ranged",
+      "radius": 18,
+      "speed": 50,
+      "hp": 80,
+      "damage": 35,
+      "attackCooldown": 2.5,
+      "sightRange": 400,
+      "chaseRange": 250,
+      "patrolRange": 80,
+      "canShoot": true,
+      "shootRange": 350,
+      "bulletSpeed": 600,
+      "color": "#9c27b0",
+      "description": "Stationary ranged unit with high damage and long sight range. Slow fire rate."
+    },
+    "swarm_drone": {
+      "id": "swarm_drone",
+      "name": "Swarm Drone",
+      "type": "melee",
+      "radius": 8,
+      "speed": 160,
+      "hp": 20,
+      "damage": 5,
+      "attackCooldown": 0.6,
+      "sightRange": 200,
+      "chaseRange": 300,
+      "patrolRange": 200,
+      "canShoot": false,
+      "color": "#ff9800",
+      "description": "Tiny fast drone. Low HP but appears in swarms. Hard to hit."
+    },
+    "turret": {
+      "id": "turret",
+      "name": "Auto-Turret",
+      "type": "ranged",
+      "radius": 24,
+      "speed": 0,
+      "hp": 200,
+      "damage": 12,
+      "attackCooldown": 0.4,
+      "sightRange": 300,
+      "chaseRange": 0,
+      "patrolRange": 0,
+      "canShoot": true,
+      "shootRange": 280,
+      "bulletSpeed": 450,
+      "color": "#607d8b",
+      "description": "Stationary automated turret. High HP, fast fire rate, limited range. Defends high-value zones."
+    },
+    "heavy_gunner": {
+      "id": "heavy_gunner",
+      "name": "Heavy Gunner",
+      "type": "ranged",
+      "radius": 22,
+      "speed": 55,
+      "hp": 180,
+      "damage": 15,
+      "attackCooldown": 0.3,
+      "sightRange": 250,
+      "chaseRange": 350,
+      "patrolRange": 100,
+      "canShoot": true,
+      "shootRange": 220,
+      "bulletSpeed": 380,
+      "color": "#f44336",
+      "description": "Heavily armored ranged unit. Slow but extremely dangerous sustained fire."
+    }
+  },
+  "crate_tiers": {
+    "supply": {
+      "label": "Supply Crate",
+      "description": "Common field supplies \u2014 mostly white and green gear.",
+      "pool": [
+        "white",
+        "white",
+        "white",
+        "white",
+        "green",
+        "green",
+        "green",
+        "blue"
+      ],
+      "itemCount": {
+        "min": 2,
+        "max": 4
+      },
+      "color": "#8d6e63",
+      "itemPool": [
+        "m4_carbine",
+        "trench_spike",
+        "soft_armor",
+        "ssh68",
+        "combat_boots",
+        "duffel_bag",
+        "field_knife",
+        "cloth_vest",
+        "scout_cap",
+        "trail_shoes",
+        "sling_pack",
+        "mp5_sd",
+        "ak74m",
+        "tomahawk",
+        "carrier_rig",
+        "ops_core",
+        "hiking_boots",
+        "day_pack",
+        "breach_hatchet",
+        "kevlar_weave",
+        "recon_helmet",
+        "runner_boots",
+        "scout_pack"
+      ]
+    },
+    "tactical": {
+      "label": "Tactical Crate",
+      "description": "Military-grade equipment \u2014 blue to purple quality.",
+      "pool": [
+        "green",
+        "blue",
+        "blue",
+        "blue",
+        "purple",
+        "purple",
+        "gold"
+      ],
+      "itemCount": {
+        "min": 2,
+        "max": 4
+      },
+      "color": "#5c6bc0",
+      "itemPool": [
+        "scar_h",
+        "hk416",
+        "karambit",
+        "fort_armor",
+        "altyn_helmet",
+        "jump_boots",
+        "alice_pack",
+        "sr25",
+        "rpk16",
+        "fire_axe",
+        "slick_armor",
+        "exfil_helmet",
+        "fast_greaves",
+        "mystery_ranch",
+        "ion_blade",
+        "ranger_plate",
+        "sentinel_helm",
+        "phase_greaves",
+        "mule_pack",
+        "revenant_machete",
+        "warden_vest",
+        "eclipse_visor",
+        "phantom_sprinters",
+        "siege_rucksack"
+      ]
+    },
+    "elite": {
+      "label": "Elite Crate",
+      "description": "High-value cache \u2014 purple, gold, and rare red items.",
+      "pool": [
+        "blue",
+        "purple",
+        "gold",
+        "gold",
+        "gold",
+        "red",
+        "red"
+      ],
+      "itemCount": {
+        "min": 1,
+        "max": 3
+      },
+      "color": "#c62828",
+      "itemPool": [
+        "ash12",
+        "mk18_cqbr",
+        "cricket_bat",
+        "altyn_vest",
+        "rys_t",
+        "evas_sprinters",
+        "parachute_pack",
+        "mk14_ebr",
+        "vector45",
+        "thermal_blade",
+        "exo_suit",
+        "cyber_helm",
+        "gravity_boots",
+        "quantum_pack",
+        "wraith_katana",
+        "titan_rig",
+        "fortress_mask",
+        "blitz_treads",
+        "cargo_titan",
+        "doom_cleaver",
+        "bastion_plate",
+        "phantom_crown",
+        "warp_drivers",
+        "void_satchel"
+      ]
+    }
+  },
+  "ammo_tiers": {
+    "ammo_white": {
+      "damageMultiplier": 0.8,
+      "sellValue": 1,
+      "color": "#aaa",
+      "instantKill": false
+    },
+    "ammo_green": {
+      "damageMultiplier": 1.0,
+      "sellValue": 8,
+      "color": "#81c784",
+      "instantKill": false
+    },
+    "ammo_blue": {
+      "damageMultiplier": 1.05,
+      "sellValue": 250,
+      "color": "#64b5f6",
+      "instantKill": false
+    },
+    "ammo_purple": {
+      "damageMultiplier": 1.2,
+      "sellValue": 5000,
+      "color": "#b388ff",
+      "instantKill": false
+    },
+    "ammo_gold": {
+      "damageMultiplier": 1.4,
+      "sellValue": 25000,
+      "color": "#ffca28",
+      "instantKill": false
+    },
+    "ammo_red": {
+      "damageMultiplier": 999999,
+      "sellValue": 1000000,
+      "color": "#ff4d4d",
+      "instantKill": true
+    }
+  }
+}

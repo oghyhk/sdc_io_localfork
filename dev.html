@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDC.IO — Developer Tool</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+  --text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--accent2:#1f6feb;
+  --green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff;
+  --gold:#ffca28;--blue:#64b5f6;
+}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+/* Header */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;font-weight:700;color:var(--accent)}
+.header .status{font-size:12px;color:var(--text2);margin-left:auto}
+.header .save-btn{background:var(--accent2);color:#fff;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:background .2s}
+.header .save-btn:hover{background:var(--accent)}
+.header .save-btn.saved{background:var(--green)}
+/* Tabs */
+.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px}
+.tab{padding:10px 20px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text2);border-bottom:2px solid transparent;transition:all .2s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* Layout */
+.container{max-width:1400px;margin:0 auto;padding:20px 24px}
+.panel{display:none}
+.panel.active{display:block}
+/* Toolbar */
+.toolbar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:6px;font-size:13px}
+.toolbar input{min-width:220px}
+.toolbar select{min-width:140px}
+.toolbar .btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 16px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
+.toolbar .btn:hover{background:var(--accent2);border-color:var(--accent2)}
+.toolbar .btn-primary{background:var(--accent2);border-color:var(--accent2);color:#fff;font-weight:600}
+.toolbar .btn-primary:hover{background:var(--accent)}
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+.card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card .rarity-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.card h3{font-size:14px;font-weight:600;margin-bottom:4px}
+.card .meta{font-size:11px;color:var(--text2);margin-bottom:8px}
+.card .stats{font-size:12px;color:var(--text2);line-height:1.6}
+.card .stats span{color:var(--text);font-weight:500}
+.card .thumb{width:100%;height:120px;background:var(--surface2);border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.card .thumb .placeholder{color:var(--text2);font-size:32px}
+/* Detail panel */
+.detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto}
+.detail-overlay.open{display:flex}
+.detail{background:var(--surface);border:1px solid var(--border);border-radius:10px;width:100%;max-width:640px;padding:24px;position:relative}
+.detail h2{font-size:18px;margin-bottom:16px}
+.detail .close-btn{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer}
+.detail .close-btn:hover{color:var(--text)}
+.form-row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.form-group{flex:1;min-width:180px}
+.form-group label{display:block;font-size:11px;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:6px;font-size:13px}
+.form-group textarea{resize:vertical;min-height:60px;font-family:inherit}
+.form-actions{display:flex;gap:10px;margin-top:16px}
+.form-actions .btn{padding:9px 20px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
+.btn-save{background:var(--accent2);border-color:var(--accent2)!important;color:#fff}
+.btn-save:hover{background:var(--accent)}
+.btn-delete{background:var(--red);border-color:var(--red)!important;color:#fff}
+.btn-delete:hover{opacity:.85}
+.btn-gen{background:var(--purple);border-color:var(--purple)!important;color:#fff}
+.btn-gen:hover{opacity:.85}
+.btn-gen:disabled{opacity:.5;cursor:wait}
+.btn-cancel{background:var(--surface2);color:var(--text)}
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:300;opacity:0;transform:translateY(10px);transition:all .3s}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{background:var(--red)}
+/* Rarity colors */
+.rarity-white{background:#eceff1}
+.rarity-gray{background:#9e9e9e}
+.rarity-green{background:#81c784}
+.rarity-blue{background:#64b5f6}
+.rarity-purple{background:#b388ff}
+.rarity-gold{background:#ffca28}
+.rarity-red{background:#ff4d4d}
+/* Tag */
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;margin-right:4px}
+/* Ammo table */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+.data-table th{color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.data-table tr:hover{background:var(--surface2)}
+.data-table .edit-cell{cursor:pointer}
+.data-table .edit-cell:hover{color:var(--accent)}
+/* Crate pool pills */
+.pool-pills{display:flex;flex-wrap:wrap;gap:4px}
+.pool-pill{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ SDC.IO Developer Tool</h1>
+  <span class="status" id="statusText">Loading...</span>
+  <button class="save-btn" id="saveBtn" onclick="saveConfig()">💾 Save Config</button>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="items" onclick="switchTab('items')">🔫 Items</div>
+  <div class="tab" data-tab="enemies" onclick="switchTab('enemies')">👾 Enemies</div>
+  <div class="tab" data-tab="crates" onclick="switchTab('crates')">📦 Crates</div>
+  <div class="tab" data-tab="ammo" onclick="switchTab('ammo')">💥 Ammo</div>
+</div>
+
+<!-- ============= ITEMS PANEL ============= -->
+<div class="container">
+<div class="panel active" id="panel-items">
+  <div class="toolbar">
+    <input type="text" id="itemSearch" placeholder="Search items..." oninput="renderItems()">
+    <select id="itemCatFilter" onchange="renderItems()">
+      <option value="">All Categories</option>
+      <option value="gun">Gun</option>
+      <option value="melee">Melee</option>
+      <option value="armor">Armor</option>
+      <option value="helmet">Helmet</option>
+      <option value="shoes">Shoes</option>
+      <option value="backpack">Backpack</option>
+    </select>
+    <select id="itemRarityFilter" onchange="renderItems()">
+      <option value="">All Rarities</option>
+      <option value="white">White</option>
+      <option value="gray">Gray</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="gold">Gold</option>
+      <option value="red">Red</option>
+    </select>
+    <button class="btn btn-primary" onclick="openItemEditor()">+ New Item</button>
+  </div>
+  <div class="grid" id="itemGrid"></div>
+</div>
+
+<!-- ============= ENEMIES PANEL ============= -->
+<div class="panel" id="panel-enemies">
+  <div class="toolbar">
+    <input type="text" id="enemySearch" placeholder="Search enemies..." oninput="renderEnemies()">
+    <button class="btn btn-primary" onclick="openEnemyEditor()">+ New Enemy</button>
+  </div>
+  <div class="grid" id="enemyGrid"></div>
+</div>
+
+<!-- ============= CRATES PANEL ============= -->
+<div class="panel" id="panel-crates">
+  <div class="grid" id="crateGrid"></div>
+</div>
+
+<!-- ============= AMMO PANEL ============= -->
+<div class="panel" id="panel-ammo">
+  <table class="data-table" id="ammoTable">
+    <thead>
+      <tr><th>Rarity</th><th>Name</th><th>Damage Multi</th><th>Sell Value</th><th>Color</th><th>Instant Kill</th><th></th></tr>
+    </thead>
+    <tbody id="ammoBody"></tbody>
+  </table>
+</div>
+</div>
+
+<!-- ============= DETAIL OVERLAY ============= -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail" id="detailContent"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── State ────────────────────────────────
+let config = { version:1, items:{}, enemies:{}, crate_tiers:{}, ammo:{} };
+const RARITY_COLORS = { white:'#eceff1', gray:'#9e9e9e', green:'#81c784', blue:'#64b5f6', purple:'#b388ff', gold:'#ffca28', red:'#ff4d4d' };
+const API = '/api';
+
+// ─── Init ─────────────────────────────────
+async function init() {
+  try {
+    const r = await fetch(API + '/dev-config');
+    const d = await r.json();
+    if (d.ok && d.config) {
+      config = d.config;
+      // Separate ammo from items for display
+      if (!config.ammo) config.ammo = {};
+      for (const [id, item] of Object.entries(config.items)) {
+        if (item.lootType === 'ammo') {
+          config.ammo[id] = { ...item };
+        }
+      }
+      document.getElementById('statusText').textContent = `${Object.keys(config.items).length} items, ${Object.keys(config.enemies).length} enemies, ${Object.keys(config.ammo).length} ammo types`;
+    }
+  } catch(e) {
+    document.getElementById('statusText').textContent = 'Error loading config: ' + e.message;
+  }
+  renderItems();
+  renderEnemies();
+  renderCrates();
+  renderAmmo();
+}
+
+// ─── Tab Switching ────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
+}
+
+// ─── Toast ────────────────────────────────
+function toast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+// ─── Save ─────────────────────────────────
+async function saveConfig() {
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = '⏳ Saving...';
+  try {
+    // Merge ammo back into items for saving
+    const saveData = JSON.parse(JSON.stringify(config));
+    for (const [id, ammo] of Object.entries(config.ammo || {})) {
+      saveData.items[id] = ammo;
+    }
+    const r = await fetch(API + '/dev-config', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(saveData)
+    });
+    const d = await r.json();
+    if (d.ok) {
+      btn.textContent = '✅ Saved!'; btn.classList.add('saved');
+      toast('Config saved successfully');
+    } else { throw new Error(d.message); }
+  } catch(e) {
+    btn.textContent = '❌ Error'; toast(e.message, true);
+  }
+  setTimeout(() => { btn.textContent = '💾 Save Config'; btn.classList.remove('saved'); }, 2000);
+}
+
+// ─── Items ────────────────────────────────
+function getItemImagePath(id) {
+  return `assets/dev/${id.replace(/[^a-zA-Z0-9_]/g,'_')}.jpg`;
+}
+
+function renderItems() {
+  const search = (document.getElementById('itemSearch').value || '').toLowerCase();
+  const cat = document.getElementById('itemCatFilter').value;
+  const rar = document.getElementById('itemRarityFilter').value;
+  const grid = document.getElementById('itemGrid');
+  const items = Object.values(config.items)
+    .filter(i => i.lootType !== 'ammo')
+    .filter(i => !search || i.name.toLowerCase().includes(search) || i.id.toLowerCase().includes(search))
+    .filter(i => !cat || i.category === cat)
+    .filter(i => !rar || i.rarity === rar)
+    .sort((a,b) => (a.category||'').localeCompare(b.category||'') || (a.name||'').localeCompare(b.name||''));
+  
+  grid.innerHTML = items.map(item => {
+    const rc = RARITY_COLORS[item.rarity] || '#999';
+    const imgPath = getItemImagePath(item.id);
+    const statsHtml = formatStats(item);
+    return `<div class="card" onclick="openItemEditor('${item.id}')">
+      <div class="thumb"><img src="${imgPath}" onerror="this.parentElement.innerHTML='<div class=placeholder>🔫</div>'" alt="${item.name}"></div>
+      <h3><span class="rarity-dot rarity-${item.rarity}"></span>${item.name}</h3>
+      <div class="meta">${item.category} · ${item.rarity} · $${item.sellValue}</div>
+      <div class="stats">${statsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function formatStats(item) {
+  const parts = [];
+  if (item.stats) {
+    for (const [k,v] of Object.entries(item.stats)) {
+      parts.push(`${k}: <span>${v}</span>`);
+    }
+  }
+  if (item.modifiers) {
+    for (const [k,v] of Object.entries(item.modifiers)) {
+      parts.push(`${k}: <span>+${v}</span>`);
+    }
+  }
+  return parts.join(' · ');
+}
+
+function openItemEditor(id) {
+  const isNew = !id;
+  const item = isNew ? { id:'', name:'', category:'gun', rarity:'white', description:'', sellValue:100, stats:{}, modifiers:{} } : { ...config.items[id] };
+  
+  const detail = document.getElementById('detailContent');
+  const cat = item.category || 'gun';
+  const isGun = cat === 'gun';
+  const isMelee = cat === 'melee';
+  const isEquip = ['armor','helmet','shoes','backpack'].includes(cat);
+  
+  detail.innerHTML = `
+    <button class="close-btn" onclick="closeDetail()">✕</button>
+    <h2>${isNew ? 'Create New Item' : 'Edit: ' + item.name}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>ID</label><input id="ed_id" value="${item.id}" ${isNew?'':'readonly'}></div>
+      <div class="form-group"><label>Name</label><input id="ed_name" value="${item.name}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label>
+        <select id="ed_cat" onchange="openItemEditor(${isNew?"":("'"+id+"'")})">
+          ${['gun','melee','armor','helmet','shoes','backpack'].map(c=>`<option value="${c}" ${c===cat?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group"><label>Rarity</label>
+        <select id="ed_rarity">
+          ${Object.keys(RARITY_COLORS).map(r=>`<option value="${r}" ${r===item.rarity?'selected':''}>${r}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group"><label>Sell Value</label><input id="ed_sell" type="number" value="${item.sellValue||0}"></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ed_desc">${item.description||''}</textarea></div>
+    ${isGun ? renderGunStats(item.stats||{}) : ''}
+    ${isMelee ? renderMeleeStats(item.stats||{}) : ''}
+    ${isEquip ? renderEquipStats(item.modifiers||{}, cat) : ''}
+    <div class="form-actions">
+      <button class="btn btn-save" onclick="saveItem('${id||''}',${isNew})">💾 Save</button>
+      <button class="btn btn-gen" id="genImgBtn" onclick="generateImage('${id||''}',${isNew})">🎨 Generate Image</button>
+      ${isNew ? '' : `<button class="btn btn-delete" onclick="deleteItem('${id}')">🗑 Delete</button>`}
+      <button class="btn btn-cancel" onclick="closeDetail()">Cancel</button>
+    </div>
+  `;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function renderGunStats(s) {
+  return `<h3 style="margin:16px 0 8px;font-size:13px;color:var(--text2)">Gun Stats</h3>
+  <div class="form-row">
+    ${['damage','cooldown','bulletSpeed','range','clipSize','reloadTime','spread'].map(f =>
+      `<div class="form-group"><label>${f}</label><input id="ed_stat_${f}" type="number" step="any" value="${s[f]||0}"></div>`
+    ).join('')}
+  </div>`;
+}
+
+function renderMeleeStats(s) {
+  return `<h3 style="margin:16px 0 8px;font-size:13px;color:var(--text2)">Melee Stats</h3>
+  <div class="form-row">
+    <div class="form-group"><label>meleeDamage</label><input id="ed_stat_meleeDamage" type="number" value="${s.meleeDamage||0}"></div>
+    <div class="form-group"><label>meleeCooldown</label><input id="ed_stat_meleeCooldown" type="number" step="any" value="${s.meleeCooldown||0}"></div>
+  </div>`;
+}
+
+function renderEquipStats(m, cat) {
+  const fields = { armor:'maxHp', helmet:'maxHp', shoes:'speed', backpack:'carrySlots' };
+  const f = fields[cat] || 'maxHp';
+  return `<h3 style="margin:16px 0 8px;font-size:13px;color:var(--text2)">Modifiers</h3>
+  <div class="form-row">
+    <div class="form-group"><label>${f}</label><input id="ed_mod_${f}" type="number" value="${m[f]||0}"></div>
+  </div>`;
+}
+
+function saveItem(oldId, isNew) {
+  const id = document.getElementById('ed_id').value.trim();
+  if (!id) return toast('ID is required', true);
+  if (isNew && config.items[id]) return toast('ID already exists', true);
+  
+  const cat = document.getElementById('ed_cat').value;
+  const item = {
+    id, category: cat, rarity: document.getElementById('ed_rarity').value,
+    name: document.getElementById('ed_name').value,
+    description: document.getElementById('ed_desc').value,
+    sellValue: parseInt(document.getElementById('ed_sell').value) || 0
+  };
+  
+  if (cat === 'gun') {
+    item.stats = {};
+    ['damage','cooldown','bulletSpeed','range','clipSize','reloadTime','spread'].forEach(f => {
+      const v = parseFloat(document.getElementById('ed_stat_'+f)?.value);
+      if (v) item.stats[f] = v;
+    });
+  } else if (cat === 'melee') {
+    item.stats = {
+      meleeDamage: parseInt(document.getElementById('ed_stat_meleeDamage')?.value) || 0,
+      meleeCooldown: parseFloat(document.getElementById('ed_stat_meleeCooldown')?.value) || 0
+    };
+  } else {
+    const modFields = { armor:'maxHp', helmet:'maxHp', shoes:'speed', backpack:'carrySlots' };
+    const f = modFields[cat];
+    const v = parseInt(document.getElementById('ed_mod_'+f)?.value) || 0;
+    if (v) item.modifiers = { [f]: v };
+  }
+  
+  if (!isNew && oldId && oldId !== id) delete config.items[oldId];
+  config.items[id] = item;
+  closeDetail(); renderItems(); toast('Item saved');
+}
+
+function deleteItem(id) {
+  if (!confirm('Delete ' + id + '?')) return;
+  delete config.items[id];
+  closeDetail(); renderItems(); toast('Item deleted');
+}
+
+async function generateImage(id, isNew) {
+  const btn = document.getElementById('genImgBtn');
+  const name = document.getElementById('ed_name').value;
+  const cat = document.getElementById('ed_cat').value;
+  const rar = document.getElementById('ed_rarity').value;
+  if (!name) return toast('Set name first', true);
+  
+  btn.disabled = true; btn.textContent = '⏳ Generating...';
+  const prompt = `Game item icon, ${cat} weapon equipment, ${name}, ${rar} rarity quality, dark background, tactical military style, detailed 3D render, top-down game asset`;
+  
+  try {
+    const itemId = document.getElementById('ed_id').value.trim() || id || 'unknown';
+    const r = await fetch(API + '/generate-image', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ prompt, itemId, width:512, height:512 })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      toast('Image generated: ' + d.path);
+    } else { throw new Error(d.message); }
+  } catch(e) { toast(e.message, true); }
+  btn.disabled = false; btn.textContent = '🎨 Generate Image';
+}
+
+// ─── Enemies ──────────────────────────────
+function renderEnemies() {
+  const search = (document.getElementById('enemySearch').value || '').toLowerCase();
+  const grid = document.getElementById('enemyGrid');
+  const enemies = Object.values(config.enemies)
+    .filter(e => !search || e.name.toLowerCase().includes(search) || e.id.toLowerCase().includes(search));
+  
+  grid.innerHTML = enemies.map(e => `
+    <div class="card" onclick="openEnemyEditor('${e.id}')">
+      <h3>${e.name}</h3>
+      <div class="meta">${e.type || 'unknown'} · HP ${e.hp} · SPD ${e.speed}</div>
+      <div class="stats">
+        Dmg: <span>${e.damage}</span> · AtkCD: <span>${e.attackCooldown}s</span><br>
+        Sight: <span>${e.sightRange}</span> · Chase: <span>${e.chaseRange}</span>
+        ${e.canShoot ? `<br>ShootRange: <span>${e.shootRange}</span> · BulletSpd: <span>${e.bulletSpeed}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openEnemyEditor(id) {
+  const isNew = !id;
+  const e = isNew ? { id:'', name:'', type:'melee', radius:12, speed:100, hp:40, damage:8, attackCooldown:0.8, sightRange:200, chaseRange:300, patrolRange:150, canShoot:false, color:'#ff5252', description:'' } : { ...config.enemies[id] };
+  
+  document.getElementById('detailContent').innerHTML = `
+    <button class="close-btn" onclick="closeDetail()">✕</button>
+    <h2>${isNew ? 'New Enemy' : 'Edit: ' + e.name}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>ID</label><input id="ee_id" value="${e.id}" ${isNew?'':'readonly'}></div>
+      <div class="form-group"><label>Name</label><input id="ee_name" value="${e.name}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Type</label><select id="ee_type">
+        <option value="melee" ${e.type==='melee'?'selected':''}>Melee</option>
+        <option value="ranged" ${e.type==='ranged'?'selected':''}>Ranged</option>
+      </select></div>
+      <div class="form-group"><label>Color</label><input id="ee_color" value="${e.color||'#ff5252'}" type="color"></div>
+    </div>
+    <div class="form-row">
+      ${['radius','speed','hp','damage','attackCooldown','sightRange','chaseRange','patrolRange'].map(f =>
+        `<div class="form-group"><label>${f}</label><input id="ee_${f}" type="number" step="any" value="${e[f]||0}"></div>`
+      ).join('')}
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>canShoot</label><select id="ee_canShoot">
+        <option value="false" ${!e.canShoot?'selected':''}>No</option>
+        <option value="true" ${e.canShoot?'selected':''}>Yes</option>
+      </select></div>
+      <div class="form-group"><label>shootRange</label><input id="ee_shootRange" type="number" value="${e.shootRange||0}"></div>
+      <div class="form-group"><label>bulletSpeed</label><input id="ee_bulletSpeed" type="number" value="${e.bulletSpeed||0}"></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ee_desc">${e.description||''}</textarea></div>
+    <div class="form-actions">
+      <button class="btn btn-save" onclick="saveEnemy('${id||''}',${isNew})">💾 Save</button>
+      ${isNew ? '' : `<button class="btn btn-delete" onclick="deleteEnemy('${id}')">🗑 Delete</button>`}
+      <button class="btn btn-cancel" onclick="closeDetail()">Cancel</button>
+    </div>
+  `;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function saveEnemy(oldId, isNew) {
+  const id = document.getElementById('ee_id').value.trim();
+  if (!id) return toast('ID required', true);
+  const enemy = {
+    id, name: document.getElementById('ee_name').value,
+    type: document.getElementById('ee_type').value,
+    color: document.getElementById('ee_color').value,
+    description: document.getElementById('ee_desc').value,
+    radius: +document.getElementById('ee_radius').value,
+    speed: +document.getElementById('ee_speed').value,
+    hp: +document.getElementById('ee_hp').value,
+    damage: +document.getElementById('ee_damage').value,
+    attackCooldown: +document.getElementById('ee_attackCooldown').value,
+    sightRange: +document.getElementById('ee_sightRange').value,
+    chaseRange: +document.getElementById('ee_chaseRange').value,
+    patrolRange: +document.getElementById('ee_patrolRange').value,
+    canShoot: document.getElementById('ee_canShoot').value === 'true',
+    shootRange: +document.getElementById('ee_shootRange').value || undefined,
+    bulletSpeed: +document.getElementById('ee_bulletSpeed').value || undefined,
+  };
+  if (!isNew && oldId && oldId !== id) delete config.enemies[oldId];
+  config.enemies[id] = enemy;
+  closeDetail(); renderEnemies(); toast('Enemy saved');
+}
+
+function deleteEnemy(id) {
+  if (!confirm('Delete ' + id + '?')) return;
+  delete config.enemies[id];
+  closeDetail(); renderEnemies(); toast('Enemy deleted');
+}
+
+// ─── Crates ───────────────────────────────
+function renderCrates() {
+  const grid = document.getElementById('crateGrid');
+  grid.innerHTML = Object.entries(config.crate_tiers || {}).map(([key, crate]) => {
+    const poolHtml = (crate.pool||[]).map(r => `<span class="pool-pill" style="background:${RARITY_COLORS[r]||'#999'};color:#000">${r}</span>`).join('');
+    return `<div class="card" onclick="openCrateEditor('${key}')">
+      <h3>${crate.label || key}</h3>
+      <div class="meta">${crate.description || ''}</div>
+      <div class="stats">Items: <span>${crate.itemCount?.min}-${crate.itemCount?.max}</span></div>
+      <div style="margin-top:8px"><div class="pool-pills">${poolHtml}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function openCrateEditor(key) {
+  const crate = config.crate_tiers[key];
+  const allRarities = ['white','green','blue','purple','gold','red'];
+  document.getElementById('detailContent').innerHTML = `
+    <button class="close-btn" onclick="closeDetail()">✕</button>
+    <h2>Edit: ${crate.label || key}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>Label</label><input id="ce_label" value="${crate.label||''}"></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ce_desc">${crate.description||''}</textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>Min Items</label><input id="ce_min" type="number" value="${crate.itemCount?.min||2}"></div>
+      <div class="form-group"><label>Max Items</label><input id="ce_max" type="number" value="${crate.itemCount?.max||4}"></div>
+      <div class="form-group"><label>Color</label><input id="ce_color" value="${crate.color||'#8d6e63'}" type="color"></div>
+    </div>
+    <h3 style="margin:16px 0 8px;font-size:13px;color:var(--text2)">Rarity Pool (comma-separated)</h3>
+    <div class="form-group"><input id="ce_pool" value="${(crate.pool||[]).join(', ')}"></div>
+    <div class="form-actions">
+      <button class="btn btn-save" onclick="saveCrate('${key}')">💾 Save</button>
+      <button class="btn btn-cancel" onclick="closeDetail()">Cancel</button>
+    </div>
+  `;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function saveCrate(key) {
+  config.crate_tiers[key] = {
+    label: document.getElementById('ce_label').value,
+    description: document.getElementById('ce_desc').value,
+    color: document.getElementById('ce_color').value,
+    itemCount: {
+      min: parseInt(document.getElementById('ce_min').value) || 2,
+      max: parseInt(document.getElementById('ce_max').value) || 4
+    },
+    pool: document.getElementById('ce_pool').value.split(',').map(s => s.trim()).filter(Boolean)
+  };
+  closeDetail(); renderCrates(); toast('Crate saved');
+}
+
+// ─── Ammo ─────────────────────────────────
+function renderAmmo() {
+  const body = document.getElementById('ammoBody');
+  const ammoList = Object.entries(config.ammo || {}).sort((a,b) => {
+    const order = ['gray','green','blue','purple','gold','red'];
+    return order.indexOf(a[1].rarity) - order.indexOf(b[1].rarity);
+  });
+  
+  body.innerHTML = ammoList.map(([id, a]) => `
+    <tr>
+      <td><span class="rarity-dot rarity-${a.rarity}"></span>${a.rarity}</td>
+      <td>${a.name}</td>
+      <td class="edit-cell" onclick="editAmmoField('${id}','damageMultiplier')">${a.damageMultiplier}×</td>
+      <td class="edit-cell" onclick="editAmmoField('${id}','sellValue')">${a.sellValue?.toLocaleString()}</td>
+      <td><span style="color:${RARITY_COLORS[a.rarity]}">●</span> ${RARITY_COLORS[a.rarity]}</td>
+      <td>${a.instantKill ? '⚡ Yes' : 'No'}</td>
+      <td><button class="btn" onclick="openAmmoEditor('${id}')">Edit</button></td>
+    </tr>
+  `).join('');
+}
+
+function openAmmoEditor(id) {
+  const a = config.ammo[id];
+  document.getElementById('detailContent').innerHTML = `
+    <button class="close-btn" onclick="closeDetail()">✕</button>
+    <h2>Edit Ammo: ${a.name}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>Name</label><input id="ae_name" value="${a.name}"></div>
+      <div class="form-group"><label>Rarity</label>
+        <select id="ae_rarity">${Object.keys(RARITY_COLORS).map(r=>`<option value="${r}" ${r===a.rarity?'selected':''}>${r}</option>`).join('')}</select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Damage Multiplier</label><input id="ae_dm" type="number" step="any" value="${a.damageMultiplier}"></div>
+      <div class="form-group"><label>Sell Value</label><input id="ae_sell" type="number" value="${a.sellValue}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Instant Kill</label><select id="ae_ik">
+        <option value="false" ${!a.instantKill?'selected':''}>No</option>
+        <option value="true" ${a.instantKill?'selected':''}>Yes</option>
+      </select></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ae_desc">${a.description||''}</textarea></div>
+    <div class="form-actions">
+      <button class="btn btn-save" onclick="saveAmmo('${id}')">💾 Save</button>
+      <button class="btn btn-cancel" onclick="closeDetail()">Cancel</button>
+    </div>
+  `;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function saveAmmo(id) {
+  config.ammo[id] = {
+    ...config.ammmo?.[id],
+    id, category:'loot', lootType:'ammo',
+    name: document.getElementById('ae_name').value,
+    rarity: document.getElementById('ae_rarity').value,
+    damageMultiplier: parseFloat(document.getElementById('ae_dm').value),
+    sellValue: parseInt(document.getElementById('ae_sell').value),
+    instantKill: document.getElementById('ae_ik').value === 'true',
+    description: document.getElementById('ae_desc').value,
+    ammoAmount: 1
+  };
+  closeDetail(); renderAmmo(); toast('Ammo saved');
+}
+
+function editAmmoField(id, field) {
+  const current = config.ammo[id]?.[field];
+  const val = prompt(`Edit ${field} for ${id}:`, current);
+  if (val === null) return;
+  config.ammo[id][field] = field === 'sellValue' ? parseInt(val) : parseFloat(val);
+  renderAmmo();
+}
+
+// ─── Overlay ──────────────────────────────
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+document.getElementById('detailOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('detailOverlay')) closeDetail();
+});
+
+// ─── Boot ─────────────────────────────────
+init();
+</script>
+</body>
+</html>

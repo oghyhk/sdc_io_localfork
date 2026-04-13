@@ -9,6 +9,7 @@ from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parent
 DATA_FILE = ROOT / 'data' / 'users.json'
+DEV_CONFIG_FILE = ROOT / 'data' / 'dev-config.json'
 HOST = '0.0.0.0'
 PORT = 8765
 USERNAME_PATTERN = re.compile(r'^(?:[A-Za-z]|❤(?:️)?)+$')
@@ -107,6 +108,13 @@ class ApiHandler(SimpleHTTPRequestHandler):
         if parsed.path == '/api/health':
             self._send_json({'ok': True})
             return
+        if parsed.path == '/api/dev-config':
+            try:
+                config = json.loads(DEV_CONFIG_FILE.read_text(encoding='utf-8'))
+                self._send_json({'ok': True, 'config': config})
+            except (FileNotFoundError, json.JSONDecodeError) as e:
+                self._send_json({'ok': False, 'message': str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
         return super().do_GET()
 
     def do_POST(self):
@@ -195,6 +203,55 @@ class ApiHandler(SimpleHTTPRequestHandler):
             write_store(store)
             safe_user = {k: v for k, v in profile.items() if k != 'password'}
             self._send_json({'ok': True, 'profile': safe_user})
+            return
+
+        if parsed.path == '/api/dev-config':
+            config = body.get('config') or body
+            if not config:
+                self._send_json({'ok': False, 'message': 'No config data provided.'}, HTTPStatus.BAD_REQUEST)
+                return
+            try:
+                DEV_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+                DEV_CONFIG_FILE.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding='utf-8')
+                self._send_json({'ok': True, 'message': 'Config saved.'})
+            except Exception as e:
+                self._send_json({'ok': False, 'message': str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if parsed.path == '/api/generate-image':
+            # Proxy to Cloudflare Workers AI image gen
+            prompt = str(body.get('prompt', '')).strip()
+            if not prompt:
+                self._send_json({'ok': False, 'message': 'No prompt provided.'}, HTTPStatus.BAD_REQUEST)
+                return
+            try:
+                import urllib.request
+                img_req = urllib.request.Request(
+                    'https://hermesimggen.oghyhk.workers.dev/',
+                    data=json.dumps({
+                        'prompt': prompt,
+                        'width': int(body.get('width', 256)),
+                        'height': int(body.get('height', 256))
+                    }).encode('utf-8'),
+                    headers={
+                        'Authorization': 'Bearer 2598',
+                        'Content-Type': 'application/json'
+                    },
+                    method='POST'
+                )
+                with urllib.request.urlopen(img_req, timeout=60) as resp:
+                    img_data = resp.read()
+                # Save to assets/dev/
+                import base64, os
+                item_id = str(body.get('itemId', 'unknown'))
+                safe_id = re.sub(r'[^a-zA-Z0-9_]', '_', item_id)
+                out_dir = ROOT / 'assets' / 'dev'
+                out_dir.mkdir(parents=True, exist_ok=True)
+                out_path = out_dir / f'{safe_id}.jpg'
+                out_path.write_bytes(img_data)
+                self._send_json({'ok': True, 'path': f'/assets/dev/{safe_id}.jpg', 'size': len(img_data)})
+            except Exception as e:
+                self._send_json({'ok': False, 'message': str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return
 
         self._send_json({'ok': False, 'message': 'Endpoint not found.'}, HTTPStatus.NOT_FOUND)

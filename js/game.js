@@ -230,6 +230,9 @@ export class Game {
         this._updateCrateState(dt);
         this._handleCrateInteraction();
 
+        // Consumable use (Q key)
+        this._handleConsumableUse();
+
         // Extraction
         this._checkExtraction(dt);
 
@@ -340,6 +343,19 @@ export class Game {
         }
     }
 
+    _handleConsumableUse() {
+        if (!this.input.useConsumableRequested) return;
+        const result = this.player.useConsumable();
+        if (result) {
+            this.crateMessage = `Used ${result.name}`;
+            this.crateMessageTimer = 1.2;
+            this._spawnParticles(this.player.x, this.player.y - 10, '#4caf50', 8);
+        } else {
+            this.crateMessage = 'No consumables.';
+            this.crateMessageTimer = 1.0;
+        }
+    }
+
     _handleCrateInteraction() {
         if (!this.input.interactRequested) return;
 
@@ -442,6 +458,24 @@ export class Game {
         if (index === -1) return { ok: false, message: 'Item unavailable.' };
 
         const item = crate.items[index];
+
+        // Consumables go to the consumable inventory (not the backpack)
+        const itemDef = getItemDefinition(item.definitionId || item.id);
+        if (itemDef && itemDef.category === 'consumable') {
+            if (this.player.getConsumableCount() >= 5) {
+                this.crateMessage = 'Consumable pouch full (max 5).';
+                this.crateMessageTimer = 1.2;
+                return { ok: false, message: 'Consumable pouch full.' };
+            }
+            this.player.addConsumable(item.definitionId || item.id);
+            crate.items.splice(index, 1);
+            this._spawnParticles(crate.x, crate.y - 6, getRarityMeta(item.rarity).color, 6);
+            this.audio.playPickup();
+            this.crateMessage = `${item.name} → consumable pouch [Q]`;
+            this.crateMessageTimer = 1.2;
+            return { ok: true, item };
+        }
+
         const added = this.player.addItem(item);
         if (!added) {
             this.crateMessage = 'Backpack full.';

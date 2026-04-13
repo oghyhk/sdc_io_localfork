@@ -443,6 +443,14 @@ export class Renderer {
         ctx.font = '10px monospace';
         ctx.fillText(`ENERGY ${Math.round(player.energy)}/${player.energyMax} · MODE ${modeText} · R TO TOGGLE · DASH ${dashReady ? 'READY' : `${player.dashCooldown.toFixed(1)}s`}`, cam.width / 2, hpY + 32);
 
+        // Consumables
+        const consumableCount = player.getConsumableCount();
+        if (consumableCount > 0) {
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 11px monospace';
+            ctx.fillText(`💊 CONSUMABLES x${consumableCount} · Q TO USE`, cam.width / 2, hpY + 46);
+        }
+
         // Timer
         const minutes = Math.floor(gameTime / 60);
         const seconds = Math.floor(gameTime % 60);

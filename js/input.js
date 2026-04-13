@@ -16,6 +16,7 @@ export class InputManager {
         this.dashRequested = false;
         this.interactRequested = false;
         this.modeToggleRequested = false;
+        this.useConsumableRequested = false;
 
         this._onKeyDown = this._onKeyDown.bind(this);
         this._onKeyUp = this._onKeyUp.bind(this);
@@ -42,6 +43,9 @@ export class InputManager {
         }
         if (e.code === 'KeyR') {
             this.modeToggleRequested = true;
+        }
+        if (e.code === 'KeyQ') {
+            this.useConsumableRequested = true;
         }
     }
 
@@ -108,6 +112,7 @@ export class InputManager {
         this.dashRequested = false;
         this.interactRequested = false;
         this.modeToggleRequested = false;
+        this.useConsumableRequested = false;
         this.rightClicked = false;
     }
 

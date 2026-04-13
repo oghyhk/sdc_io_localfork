@@ -77,6 +77,13 @@ export class Player {
             .filter(Boolean)
             .slice(0, 4);
 
+        // Consumables inventory (picked up from loot, used with Q)
+        this.consumables = [];
+
+        // Active regen effect
+        this.regenPerSecond = 0;
+        this.regenTimer = 0;
+
         // Extraction
         this.extracting = false;
         this.extractTimer = 0;
@@ -391,6 +398,15 @@ export class Player {
         this.damageFlash = Math.max(0, this.damageFlash - dt);
         this.invincible = Math.max(0, this.invincible - dt);
 
+        // Regen effect
+        if (this.regenTimer > 0) {
+            this.regenTimer = Math.max(0, this.regenTimer - dt);
+            this.heal(this.regenPerSecond * dt);
+            if (this.regenTimer <= 0) {
+                this.regenPerSecond = 0;
+            }
+        }
+
         // Aim angle
         this.angle = angleBetween(this.x, this.y, input.aimWorld.x, input.aimWorld.y);
 
@@ -556,6 +572,42 @@ export class Player {
 
     heal(amount) {
         this.hp = Math.min(this.maxHp, this.hp + amount);
+    }
+
+    addConsumable(definitionId) {
+        const def = getItemDefinition(definitionId);
+        if (!def || def.category !== 'consumable') return false;
+        this.consumables.push(definitionId);
+        return true;
+    }
+
+    getConsumableCount() {
+        return this.consumables.length;
+    }
+
+    useConsumable() {
+        if (this.consumables.length === 0) return false;
+        const definitionId = this.consumables.shift();
+        const def = getItemDefinition(definitionId);
+        if (!def) return false;
+
+        if (def.healAmount === -1) {
+            // Full heal
+            this.hp = this.maxHp;
+        } else if (def.healAmount > 0) {
+            this.heal(def.healAmount);
+        }
+
+        if (def.restoreEnergy) {
+            this.energy = this.energyMax;
+        }
+
+        if (def.regenPerSecond && def.regenDuration) {
+            this.regenPerSecond = def.regenPerSecond;
+            this.regenTimer = def.regenDuration;
+        }
+
+        return { definitionId, name: def.name };
     }
 
     addItem(item) {
