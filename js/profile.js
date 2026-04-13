@@ -46,12 +46,14 @@ export const ITEM_DEFS = {
         id: 'g17', category: 'gun', rarity: 'gray',
         name: 'G17', description: 'Sidearm with a steady rhythm, 17-round magazine, and light recoil drift.',
         sellValue: 120,
+        size: 1,
         stats: { damage: 14, cooldown: 0.27, bulletSpeed: 500, range: 340, clipSize: 17, reloadTime: 1, spread: 0.075 }
     },
     as_val: {
         id: 'as_val', category: 'gun', rarity: 'gray',
         name: 'AS VAL', description: 'Suppressed rifle with 900 RPM fire rate, 45-round magazine, and wider spray.',
         sellValue: 240,
+        size: 1,
         stats: { damage: 10, cooldown: 60 / 900, bulletSpeed: 540, range: 436, clipSize: 45, reloadTime: 2, spread: 0.11 }
     },
 
@@ -105,36 +107,42 @@ export const ITEM_DEFS = {
         id: 'field_knife', category: 'melee', rarity: 'white',
         name: 'Field Knife', description: 'Basic close-quarters blade.',
         sellValue: 80,
+        size: 1,
         stats: { meleeDamage: 24, meleeCooldown: 0.42 }
     },
     breach_hatchet: {
         id: 'breach_hatchet', category: 'melee', rarity: 'green',
         name: 'Breach Hatchet', description: 'Reliable utility hatchet.',
         sellValue: 110,
+        size: 1,
         stats: { meleeDamage: 30, meleeCooldown: 0.4 }
     },
     ion_blade: {
         id: 'ion_blade', category: 'melee', rarity: 'blue',
         name: 'Ion Blade', description: 'Light blade with quick recovery.',
         sellValue: 180,
+        size: 1,
         stats: { meleeDamage: 34, meleeCooldown: 0.34 }
     },
     revenant_machete: {
         id: 'revenant_machete', category: 'melee', rarity: 'purple',
         name: 'Revenant Machete', description: 'Heavy finishing blade.',
         sellValue: 260,
+        size: 1,
         stats: { meleeDamage: 42, meleeCooldown: 0.36 }
     },
     wraith_katana: {
         id: 'wraith_katana', category: 'melee', rarity: 'gold',
         name: 'Wraith Katana', description: 'Elegant high-damage blade for elite operatives.',
         sellValue: 380,
+        size: 1,
         stats: { meleeDamage: 50, meleeCooldown: 0.3 }
     },
     doom_cleaver: {
         id: 'doom_cleaver', category: 'melee', rarity: 'red',
         name: 'Doom Cleaver', description: 'Prototype heavy weapon that obliterates anything in range.',
         sellValue: 550,
+        size: 1,
         stats: { meleeDamage: 68, meleeCooldown: 0.38 }
     },
 
@@ -143,36 +151,42 @@ export const ITEM_DEFS = {
         id: 'cloth_vest', category: 'armor', rarity: 'white',
         name: 'Cloth Vest', description: 'Minimal torso protection.',
         sellValue: 90,
+        size: 1,
         modifiers: { maxHp: 10 }
     },
     kevlar_weave: {
         id: 'kevlar_weave', category: 'armor', rarity: 'green',
         name: 'Kevlar Weave', description: 'Standard-issue ballistic protection.',
         sellValue: 150,
+        size: 1,
         modifiers: { maxHp: 18 }
     },
     ranger_plate: {
         id: 'ranger_plate', category: 'armor', rarity: 'blue',
         name: 'Ranger Plate', description: 'Balanced combat vest.',
         sellValue: 220,
+        size: 1,
         modifiers: { maxHp: 28 }
     },
     warden_vest: {
         id: 'warden_vest', category: 'armor', rarity: 'purple',
         name: 'Warden Vest', description: 'Heavy-duty protection for high-threat zones.',
         sellValue: 310,
+        size: 1,
         modifiers: { maxHp: 40 }
     },
     titan_rig: {
         id: 'titan_rig', category: 'armor', rarity: 'gold',
         name: 'Titan Rig', description: 'Heavy armor for frontline raids.',
         sellValue: 390,
+        size: 1,
         modifiers: { maxHp: 52 }
     },
     bastion_plate: {
         id: 'bastion_plate', category: 'armor', rarity: 'red',
         name: 'Bastion Plate', description: 'Experimental exo-armor with maximum protection.',
         sellValue: 580,
+        size: 1,
         modifiers: { maxHp: 72 }
     },
 
@@ -181,36 +195,42 @@ export const ITEM_DEFS = {
         id: 'scout_cap', category: 'helmet', rarity: 'white',
         name: 'Scout Cap', description: 'Light head cover.',
         sellValue: 70,
+        size: 1,
         modifiers: { maxHp: 6 }
     },
     recon_helmet: {
         id: 'recon_helmet', category: 'helmet', rarity: 'green',
         name: 'Recon Helmet', description: 'Standard issue tactical helmet.',
         sellValue: 140,
+        size: 1,
         modifiers: { maxHp: 14 }
     },
     sentinel_helm: {
         id: 'sentinel_helm', category: 'helmet', rarity: 'blue',
         name: 'Sentinel Helm', description: 'Reinforced helmet with side protection.',
         sellValue: 200,
+        size: 1,
         modifiers: { maxHp: 20 }
     },
     eclipse_visor: {
         id: 'eclipse_visor', category: 'helmet', rarity: 'purple',
         name: 'Eclipse Visor', description: 'Enhanced visor with reinforced shell.',
         sellValue: 250,
+        size: 1,
         modifiers: { maxHp: 24 }
     },
     fortress_mask: {
         id: 'fortress_mask', category: 'helmet', rarity: 'gold',
         name: 'Fortress Mask', description: 'Full-face tactical helmet with blast shielding.',
         sellValue: 360,
+        size: 1,
         modifiers: { maxHp: 36 }
     },
     phantom_crown: {
         id: 'phantom_crown', category: 'helmet', rarity: 'red',
         name: 'Phantom Crown', description: 'Prototype adaptive helmet with integrated HUD.',
         sellValue: 520,
+        size: 1,
         modifiers: { maxHp: 48 }
     },
 
@@ -219,36 +239,42 @@ export const ITEM_DEFS = {
         id: 'trail_shoes', category: 'shoes', rarity: 'white',
         name: 'Trail Shoes', description: 'Plain footwear for basic mobility.',
         sellValue: 60,
+        size: 1,
         modifiers: { speed: 10 }
     },
     runner_boots: {
         id: 'runner_boots', category: 'shoes', rarity: 'green',
         name: 'Runner Boots', description: 'Reliable movement boost.',
         sellValue: 120,
+        size: 1,
         modifiers: { speed: 20 }
     },
     phase_greaves: {
         id: 'phase_greaves', category: 'shoes', rarity: 'blue',
         name: 'Phase Greaves', description: 'Fast boots for quick disengages.',
         sellValue: 200,
+        size: 1,
         modifiers: { speed: 32 }
     },
     phantom_sprinters: {
         id: 'phantom_sprinters', category: 'shoes', rarity: 'purple',
         name: 'Phantom Sprinters', description: 'Ultra-light boots for rapid extraction.',
         sellValue: 280,
+        size: 1,
         modifiers: { speed: 44 }
     },
     blitz_treads: {
         id: 'blitz_treads', category: 'shoes', rarity: 'gold',
         name: 'Blitz Treads', description: 'High-performance boots with shock absorption.',
         sellValue: 370,
+        size: 1,
         modifiers: { speed: 56 }
     },
     warp_drivers: {
         id: 'warp_drivers', category: 'shoes', rarity: 'red',
         name: 'Warp Drivers', description: 'Experimental exo-boots that defy physics.',
         sellValue: 520,
+        size: 1,
         modifiers: { speed: 72 }
     },
 
@@ -257,36 +283,42 @@ export const ITEM_DEFS = {
         id: 'sling_pack', category: 'backpack', rarity: 'white',
         name: 'Sling Pack', description: 'Small pack with limited carrying space.',
         sellValue: 75,
+        size: 1,
         modifiers: { carrySlots: 3 }
     },
     scout_pack: {
         id: 'scout_pack', category: 'backpack', rarity: 'green',
         name: 'Scout Pack', description: 'Compact backpack for efficient loot runs.',
         sellValue: 130,
+        size: 1,
         modifiers: { carrySlots: 5 }
     },
     mule_pack: {
         id: 'mule_pack', category: 'backpack', rarity: 'blue',
         name: 'Mule Pack', description: 'Larger backpack for bigger hauls.',
         sellValue: 220,
+        size: 1,
         modifiers: { carrySlots: 8 }
     },
     siege_rucksack: {
         id: 'siege_rucksack', category: 'backpack', rarity: 'purple',
         name: 'Siege Rucksack', description: 'Tactical rucksack built for extended operations.',
         sellValue: 300,
+        size: 1,
         modifiers: { carrySlots: 11 }
     },
     cargo_titan: {
         id: 'cargo_titan', category: 'backpack', rarity: 'gold',
         name: 'Cargo Titan', description: 'Heavy-duty hauler with reinforced compartments.',
         sellValue: 400,
+        size: 1,
         modifiers: { carrySlots: 14 }
     },
     void_satchel: {
         id: 'void_satchel', category: 'backpack', rarity: 'red',
         name: 'Void Satchel', description: 'Prototype pack with huge haul capacity.',
         sellValue: 480,
+        size: 1,
         modifiers: { carrySlots: 18 }
     },
 
@@ -295,30 +327,35 @@ export const ITEM_DEFS = {
         id: 'field_bandage', category: 'consumable', rarity: 'white',
         name: 'Field Bandage', description: 'Basic gauze wrap. Restores 20 HP.',
         sellValue: 30,
+        size: 1,
         healAmount: 20
     },
     med_kit: {
         id: 'med_kit', category: 'consumable', rarity: 'green',
         name: 'Med Kit', description: 'Standard first aid kit. Restores 35 HP.',
         sellValue: 80,
+        size: 1,
         healAmount: 35
     },
     stim_syringe: {
         id: 'stim_syringe', category: 'consumable', rarity: 'blue',
         name: 'Stim Syringe', description: 'Fast-acting combat stimulant. Restores 50 HP.',
         sellValue: 200,
+        size: 1,
         healAmount: 50
     },
     combat_medic_pack: {
         id: 'combat_medic_pack', category: 'consumable', rarity: 'purple',
         name: 'Combat Medic Pack', description: 'Advanced field surgical kit. Restores 70 HP.',
         sellValue: 400,
+        size: 1,
         healAmount: 70
     },
     regen_injector: {
         id: 'regen_injector', category: 'consumable', rarity: 'gold',
         name: 'Regen Injector', description: 'Nanobots that slowly regen health. Restores 100 HP + 2 HP/sec for 15 sec.',
         sellValue: 800,
+        size: 1,
         healAmount: 100,
         regenPerSecond: 2,
         regenDuration: 15
@@ -327,6 +364,7 @@ export const ITEM_DEFS = {
         id: 'nano_serum', category: 'consumable', rarity: 'red',
         name: 'Nano Serum', description: 'Experimental full-body nano-repair. Fully restores HP and energy.',
         sellValue: 5000,
+        size: 1,
         healAmount: -1,  // -1 = full heal
         restoreEnergy: true
     }
@@ -630,6 +668,11 @@ function isMarketLockedAmmo(definitionId) {
     return definitionId === 'ammo_white';
 }
 
+function isMarketLockedMelee(definitionId) {
+    const def = ITEM_DEFS[definitionId];
+    return def?.category === 'melee';
+}
+
 function isFreeFallbackAmmo(definitionId) {
     return definitionId === 'ammo_white';
 }
@@ -648,19 +691,22 @@ function applyDeathLosses(profile, difficulty = 'advanced') {
         return entries;
     }, []);
 
+    // Melee weapons are never lost on death
+    const nonMeleeEquipped = equippedDefinitions.filter((entry) => entry.slot !== 'melee');
+
     if (difficulty === 'hell') {
-        for (const { definitionId } of equippedDefinitions) {
+        for (const { definitionId } of nonMeleeEquipped) {
             removeOneDefinitionFromStash(profile, definitionId);
         }
         return;
     }
 
-    const gunEntry = equippedDefinitions.find((entry) => entry.slot === 'gun');
+    const gunEntry = nonMeleeEquipped.find((entry) => entry.slot === 'gun');
     if (gunEntry) {
         removeOneDefinitionFromStash(profile, gunEntry.definitionId);
     }
 
-    for (const entry of equippedDefinitions) {
+    for (const entry of nonMeleeEquipped) {
         if (entry.slot === 'gun') continue;
         if (rollLoss(0.15)) {
             removeOneDefinitionFromStash(profile, entry.definitionId);
@@ -784,6 +830,7 @@ export function createLootItem(definitionId, options = {}) {
         category: definition.category,
         rarity: definition.rarity,
         sellValue: quantity ? definition.sellValue * quantity : definition.sellValue,
+        size: definition.size || 1,
         description: quantity ? `${definition.name} pack containing ${quantity} round${quantity === 1 ? '' : 's'}.` : definition.description,
         quantity: quantity || undefined,
         stats: clone(definition.stats || {}),
@@ -803,7 +850,7 @@ export function createPersistentEntryFromLootItem(item) {
 export function createLootItemsForCrateTier(tierKey) {
     const tier = CRATE_TIERS[tierKey];
     if (!tier) return createLootItemsForZone(0, 3);
-    const itemIds = Object.keys(ITEM_DEFS);
+    const itemIds = Object.keys(ITEM_DEFS).filter((id) => ITEM_DEFS[id].category !== 'melee');
     const count = tier.itemCount.min + Math.floor(Math.random() * (tier.itemCount.max - tier.itemCount.min + 1));
     const items = [];
     for (let i = 0; i < count; i++) {
@@ -861,7 +908,7 @@ function getCrateDropRarity(crateRarity) {
 export function createLootItemsForCrateRarity(crateRarity) {
     const countRange = getCrateItemCount(crateRarity);
     const count = countRange.min + Math.floor(Math.random() * (countRange.max - countRange.min + 1));
-    const itemIds = Object.keys(ITEM_DEFS).filter((id) => ITEM_DEFS[id].category !== 'loot');
+    const itemIds = Object.keys(ITEM_DEFS).filter((id) => ITEM_DEFS[id].category !== 'loot' && ITEM_DEFS[id].category !== 'melee');
     const items = [];
 
     for (let i = 0; i < count; i++) {
@@ -876,7 +923,7 @@ export function createLootItemsForCrateRarity(crateRarity) {
 
 export function createLootItemsForZone(zone, count) {
     const pool = LOOT_POOLS[zone] || LOOT_POOLS[0];
-    const itemIds = Object.keys(ITEM_DEFS);
+    const itemIds = Object.keys(ITEM_DEFS).filter((id) => ITEM_DEFS[id].category !== 'melee');
     const items = [];
     for (let i = 0; i < count; i++) {
         const rarity = pool[Math.floor(Math.random() * pool.length)];
@@ -1148,6 +1195,7 @@ export class ProfileStore {
         const definition = ITEM_DEFS[definitionId];
         if (!definition) throw new Error('Item not found.');
         if (isMarketLockedAmmo(definitionId)) throw new Error('Gray ammo cannot be traded in the market.');
+        if (isMarketLockedMelee(definitionId)) throw new Error('Melee weapons cannot be traded in the market.');
         const amount = Math.max(1, Math.floor(Number(quantity) || 0));
         const totalCost = getBuyTradeTotal(definitionId, amount);
         if (totalCost < MIN_TRADE_TOTAL) throw new Error(`Trades must be at least ${MIN_TRADE_TOTAL} coins.`);
@@ -1168,6 +1216,7 @@ export class ProfileStore {
         const definition = ITEM_DEFS[definitionId];
         if (!definition) throw new Error('Item not found.');
         if (isMarketLockedAmmo(definitionId)) throw new Error('Gray ammo cannot be traded in the market.');
+        if (isMarketLockedMelee(definitionId)) throw new Error('Melee weapons cannot be traded in the market.');
         const stash = this.currentProfile.stashItems || [];
         const ownedCount = isAmmoDefinition(definitionId)
             ? getAmmoCountForProfile(this.currentProfile, definitionId)

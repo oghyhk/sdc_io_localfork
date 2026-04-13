@@ -271,7 +271,7 @@ function renderItems() {
     return `<div class="card" onclick="openItemEditor('${item.id}')">
       <div class="thumb"><img src="${imgPath}" onerror="this.parentElement.innerHTML='<div class=placeholder>🔫</div>'" alt="${item.name}"></div>
       <h3><span class="rarity-dot rarity-${item.rarity}"></span>${item.name}</h3>
-      <div class="meta">${item.category} · ${item.rarity} · $${item.sellValue}</div>
+      <div class="meta">${item.category} · ${item.rarity} · $${item.sellValue} · size:${item.size||1}</div>
       <div class="stats">${statsHtml}</div>
     </div>`;
   }).join('');
@@ -321,6 +321,7 @@ function openItemEditor(id) {
         </select>
       </div>
       <div class="form-group"><label>Sell Value</label><input id="ed_sell" type="number" value="${item.sellValue||0}"></div>
+      <div class="form-group"><label>Size (carry slots)</label><input id="ed_size" type="number" min="1" value="${item.size||1}"></div>
     </div>
     <div class="form-group"><label>Description</label><textarea id="ed_desc">${item.description||''}</textarea></div>
     ${isGun ? renderGunStats(item.stats||{}) : ''}
@@ -372,7 +373,8 @@ function saveItem(oldId, isNew) {
     id, category: cat, rarity: document.getElementById('ed_rarity').value,
     name: document.getElementById('ed_name').value,
     description: document.getElementById('ed_desc').value,
-    sellValue: parseInt(document.getElementById('ed_sell').value) || 0
+    sellValue: parseInt(document.getElementById('ed_sell').value) || 0,
+    size: parseInt(document.getElementById('ed_size').value) || 1
   };
   
   if (cat === 'gun') {

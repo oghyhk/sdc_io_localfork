@@ -17,7 +17,8 @@
         "reloadTime": 1,
         "spread": 0.075
       },
-      "image": "/assets/dev/g17.jpg"
+      "image": "/assets/dev/g17.jpg",
+      "size": 1
     },
     "as_val": {
       "id": "as_val",
@@ -35,7 +36,8 @@
         "reloadTime": 2,
         "spread": 0.11
       },
-      "image": "/assets/dev/as_val.jpg"
+      "image": "/assets/dev/as_val.jpg",
+      "size": 1
     },
     "field_knife": {
       "id": "field_knife",
@@ -48,7 +50,8 @@
         "meleeDamage": 24,
         "meleeCooldown": 0.42
       },
-      "image": "/assets/dev/field_knife.jpg"
+      "image": "/assets/dev/field_knife.jpg",
+      "size": 1
     },
     "breach_hatchet": {
       "id": "breach_hatchet",
@@ -61,7 +64,8 @@
         "meleeDamage": 30,
         "meleeCooldown": 0.4
       },
-      "image": "/assets/dev/breach_hatchet.jpg"
+      "image": "/assets/dev/breach_hatchet.jpg",
+      "size": 1
     },
     "ion_blade": {
       "id": "ion_blade",
@@ -74,7 +78,8 @@
         "meleeDamage": 34,
         "meleeCooldown": 0.34
       },
-      "image": "/assets/dev/ion_blade.jpg"
+      "image": "/assets/dev/ion_blade.jpg",
+      "size": 1
     },
     "revenant_machete": {
       "id": "revenant_machete",
@@ -87,7 +92,8 @@
         "meleeDamage": 42,
         "meleeCooldown": 0.36
       },
-      "image": "/assets/dev/revenant_machete.jpg"
+      "image": "/assets/dev/revenant_machete.jpg",
+      "size": 1
     },
     "wraith_katana": {
       "id": "wraith_katana",
@@ -100,7 +106,8 @@
         "meleeDamage": 50,
         "meleeCooldown": 0.3
       },
-      "image": "/assets/dev/wraith_katana.jpg"
+      "image": "/assets/dev/wraith_katana.jpg",
+      "size": 1
     },
     "doom_cleaver": {
       "id": "doom_cleaver",
@@ -113,7 +120,8 @@
         "meleeDamage": 68,
         "meleeCooldown": 0.38
       },
-      "image": "/assets/dev/doom_cleaver.jpg"
+      "image": "/assets/dev/doom_cleaver.jpg",
+      "size": 1
     },
     "cloth_vest": {
       "id": "cloth_vest",
@@ -125,7 +133,8 @@
       "modifiers": {
         "maxHp": 10
       },
-      "image": "/assets/dev/cloth_vest.jpg"
+      "image": "/assets/dev/cloth_vest.jpg",
+      "size": 1
     },
     "kevlar_weave": {
       "id": "kevlar_weave",
@@ -137,7 +146,8 @@
       "modifiers": {
         "maxHp": 18
       },
-      "image": "/assets/dev/kevlar_weave.jpg"
+      "image": "/assets/dev/kevlar_weave.jpg",
+      "size": 1
     },
     "ranger_plate": {
       "id": "ranger_plate",
@@ -149,7 +159,8 @@
       "modifiers": {
         "maxHp": 28
       },
-      "image": "/assets/dev/ranger_plate.jpg"
+      "image": "/assets/dev/ranger_plate.jpg",
+      "size": 1
     },
     "warden_vest": {
       "id": "warden_vest",
@@ -161,7 +172,8 @@
       "modifiers": {
         "maxHp": 40
       },
-      "image": "/assets/dev/warden_vest.jpg"
+      "image": "/assets/dev/warden_vest.jpg",
+      "size": 1
     },
     "titan_rig": {
       "id": "titan_rig",
@@ -173,7 +185,8 @@
       "modifiers": {
         "maxHp": 52
       },
-      "image": "/assets/dev/titan_rig.jpg"
+      "image": "/assets/dev/titan_rig.jpg",
+      "size": 1
     },
     "bastion_plate": {
       "id": "bastion_plate",
@@ -185,7 +198,8 @@
       "modifiers": {
         "maxHp": 72
       },
-      "image": "/assets/dev/bastion_plate.jpg"
+      "image": "/assets/dev/bastion_plate.jpg",
+      "size": 1
     },
     "scout_cap": {
       "id": "scout_cap",
@@ -197,7 +211,8 @@
       "modifiers": {
         "maxHp": 6
       },
-      "image": "/assets/dev/scout_cap.jpg"
+      "image": "/assets/dev/scout_cap.jpg",
+      "size": 1
     },
     "recon_helmet": {
       "id": "recon_helmet",
@@ -209,7 +224,8 @@
       "modifiers": {
         "maxHp": 14
       },
-      "image": "/assets/dev/recon_helmet.jpg"
+      "image": "/assets/dev/recon_helmet.jpg",
+      "size": 1
     },
     "sentinel_helm": {
       "id": "sentinel_helm",
@@ -221,7 +237,8 @@
       "modifiers": {
         "maxHp": 20
       },
-      "image": "/assets/dev/sentinel_helm.jpg"
+      "image": "/assets/dev/sentinel_helm.jpg",
+      "size": 1
     },
     "eclipse_visor": {
       "id": "eclipse_visor",
@@ -233,7 +250,8 @@
       "modifiers": {
         "maxHp": 24
       },
-      "image": "/assets/dev/eclipse_visor.jpg"
+      "image": "/assets/dev/eclipse_visor.jpg",
+      "size": 1
     },
     "fortress_mask": {
       "id": "fortress_mask",
@@ -245,7 +263,8 @@
       "modifiers": {
         "maxHp": 36
       },
-      "image": "/assets/dev/fortress_mask.jpg"
+      "image": "/assets/dev/fortress_mask.jpg",
+      "size": 1
     },
     "phantom_crown": {
       "id": "phantom_crown",
@@ -257,7 +276,8 @@
       "modifiers": {
         "maxHp": 48
       },
-      "image": "/assets/dev/phantom_crown.jpg"
+      "image": "/assets/dev/phantom_crown.jpg",
+      "size": 1
     },
     "trail_shoes": {
       "id": "trail_shoes",
@@ -269,7 +289,8 @@
       "modifiers": {
         "speed": 10
       },
-      "image": "/assets/dev/trail_shoes.jpg"
+      "image": "/assets/dev/trail_shoes.jpg",
+      "size": 1
     },
     "runner_boots": {
       "id": "runner_boots",
@@ -281,7 +302,8 @@
       "modifiers": {
         "speed": 20
       },
-      "image": "/assets/dev/runner_boots.jpg"
+      "image": "/assets/dev/runner_boots.jpg",
+      "size": 1
     },
     "phase_greaves": {
       "id": "phase_greaves",
@@ -293,7 +315,8 @@
       "modifiers": {
         "speed": 32
       },
-      "image": "/assets/dev/phase_greaves.jpg"
+      "image": "/assets/dev/phase_greaves.jpg",
+      "size": 1
     },
     "phantom_sprinters": {
       "id": "phantom_sprinters",
@@ -305,7 +328,8 @@
       "modifiers": {
         "speed": 44
       },
-      "image": "/assets/dev/phantom_sprinters.jpg"
+      "image": "/assets/dev/phantom_sprinters.jpg",
+      "size": 1
     },
     "blitz_treads": {
       "id": "blitz_treads",
@@ -317,7 +341,8 @@
       "modifiers": {
         "speed": 56
       },
-      "image": "/assets/dev/blitz_treads.jpg"
+      "image": "/assets/dev/blitz_treads.jpg",
+      "size": 1
     },
     "warp_drivers": {
       "id": "warp_drivers",
@@ -329,7 +354,8 @@
       "modifiers": {
         "speed": 72
       },
-      "image": "/assets/dev/warp_drivers.jpg"
+      "image": "/assets/dev/warp_drivers.jpg",
+      "size": 1
     },
     "sling_pack": {
       "id": "sling_pack",
@@ -341,7 +367,8 @@
       "modifiers": {
         "carrySlots": 3
       },
-      "image": "/assets/dev/sling_pack.jpg"
+      "image": "/assets/dev/sling_pack.jpg",
+      "size": 1
     },
     "scout_pack": {
       "id": "scout_pack",
@@ -353,7 +380,8 @@
       "modifiers": {
         "carrySlots": 5
       },
-      "image": "/assets/dev/scout_pack.jpg"
+      "image": "/assets/dev/scout_pack.jpg",
+      "size": 1
     },
     "mule_pack": {
       "id": "mule_pack",
@@ -365,7 +393,8 @@
       "modifiers": {
         "carrySlots": 8
       },
-      "image": "/assets/dev/mule_pack.jpg"
+      "image": "/assets/dev/mule_pack.jpg",
+      "size": 1
     },
     "siege_rucksack": {
       "id": "siege_rucksack",
@@ -377,7 +406,8 @@
       "modifiers": {
         "carrySlots": 11
       },
-      "image": "/assets/dev/siege_rucksack.jpg"
+      "image": "/assets/dev/siege_rucksack.jpg",
+      "size": 1
     },
     "cargo_titan": {
       "id": "cargo_titan",
@@ -389,7 +419,8 @@
       "modifiers": {
         "carrySlots": 14
       },
-      "image": "/assets/dev/cargo_titan.jpg"
+      "image": "/assets/dev/cargo_titan.jpg",
+      "size": 1
     },
     "void_satchel": {
       "id": "void_satchel",
@@ -401,7 +432,8 @@
       "modifiers": {
         "carrySlots": 18
       },
-      "image": "/assets/dev/void_satchel.jpg"
+      "image": "/assets/dev/void_satchel.jpg",
+      "size": 1
     },
     "ammo_white": {
       "id": "ammo_white",
@@ -492,7 +524,8 @@
         "reloadTime": 1.8,
         "spread": 0.09
       },
-      "image": "/assets/dev/m4_carbine.jpg"
+      "image": "/assets/dev/m4_carbine.jpg",
+      "size": 1
     },
     "mp5_sd": {
       "id": "mp5_sd",
@@ -510,7 +543,8 @@
         "reloadTime": 1.6,
         "spread": 0.12
       },
-      "image": "/assets/dev/mp5_sd.jpg"
+      "image": "/assets/dev/mp5_sd.jpg",
+      "size": 1
     },
     "ak74m": {
       "id": "ak74m",
@@ -528,7 +562,8 @@
         "reloadTime": 2.1,
         "spread": 0.1
       },
-      "image": "/assets/dev/ak74m.jpg"
+      "image": "/assets/dev/ak74m.jpg",
+      "size": 1
     },
     "scar_h": {
       "id": "scar_h",
@@ -546,7 +581,8 @@
         "reloadTime": 2.2,
         "spread": 0.07
       },
-      "image": "/assets/dev/scar_h.jpg"
+      "image": "/assets/dev/scar_h.jpg",
+      "size": 1
     },
     "hk416": {
       "id": "hk416",
@@ -564,7 +600,8 @@
         "reloadTime": 1.9,
         "spread": 0.065
       },
-      "image": "/assets/dev/hk416.jpg"
+      "image": "/assets/dev/hk416.jpg",
+      "size": 1
     },
     "sr25": {
       "id": "sr25",
@@ -582,7 +619,8 @@
         "reloadTime": 2.5,
         "spread": 0.04
       },
-      "image": "/assets/dev/sr25.jpg"
+      "image": "/assets/dev/sr25.jpg",
+      "size": 1
     },
     "rpk16": {
       "id": "rpk16",
@@ -600,7 +638,8 @@
         "reloadTime": 4.0,
         "spread": 0.13
       },
-      "image": "/assets/dev/rpk16.jpg"
+      "image": "/assets/dev/rpk16.jpg",
+      "size": 1
     },
     "ash12": {
       "id": "ash12",
@@ -618,7 +657,8 @@
         "reloadTime": 2.8,
         "spread": 0.09
       },
-      "image": "/assets/dev/ash12.jpg"
+      "image": "/assets/dev/ash12.jpg",
+      "size": 1
     },
     "mk18_cqbr": {
       "id": "mk18_cqbr",
@@ -636,7 +676,8 @@
         "reloadTime": 1.7,
         "spread": 0.06
       },
-      "image": "/assets/dev/mk18_cqbr.jpg"
+      "image": "/assets/dev/mk18_cqbr.jpg",
+      "size": 1
     },
     "mk14_ebr": {
       "id": "mk14_ebr",
@@ -654,7 +695,8 @@
         "reloadTime": 2.6,
         "spread": 0.035
       },
-      "image": "/assets/dev/mk14_ebr.jpg"
+      "image": "/assets/dev/mk14_ebr.jpg",
+      "size": 1
     },
     "vector45": {
       "id": "vector45",
@@ -672,7 +714,8 @@
         "reloadTime": 1.5,
         "spread": 0.14
       },
-      "image": "/assets/dev/vector45.jpg"
+      "image": "/assets/dev/vector45.jpg",
+      "size": 1
     },
     "trench_spike": {
       "id": "trench_spike",
@@ -685,7 +728,8 @@
         "meleeDamage": 20,
         "meleeCooldown": 0.38
       },
-      "image": "/assets/dev/trench_spike.jpg"
+      "image": "/assets/dev/trench_spike.jpg",
+      "size": 1
     },
     "tomahawk": {
       "id": "tomahawk",
@@ -698,7 +742,8 @@
         "meleeDamage": 32,
         "meleeCooldown": 0.42
       },
-      "image": "/assets/dev/tomahawk.jpg"
+      "image": "/assets/dev/tomahawk.jpg",
+      "size": 1
     },
     "karambit": {
       "id": "karambit",
@@ -711,7 +756,8 @@
         "meleeDamage": 28,
         "meleeCooldown": 0.28
       },
-      "image": "/assets/dev/karambit.jpg"
+      "image": "/assets/dev/karambit.jpg",
+      "size": 1
     },
     "fire_axe": {
       "id": "fire_axe",
@@ -724,7 +770,8 @@
         "meleeDamage": 55,
         "meleeCooldown": 0.55
       },
-      "image": "/assets/dev/fire_axe.jpg"
+      "image": "/assets/dev/fire_axe.jpg",
+      "size": 1
     },
     "cricket_bat": {
       "id": "cricket_bat",
@@ -737,7 +784,8 @@
         "meleeDamage": 48,
         "meleeCooldown": 0.35
       },
-      "image": "/assets/dev/cricket_bat.jpg"
+      "image": "/assets/dev/cricket_bat.jpg",
+      "size": 1
     },
     "thermal_blade": {
       "id": "thermal_blade",
@@ -750,7 +798,8 @@
         "meleeDamage": 78,
         "meleeCooldown": 0.42
       },
-      "image": "/assets/dev/thermal_blade.jpg"
+      "image": "/assets/dev/thermal_blade.jpg",
+      "size": 1
     },
     "soft_armor": {
       "id": "soft_armor",
@@ -762,7 +811,8 @@
       "modifiers": {
         "maxHp": 12
       },
-      "image": "/assets/dev/soft_armor.jpg"
+      "image": "/assets/dev/soft_armor.jpg",
+      "size": 1
     },
     "carrier_rig": {
       "id": "carrier_rig",
@@ -774,7 +824,8 @@
       "modifiers": {
         "maxHp": 22
       },
-      "image": "/assets/dev/carrier_rig.jpg"
+      "image": "/assets/dev/carrier_rig.jpg",
+      "size": 1
     },
     "fort_armor": {
       "id": "fort_armor",
@@ -786,7 +837,8 @@
       "modifiers": {
         "maxHp": 32
       },
-      "image": "/assets/dev/fort_armor.jpg"
+      "image": "/assets/dev/fort_armor.jpg",
+      "size": 1
     },
     "slick_armor": {
       "id": "slick_armor",
@@ -798,7 +850,8 @@
       "modifiers": {
         "maxHp": 45
       },
-      "image": "/assets/dev/slick_armor.jpg"
+      "image": "/assets/dev/slick_armor.jpg",
+      "size": 1
     },
     "altyn_vest": {
       "id": "altyn_vest",
@@ -810,7 +863,8 @@
       "modifiers": {
         "maxHp": 58
       },
-      "image": "/assets/dev/altyn_vest.jpg"
+      "image": "/assets/dev/altyn_vest.jpg",
+      "size": 1
     },
     "exo_suit": {
       "id": "exo_suit",
@@ -822,7 +876,8 @@
       "modifiers": {
         "maxHp": 80
       },
-      "image": "/assets/dev/exo_suit.jpg"
+      "image": "/assets/dev/exo_suit.jpg",
+      "size": 1
     },
     "ssh68": {
       "id": "ssh68",
@@ -834,7 +889,8 @@
       "modifiers": {
         "maxHp": 8
       },
-      "image": "/assets/dev/ssh68.jpg"
+      "image": "/assets/dev/ssh68.jpg",
+      "size": 1
     },
     "ops_core": {
       "id": "ops_core",
@@ -846,7 +902,8 @@
       "modifiers": {
         "maxHp": 16
       },
-      "image": "/assets/dev/ops_core.jpg"
+      "image": "/assets/dev/ops_core.jpg",
+      "size": 1
     },
     "altyn_helmet": {
       "id": "altyn_helmet",
@@ -858,7 +915,8 @@
       "modifiers": {
         "maxHp": 22
       },
-      "image": "/assets/dev/altyn_helmet.jpg"
+      "image": "/assets/dev/altyn_helmet.jpg",
+      "size": 1
     },
     "exfil_helmet": {
       "id": "exfil_helmet",
@@ -870,7 +928,8 @@
       "modifiers": {
         "maxHp": 28
       },
-      "image": "/assets/dev/exfil_helmet.jpg"
+      "image": "/assets/dev/exfil_helmet.jpg",
+      "size": 1
     },
     "rys_t": {
       "id": "rys_t",
@@ -882,7 +941,8 @@
       "modifiers": {
         "maxHp": 40
       },
-      "image": "/assets/dev/rys_t.jpg"
+      "image": "/assets/dev/rys_t.jpg",
+      "size": 1
     },
     "cyber_helm": {
       "id": "cyber_helm",
@@ -894,7 +954,8 @@
       "modifiers": {
         "maxHp": 52
       },
-      "image": "/assets/dev/cyber_helm.jpg"
+      "image": "/assets/dev/cyber_helm.jpg",
+      "size": 1
     },
     "combat_boots": {
       "id": "combat_boots",
@@ -906,7 +967,8 @@
       "modifiers": {
         "speed": 12
       },
-      "image": "/assets/dev/combat_boots.jpg"
+      "image": "/assets/dev/combat_boots.jpg",
+      "size": 1
     },
     "hiking_boots": {
       "id": "hiking_boots",
@@ -918,7 +980,8 @@
       "modifiers": {
         "speed": 22
       },
-      "image": "/assets/dev/hiking_boots.jpg"
+      "image": "/assets/dev/hiking_boots.jpg",
+      "size": 1
     },
     "jump_boots": {
       "id": "jump_boots",
@@ -930,7 +993,8 @@
       "modifiers": {
         "speed": 35
       },
-      "image": "/assets/dev/jump_boots.jpg"
+      "image": "/assets/dev/jump_boots.jpg",
+      "size": 1
     },
     "fast_greaves": {
       "id": "fast_greaves",
@@ -942,7 +1006,8 @@
       "modifiers": {
         "speed": 48
       },
-      "image": "/assets/dev/fast_greaves.jpg"
+      "image": "/assets/dev/fast_greaves.jpg",
+      "size": 1
     },
     "evas_sprinters": {
       "id": "evas_sprinters",
@@ -954,7 +1019,8 @@
       "modifiers": {
         "speed": 60
       },
-      "image": "/assets/dev/evas_sprinters.jpg"
+      "image": "/assets/dev/evas_sprinters.jpg",
+      "size": 1
     },
     "gravity_boots": {
       "id": "gravity_boots",
@@ -966,7 +1032,8 @@
       "modifiers": {
         "speed": 78
       },
-      "image": "/assets/dev/gravity_boots.jpg"
+      "image": "/assets/dev/gravity_boots.jpg",
+      "size": 1
     },
     "duffel_bag": {
       "id": "duffel_bag",
@@ -978,7 +1045,8 @@
       "modifiers": {
         "carrySlots": 4
       },
-      "image": "/assets/dev/duffel_bag.jpg"
+      "image": "/assets/dev/duffel_bag.jpg",
+      "size": 1
     },
     "day_pack": {
       "id": "day_pack",
@@ -990,7 +1058,8 @@
       "modifiers": {
         "carrySlots": 6
       },
-      "image": "/assets/dev/day_pack.jpg"
+      "image": "/assets/dev/day_pack.jpg",
+      "size": 1
     },
     "alice_pack": {
       "id": "alice_pack",
@@ -1002,7 +1071,8 @@
       "modifiers": {
         "carrySlots": 9
       },
-      "image": "/assets/dev/alice_pack.jpg"
+      "image": "/assets/dev/alice_pack.jpg",
+      "size": 1
     },
     "mystery_ranch": {
       "id": "mystery_ranch",
@@ -1014,7 +1084,8 @@
       "modifiers": {
         "carrySlots": 12
       },
-      "image": "/assets/dev/mystery_ranch.jpg"
+      "image": "/assets/dev/mystery_ranch.jpg",
+      "size": 1
     },
     "parachute_pack": {
       "id": "parachute_pack",
@@ -1026,7 +1097,8 @@
       "modifiers": {
         "carrySlots": 15
       },
-      "image": "/assets/dev/parachute_pack.jpg"
+      "image": "/assets/dev/parachute_pack.jpg",
+      "size": 1
     },
     "quantum_pack": {
       "id": "quantum_pack",
@@ -1038,7 +1110,8 @@
       "modifiers": {
         "carrySlots": 20
       },
-      "image": "/assets/dev/quantum_pack.jpg"
+      "image": "/assets/dev/quantum_pack.jpg",
+      "size": 1
     }
   },
   "enemies": {
@@ -1165,7 +1238,7 @@
   "crate_tiers": {
     "supply": {
       "label": "Supply Crate",
-      "description": "Common field supplies \u2014 mostly white and green gear.",
+      "description": "Common field supplies — mostly white and green gear.",
       "pool": [
         "white",
         "white",
@@ -1209,7 +1282,7 @@
     },
     "tactical": {
       "label": "Tactical Crate",
-      "description": "Military-grade equipment \u2014 blue to purple quality.",
+      "description": "Military-grade equipment — blue to purple quality.",
       "pool": [
         "green",
         "blue",
@@ -1253,7 +1326,7 @@
     },
     "elite": {
       "label": "Elite Crate",
-      "description": "High-value cache \u2014 purple, gold, and rare red items.",
+      "description": "High-value cache — purple, gold, and rare red items.",
       "pool": [
         "blue",
         "purple",

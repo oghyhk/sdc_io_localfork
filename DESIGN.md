@@ -46,6 +46,16 @@ The game includes 36 items across all six categories and rarity tiers:
 ### Consumables System
 Consumable items are picked up from loot crates during raids and stored in a separate consumable pouch (max 5). They do NOT take up backpack carry slots. Press **Q** to use a consumable. The HUD shows consumable count when any are held.
 
+### Melee Weapon Rules
+Melee weapons are permanent equipment with special rules that distinguish them from all other item types:
+
+- **Never dropped from crates** — Melee weapons cannot appear in loot crates, zone drops, or any random loot pool.
+- **Cannot be traded** — Melee weapons cannot be bought or sold on the market.
+- **Never lost on death** — Melee weapons are kept regardless of raid outcome or difficulty mode (Easy, Advanced, Hell). The equipped melee is always preserved.
+- **Always equipped** — Every player starts with a Field Knife (White) and the loadout system ensures a melee weapon is always equipped. If missing, the starter melee is auto-restored.
+
+> **Note:** The method of obtaining new/upgraded melee weapons (beyond the starter Field Knife) will be implemented later.
+
 | Item | Rarity | Heal | Special |
 |------|--------|------|---------|
 | Field Bandage | White | 20 HP | — |
@@ -62,6 +72,16 @@ Each item has a 512x512 PNG image stored in `assets/items/`. Images are displaye
 - **Crate loot panel** — full-width image above item details when opening crates during a raid
 
 The `getItemImagePath(definitionId)` function in `profile.js` returns the image path as `assets/items/<definitionId>.png`.
+
+### Item Size
+Each item (except ammo) has a `size` property (integer, default 1) that determines how many units of inventory space it occupies in the player's carrying capacity. Backpacks provide `carrySlots` which is the total space available.
+
+| Item | Size |
+|------|------|
+| Most items | 1 (default) |
+| Large/heavy items | 2+ |
+
+Size can be adjusted per-item via the Dev UI (`dev.html`) or CLI (`python dev.py edit item --id <id> --field size --value <n>`).
 
 ### Rarity Ladder
 All items, including equipment, follow this rarity order from highest to lowest:

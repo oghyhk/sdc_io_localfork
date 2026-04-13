@@ -7,7 +7,7 @@ Usage:
     python dev.py list enemies
     python dev.py list ammo
     python dev.py list crates
-    python dev.py add item --id my_gun --name "My Gun" --category gun --rarity blue --sell 200
+    python dev.py add item --id my_gun --name "My Gun" --category gun --rarity blue --sell 200 --size 2
     python dev.py add enemy --id my_enemy --name "My Enemy" --type melee --hp 50 --speed 90 --damage 10
     python dev.py edit item --id my_gun --field name --value "Better Gun"
     python dev.py edit enemy --id my_enemy --field hp --value 100
@@ -86,7 +86,8 @@ def cmd_list_items(args):
             stats = v.get('stats', {})
             mods = v.get('modifiers', {})
             stat_str = ', '.join(f"{sk}:{sv}" for sk, sv in {**stats, **mods}.items())
-            print(f"  {rc}●{RESET} {BOLD}{v.get('name', k):20s}{RESET} [{v.get('rarity',''):6s}] ${v.get('sellValue',0):>6}  {DIM}{stat_str}{RESET}")
+            size_str = f"  sz:{v.get('size', 1)}" if not v.get('lootType') == 'ammo' else ""
+            print(f"  {rc}●{RESET} {BOLD}{v.get('name', k):20s}{RESET} [{v.get('rarity',''):6s}] ${v.get('sellValue',0):>6}{size_str}  {DIM}{stat_str}{RESET}")
             if v.get('description'):
                 print(f"    {DIM}{v['description']}{RESET}")
     
@@ -151,6 +152,7 @@ def cmd_add_item(args):
         'rarity': args.rarity or 'white',
         'description': args.description or '',
         'sellValue': args.sell or 100,
+        'size': args.size or 1,
     }
     
     # Add default stats based on category
@@ -385,6 +387,7 @@ def main():
     add_item.add_argument('--hp_bonus', type=int)
     add_item.add_argument('--speed_bonus', type=int)
     add_item.add_argument('--carry_slots', type=int)
+    add_item.add_argument('--size', type=int, default=1)
     
     add_enemy = add_sub.add_parser('enemy')
     add_enemy.add_argument('--id', required=True)
