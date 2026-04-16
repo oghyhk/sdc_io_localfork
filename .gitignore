@@ -1,1 +1,6 @@
 __pycache__/
+data/users.json
+data/dev-config.json
+cron-state/state.json
+*.log
+nohup.out
