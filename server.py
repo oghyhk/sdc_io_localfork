@@ -327,6 +327,120 @@ class ApiHandler(SimpleHTTPRequestHandler):
             self._send_json({'ok': True, 'profile': safe_user})
             return
 
+        if parsed.path == '/api/mail':
+            # GET-like: fetch mail list for a user
+            username = str(body.get('username', '')).strip()
+            if not username:
+                self._send_json({'ok': False, 'message': 'Username required.'}, HTTPStatus.BAD_REQUEST)
+                return
+            store = read_store()
+            users = store.setdefault('users', {})
+            existing_key, user = get_user_record(users, username)
+            if not user:
+                self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
+                return
+            import time
+            now_ms = int(time.time() * 1000)
+            MAIL_EXPIRE_MS = 10 * 60 * 1000  # 10 minutes after claim
+            mail = user.get('mail', [])
+            # Filter out expired mail (claimed more than 10 min ago)
+            active_mail = []
+            changed = False
+            for m in mail:
+                if m.get('claimedAt') and (now_ms - m['claimedAt']) > MAIL_EXPIRE_MS:
+                    changed = True
+                    continue
+                active_mail.append(m)
+            if changed:
+                user['mail'] = active_mail
+                users[existing_key] = user
+                write_store(store)
+            safe_mail = [{k: v for k, v in m.items()} for m in active_mail]
+            self._send_json({'ok': True, 'mail': safe_mail})
+            return
+
+        if parsed.path == '/api/mail/claim':
+            username = str(body.get('username', '')).strip()
+            mail_id = str(body.get('mailId', '')).strip()
+            if not username or not mail_id:
+                self._send_json({'ok': False, 'message': 'Username and mailId required.'}, HTTPStatus.BAD_REQUEST)
+                return
+            store = read_store()
+            users = store.setdefault('users', {})
+            existing_key, user = get_user_record(users, username)
+            if not user:
+                self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
+                return
+            import time
+            now_ms = int(time.time() * 1000)
+            mail = user.get('mail', [])
+            found = False
+            for m in mail:
+                if m.get('id') == mail_id:
+                    if m.get('claimedAt'):
+                        self._send_json({'ok': False, 'message': 'Rewards already claimed.'}, HTTPStatus.BAD_REQUEST)
+                        return
+                    # Add rewards to profile
+                    for reward in m.get('rewards', []):
+                        did = reward.get('definitionId', '')
+                        qty = int(reward.get('quantity', 1))
+                        if not did:
+                            continue
+                        if did == 'coins' or did == 'coin':
+                            user['coins'] = int(user.get('coins', 0)) + qty
+                        else:
+                            # Item reward — add to stash
+                            stash = user.get('stashItems', [])
+                            for _ in range(max(1, qty)):
+                                stash.append({'definitionId': did})
+                            user['stashItems'] = stash
+                    m['claimedAt'] = now_ms
+                    found = True
+                    break
+            if not found:
+                self._send_json({'ok': False, 'message': 'Mail not found.'}, HTTPStatus.NOT_FOUND)
+                return
+            users[existing_key] = user
+            write_store(store)
+            safe_user = {k: v for k, v in user.items() if k != 'password'}
+            self._send_json({'ok': True, 'profile': safe_user})
+            return
+
+        if parsed.path == '/api/mail/send':
+            # Dev/admin: send mail to a player
+            username = str(body.get('username', '')).strip()
+            title = str(body.get('title', '')).strip()
+            content = str(body.get('content', '')).strip()
+            rewards = body.get('rewards', [])
+            if not username or not title:
+                self._send_json({'ok': False, 'message': 'Username and title required.'}, HTTPStatus.BAD_REQUEST)
+                return
+            if len(rewards) > 5:
+                self._send_json({'ok': False, 'message': 'Max 5 rewards per mail.'}, HTTPStatus.BAD_REQUEST)
+                return
+            import time, uuid
+            store = read_store()
+            users = store.setdefault('users', {})
+            existing_key, user = get_user_record(users, username)
+            if not user:
+                self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
+                return
+            mail_entry = {
+                'id': f'mail_{uuid.uuid4().hex[:12]}',
+                'title': title,
+                'content': content,
+                'rewards': [{'definitionId': str(r.get('definitionId', '')), 'quantity': int(r.get('quantity', 1))} for r in rewards if r.get('definitionId')],
+                'createdAt': int(time.time() * 1000),
+                'claimedAt': None,
+            }
+            mail = user.get('mail', [])
+            mail.append(mail_entry)
+            user['mail'] = mail
+            users[existing_key] = user
+            write_store(store)
+            self._send_json({'ok': True, 'mailId': mail_entry['id']})
+            return
+
         if parsed.path == '/api/dev-config':
             config = body.get('config') or body
             if not config:

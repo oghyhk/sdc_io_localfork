@@ -164,6 +164,27 @@ Achievements are managed through the dev tool (`dev.html` → 🏅 Achievements 
 
 On the Account page, achievements display as a row of circular badge images. Hovering reveals a tooltip with the full image, name, and description. Only enabled achievements are shown to players.
 
+## 3c. Mail System
+
+Players access mail via the ✉ button in the topbar next to the account button.
+
+### Mail Structure
+Each mail contains:
+- **Title** — subject line
+- **Content** — body text
+- **Rewards** — up to 5 item/coin rewards, shown as icons at the bottom
+- **Claim Rewards** button (if rewards exist)
+
+### Lifecycle
+- Unclaimed mail persists indefinitely
+- Claiming rewards stamps `claimedAt` timestamp
+- Mail auto-deletes **10 minutes** after rewards are claimed (server-side cleanup on next fetch)
+
+### Server API
+- `POST /api/mail` — fetch player's mail (auto-cleans expired)
+- `POST /api/mail/claim` — claim rewards, adds items/coins to profile
+- `POST /api/mail/send` — (admin) send mail with rewards to a player
+
 ---
 
 ## 4. Visual Direction
