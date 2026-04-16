@@ -292,6 +292,58 @@
         .placeholder-actions {
             display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px;
         }
+        /* Account page */
+        .account-layout { display: flex; gap: 28px; margin-top: 20px; }
+        .account-sidebar { flex: 0 0 200px; text-align: center; }
+        .account-main { flex: 1; min-width: 0; }
+        .account-pfp-wrap {
+            position: relative; width: 160px; height: 160px; margin: 0 auto 14px;
+            border-radius: 50%; overflow: hidden; border: 3px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05); cursor: pointer;
+        }
+        .account-pfp-wrap:hover { border-color: rgba(255,255,255,0.35); }
+        .account-pfp-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .account-pfp-placeholder {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            font-size: 48px; color: rgba(255,255,255,0.3);
+        }
+        .account-pfp-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex;
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;
+            font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+        }
+        .account-pfp-wrap:hover .account-pfp-overlay { opacity: 1; }
+        .account-username-display {
+            font-size: 20px; font-weight: 700; letter-spacing: 0.03em; margin-bottom: 4px;
+        }
+        .account-elo-display { font-size: 13px; color: rgba(255,255,255,0.55); }
+        .account-section { margin-bottom: 22px; }
+        .account-section h3 {
+            font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+            color: rgba(255,255,255,0.5); margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .account-field { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 12px; }
+        .account-field label { font-size: 14px; color: rgba(255,255,255,0.7); flex: 0 0 auto; }
+        .account-field-value { font-size: 14px; font-weight: 600; }
+        .account-field input[type="password"], .account-field input[type="text"] {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 14px;
+            width: 220px; outline: none;
+        }
+        .account-field input:focus { border-color: rgba(255,255,255,0.3); }
+        .account-btn {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px; padding: 8px 16px; color: #fff; font-size: 13px;
+            font-weight: 600; cursor: pointer; transition: background 0.15s;
+        }
+        .account-btn:hover { background: rgba(255,255,255,0.14); }
+        .account-btn.danger { border-color: rgba(220,50,50,0.3); color: #f66; }
+        .account-btn.danger:hover { background: rgba(220,50,50,0.15); }
+        .account-msg { font-size: 13px; margin-top: 6px; }
+        .account-msg.success { color: #6f6; }
+        .account-msg.error { color: #f66; }
+        .account-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; text-align: left; }
         .summary-tile {
             border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
@@ -1036,6 +1088,7 @@
                     <button id="placeholderBackButton" type="button" class="secondary-button">Back</button>
                 </div>
                 <div id="placeholderSummary" class="summary-grid"></div>
+                <div id="placeholderContent" class="placeholder-content"></div>
                 <div class="placeholder-actions">
                     <button class="secondary-button" disabled>Content coming soon</button>
                 </div>

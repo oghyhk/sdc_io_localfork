@@ -43,7 +43,8 @@ import {
     getBuyTradeTotal,
     getSellTradeTotal,
     getMinimumTradeQuantity,
-    MIN_TRADE_TOTAL
+    MIN_TRADE_TOTAL,
+    apiFetch
 } from './profile.js';
 import { getRosterLeaderboardEntries } from './ai_roster.js';
 
@@ -65,6 +66,7 @@ const placeholderScreen = document.getElementById('placeholderScreen');
 const placeholderTitle = document.getElementById('placeholderTitle');
 const placeholderSubtitle = document.getElementById('placeholderSubtitle');
 const placeholderSummary = document.getElementById('placeholderSummary');
+const placeholderContent = document.getElementById('placeholderContent');
 const placeholderBackButton = document.getElementById('placeholderBackButton');
 const menuSummary = document.getElementById('menuSummary');
 const inventoryCoins = document.getElementById('inventoryCoins');
@@ -176,7 +178,6 @@ const TOPBAR_PAGE_OPTIONS = [
     { id: 'leaderboard', label: 'Leaderboard' },
     { id: 'safebox', label: 'Safebox' },
     { id: 'account', label: 'Account' },
-    { id: 'profile', label: 'Profile' },
     { id: 'operation-pass', label: 'Operation Pass' },
 ];
 const DIFFICULTY_BUTTON_THEME = {
@@ -1003,6 +1004,160 @@ function syncAiRosterToServer() {
     store.pushAiRoster(entries).catch(() => {});
 }
 
+function renderAccountPage(profile) {
+    const summary = summarizeProfile(profile);
+    placeholderTitle.textContent = 'Account';
+    placeholderSubtitle.textContent = 'Manage your profile, avatar, and account settings.';
+    placeholderSummary.innerHTML = '';
+
+    const avatarDataUrl = profile.avatarDataUrl || '';
+    const pfpHtml = avatarDataUrl
+        ? `<img src="${avatarDataUrl}" alt="Avatar">`
+        : `<div class="account-pfp-placeholder">?</div>`;
+
+    const stats = profile.stats || {};
+    const winRate = stats.totalRuns > 0 ? Math.round((stats.totalExtractions / stats.totalRuns) * 100) : 0;
+
+    placeholderContent.innerHTML = `
+        <div class="account-layout">
+            <div class="account-sidebar">
+                <div class="account-pfp-wrap" id="accountPfpWrap" title="Change avatar">
+                    ${pfpHtml}
+                    <div class="account-pfp-overlay">CHANGE</div>
+                </div>
+                <input type="file" id="accountPfpInput" accept="image/*" style="display:none">
+                <div class="account-username-display">${escapeHtml(profile.username)}</div>
+                <div class="account-elo-display">ELO ${profile.elo || 1000}</div>
+            </div>
+            <div class="account-main">
+                <div class="account-section">
+                    <h3>Profile</h3>
+                    <div class="account-field">
+                        <label>Username</label>
+                        <span class="account-field-value">${escapeHtml(profile.username)}</span>
+                    </div>
+                    <div class="account-field">
+                        <label>ELO Rating</label>
+                        <span class="account-field-value">${profile.elo || 1000}</span>
+                    </div>
+                    <div class="account-field">
+                        <label>Player Level</label>
+                        <span class="account-field-value">${getPlayerLevelProgress(profile.playerExp || 0).level}</span>
+                    </div>
+                </div>
+                <div class="account-section">
+                    <h3>Security</h3>
+                    <div class="account-field">
+                        <label>Current Password</label>
+                        <input type="password" id="accountCurrentPw" placeholder="Enter current password">
+                    </div>
+                    <div class="account-field">
+                        <label>New Password</label>
+                        <input type="password" id="accountNewPw" placeholder="Enter new password">
+                    </div>
+                    <div class="account-field">
+                        <label>Confirm Password</label>
+                        <input type="password" id="accountConfirmPw" placeholder="Confirm new password">
+                    </div>
+                    <button class="account-btn" id="accountChangePwBtn">Change Password</button>
+                    <div id="accountPwMsg" class="account-msg"></div>
+                </div>
+                <div class="account-section">
+                    <h3>Lifetime Stats</h3>
+                    <div class="account-stats-grid">
+                        <div class="summary-tile"><span class="summary-label">Total Runs</span><strong>${stats.totalRuns || 0}</strong></div>
+                        <div class="summary-tile"><span class="summary-label">Extractions</span><strong>${stats.totalExtractions || 0}</strong></div>
+                        <div class="summary-tile"><span class="summary-label">Win Rate</span><strong>${winRate}%</strong></div>
+                        <div class="summary-tile"><span class="summary-label">Total Kills</span><strong>${stats.totalKills || 0}</strong></div>
+                        <div class="summary-tile"><span class="summary-label">Coins Earned</span><strong>${formatCoinAmountMarkup(stats.totalCoinsEarned || 0)}</strong></div>
+                        <div class="summary-tile"><span class="summary-label">Market Trades</span><strong>${stats.totalMarketTrades || 0}</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Hide the generic "coming soon" actions
+    const actionsEl = placeholderContent.parentElement?.querySelector('.placeholder-actions');
+    if (actionsEl) actionsEl.style.display = 'none';
+
+    // PFP upload
+    const pfpWrap = document.getElementById('accountPfpWrap');
+    const pfpInput = document.getElementById('accountPfpInput');
+    pfpWrap?.addEventListener('click', () => pfpInput?.click());
+    pfpInput?.addEventListener('change', async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+            const dataUrl = await compressImageTo512(file);
+            profile.avatarDataUrl = dataUrl;
+            await store.saveCurrentProfile();
+            renderAccountPage(store.getCurrentProfile());
+        } catch (err) {
+            console.error('PFP upload failed:', err);
+        }
+    });
+
+    // Password change
+    document.getElementById('accountChangePwBtn')?.addEventListener('click', async () => {
+        const msgEl = document.getElementById('accountPwMsg');
+        const currentPw = document.getElementById('accountCurrentPw')?.value || '';
+        const newPw = document.getElementById('accountNewPw')?.value || '';
+        const confirmPw = document.getElementById('accountConfirmPw')?.value || '';
+        if (!currentPw) { msgEl.className = 'account-msg error'; msgEl.textContent = 'Enter current password.'; return; }
+        if (newPw.length < 3) { msgEl.className = 'account-msg error'; msgEl.textContent = 'New password must be at least 3 characters.'; return; }
+        if (newPw !== confirmPw) { msgEl.className = 'account-msg error'; msgEl.textContent = 'Passwords do not match.'; return; }
+        try {
+            const res = await apiFetch('/change-password', {
+                method: 'POST',
+                body: JSON.stringify({ username: profile.username, currentPassword: currentPw, newPassword: newPw })
+            });
+            if (res.ok) {
+                msgEl.className = 'account-msg success'; msgEl.textContent = 'Password changed!';
+                store.currentProfile.password = newPw;
+                document.getElementById('accountCurrentPw').value = '';
+                document.getElementById('accountNewPw').value = '';
+                document.getElementById('accountConfirmPw').value = '';
+            } else {
+                msgEl.className = 'account-msg error'; msgEl.textContent = res.message || 'Failed to change password.';
+            }
+        } catch (err) {
+            msgEl.className = 'account-msg error'; msgEl.textContent = 'Network error.';
+        }
+    });
+}
+
+function compressImageTo512(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 512;
+                canvas.height = 512;
+                const ctx = canvas.getContext('2d');
+                // Center-crop to square
+                const size = Math.min(img.width, img.height);
+                const sx = (img.width - size) / 2;
+                const sy = (img.height - size) / 2;
+                ctx.drawImage(img, sx, sy, size, size, 0, 0, 512, 512);
+                resolve(canvas.toDataURL('image/jpeg', 0.85));
+            };
+            img.onerror = reject;
+            img.src = ev.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
 function renderPlaceholderScreen() {
     const profile = store.getCurrentProfile();
     const page = getCurrentPlaceholderPage();
@@ -1022,6 +1177,14 @@ function renderPlaceholderScreen() {
         renderLeaderboardPage(profile);
         return;
     }
+    if (page.id === 'account') {
+        renderAccountPage(profile);
+        return;
+    }
+    // Restore generic actions visibility for non-account pages
+    const actionsEl = placeholderContent?.parentElement?.querySelector('.placeholder-actions');
+    if (actionsEl) actionsEl.style.display = '';
+    if (placeholderContent) placeholderContent.innerHTML = '';
     renderGenericPlaceholderPage(profile, page);
 }
 

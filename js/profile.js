@@ -694,7 +694,7 @@ function getApiCandidates() {
     return candidates;
 }
 
-async function apiFetch(path, options = {}) {
+export async function apiFetch(path, options = {}) {
     let lastError = null;
     for (const base of getApiCandidates()) {
         try {

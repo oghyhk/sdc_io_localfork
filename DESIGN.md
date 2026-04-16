@@ -142,6 +142,17 @@ This is aligned with the general readability goal of extraction shooters:
 
 This is conceptually similar to modern extraction-mode inventory interactions without copying proprietary UI assets.
 
+## 3b. Account Page
+
+The Account page (accessible from the top-right dropdown) consolidates all player account and profile settings:
+
+- **Avatar (PFP)** — Click to upload a profile picture. Images are auto-compressed and center-cropped to 512×512 JPEG. Stored as base64 in the player's profile.
+- **Profile Info** — Username (read-only), ELO rating, and player level displayed.
+- **Security** — Password change with current-password verification (server-validated via `/api/change-password`).
+- **Lifetime Stats** — Total runs, extractions, win rate, kills, coins earned, and market trades.
+
+The previous separate "Profile" page in the dropdown has been removed; all settings now live under Account.
+
 ---
 
 ## 4. Visual Direction

@@ -301,6 +301,32 @@ class ApiHandler(SimpleHTTPRequestHandler):
             self._send_json({'ok': True, 'profile': safe_user})
             return
 
+        if parsed.path == '/api/change-password':
+            username = str(body.get('username', '')).strip()
+            current_pw = str(body.get('currentPassword', ''))
+            new_pw = str(body.get('newPassword', ''))
+            if not username or not current_pw or not new_pw:
+                self._send_json({'ok': False, 'message': 'All fields are required.'}, HTTPStatus.BAD_REQUEST)
+                return
+            if len(new_pw) < 3:
+                self._send_json({'ok': False, 'message': 'Password must be at least 3 characters.'}, HTTPStatus.BAD_REQUEST)
+                return
+            store = read_store()
+            users = store.setdefault('users', {})
+            existing_key, user = get_user_record(users, username)
+            if not user or not existing_key:
+                self._send_json({'ok': False, 'message': 'User not found.'}, HTTPStatus.NOT_FOUND)
+                return
+            if user.get('password', '') != current_pw:
+                self._send_json({'ok': False, 'message': 'Current password is incorrect.'}, HTTPStatus.UNAUTHORIZED)
+                return
+            user['password'] = new_pw
+            users[existing_key] = user
+            write_store(store)
+            safe_user = {k: v for k, v in user.items() if k != 'password'}
+            self._send_json({'ok': True, 'profile': safe_user})
+            return
+
         if parsed.path == '/api/dev-config':
             config = body.get('config') or body
             if not config:
