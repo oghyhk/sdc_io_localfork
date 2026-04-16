@@ -18,7 +18,7 @@ import {
 import {
     dist, circleCollision, circleRectCollision, clamp, generateId, randInt, resetIdCounter
 } from './utils.js';
-import { calculateDeathLosses, calculateSafeboxDeathLosses, computeEloChange, computePerKillElo, computeDeathPenaltyScale, createLootItem, createPersistentEntryFromLootItem, getItemCategoryLabel, getItemDefinition, getRarityMeta, getSlotLabel } from './profile.js';
+import { calculateDeathLosses, calculateSafeboxDeathLosses, computeEloChange, computePerKillElo, computeDeathPenaltyScale, createLootItem, createPersistentEntryFromLootItem, getItemCategoryLabel, getItemDefinition, getRarityMeta, getSlotLabel, ITEM_DEFS } from './profile.js';
 
 // Game states
 export const GAME_STATE = {
@@ -540,6 +540,27 @@ export class Game {
                             this.stats.aiEnemyKills++;
                         }
                         this._spawnParticles(e.x, e.y, e.type === 'drone' ? COLORS.ENEMY_DRONE : COLORS.ENEMY_SENTINEL, 12);
+                        // 1% chance AI enemy drops a high-value crate
+                        if (Math.random() < 0.01) {
+                            const hvItems = this._generateHighValueCrateItems();
+                            if (hvItems.length) {
+                                this.mapData.lootCrates.push({
+                                    id: generateId(),
+                                    x: e.x,
+                                    y: e.y,
+                                    w: CRATE_WIDTH,
+                                    h: CRATE_HEIGHT,
+                                    opened: false,
+                                    inspected: true,
+                                    tier: 'elite',
+                                    tierLabel: 'High Value Crate',
+                                    tierColor: '#ffd700',
+                                    items: hvItems,
+                                });
+                                this.crateMessage = 'HIGH VALUE CRATE DROPPED!';
+                                this.crateMessageTimer = 2.5;
+                            }
+                        }
                     }
                     this.bullets.splice(i, 1);
                     bulletRemoved = true;
@@ -702,6 +723,36 @@ export class Game {
         }
 
         this._spawnParticles(bot.x, bot.y, COLORS.AI_PLAYER, 12);
+    }
+
+    _generateHighValueCrateItems() {
+        const count = 1 + Math.floor(Math.random() * 3); // 1-3 items
+        const items = [];
+        const goldCandidates = Object.keys(ITEM_DEFS).filter(
+            (id) => ITEM_DEFS[id].rarity === 'gold' && ITEM_DEFS[id].lootType !== 'ammo'
+        );
+        const redCandidates = Object.keys(ITEM_DEFS).filter(
+            (id) => ITEM_DEFS[id].rarity === 'red' && ITEM_DEFS[id].lootType !== 'ammo'
+        );
+
+        for (let i = 0; i < count; i++) {
+            const roll = Math.random();
+            let picked;
+            if (roll < 0.02) {
+                // 2% — .338 AP ammo
+                picked = createLootItem('ammo_338_ap');
+            } else if (roll < 0.15) {
+                // 13% — red rarity item
+                const id = redCandidates[Math.floor(Math.random() * redCandidates.length)];
+                picked = id ? createLootItem(id) : null;
+            } else {
+                // 85% — gold rarity item
+                const id = goldCandidates[Math.floor(Math.random() * goldCandidates.length)];
+                picked = id ? createLootItem(id) : null;
+            }
+            if (picked) items.push(picked);
+        }
+        return items;
     }
 
     _checkHealthPickup() {

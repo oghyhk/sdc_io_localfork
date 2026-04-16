@@ -123,6 +123,14 @@ Crates come in three tiers that determine loot quality:
 
 Each tier has its own image (`crate_supply.png`, `crate_tactical.png`, `crate_elite.png`) and the crate is colored to match its tier.
 
+### High-Value Enemy Drop Crate
+AI enemies (drones and sentinels) have a **1% chance** to drop a golden **High Value Crate** on death. This crate contains **1–3 items** with the following rarity distribution per slot:
+- **85%** — Gold rarity item
+- **13%** — Red rarity item
+- **2%** — .338 AP ammo (legend rarity, instant-kill, wall-penetrating)
+
+When dropped, a "HIGH VALUE CRATE DROPPED!" banner is shown to the player. The crate appears at the enemy's death location with a gold tier color (`#ffd700`).
+
 ### Crate UI Direction
 The prototype now uses a **centered loot panel** while raiding.
 This is aligned with the general readability goal of extraction shooters:
